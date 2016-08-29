@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.nitkkr.gawds.ts16.aboutTs">
+    <ImageView
+    android:id="@+id/aboutTsImg"
+    android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/ic_launcher"
+    android:layout_centerHorizontal="true" android:paddingTop="40dp"/>
+    <TextView
+        android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/TitleName"
+        android:textSize="30sp"
+        android:paddingTop="30dp" android:layout_below="@+id/aboutTsImg"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/AboutTsDesc"
+        android:layout_centerVertical="true" android:textSize="20sp"/>
+
+</RelativeLayout>

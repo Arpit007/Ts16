@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Ts16</string>
+    <string name="TitleShort">Ts\' 16</string>
+    <string name="TitleLong">Talent Show 2K16</string>
+    <string name="TitleName">Talent Show</string>
+    <string name="TitleYear">2K16</string>
+    <string name="AboutTs">About TS</string>
+    <string name="AboutTsDesc">Talent Show is ...</string>
+    <string name="AboutUs">About TS</string>
+    <string name="DevName1">Arpit Bhatnagar</string>
+    <string name="DevName2">Sahil Singla</string>
+    <string name="AboutUsDesc">We...</string>
+    <string name="Dev1Profile">http://www.facebook.com/profile.php?id=100001485651736</string>
+    <string name="Dev2Profile">http://www.facebook.com/profile.php?id=100001485651736</string>
+    <string name="eventTab1">Description</string>
+    <string name="eventTab2">Rules</string>
+    <string name="eventTab3">Result</string>
+    <string name="homeTab1">Home</string>
+    <string name="homeTab2">News</string>
+    <string name="homeTab3">Active</string>
+    <string name="homeTab4">Upcoming</string>
+    <string name="homeTab5">Schedule</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
