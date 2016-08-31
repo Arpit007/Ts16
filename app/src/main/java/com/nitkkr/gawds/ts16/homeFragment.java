@@ -13,14 +13,6 @@ import android.view.ViewGroup;
  */
 public class homeFragment extends Fragment
 {
-
-
-	public homeFragment()
-	{
-		// Required empty public constructor
-	}
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)

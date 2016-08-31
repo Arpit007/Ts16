@@ -16,11 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".aboutTs">
             <meta-data
@@ -38,6 +33,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.homePage"/>
+        </activity>
+        <activity android:name=".sponsors">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".eventCategory">
         </activity>
     </application>
 

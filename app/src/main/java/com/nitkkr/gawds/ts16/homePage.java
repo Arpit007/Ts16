@@ -21,7 +21,7 @@ public class homePage extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_page);
 
-		TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabLayout);
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab1)).setIcon(R.drawable.home_icon));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab2)).setIcon(R.drawable.news_icon));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab3)).setIcon(R.drawable.ongoing_icon));
@@ -29,7 +29,7 @@ public class homePage extends AppCompatActivity
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab5)).setIcon(R.drawable.schedule_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-		final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
+		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		final PagerAdapter adapter = new PagerAdapter
 				(getSupportFragmentManager(), tabLayout.getTabCount());
 		viewPager.setAdapter(adapter);
@@ -65,12 +65,12 @@ public class homePage extends AppCompatActivity
 		@Override
 		public Fragment getItem(int position) {
 
-			Bundle bundle=new Bundle();
-
 			switch (position) {
-				case 0: return eventDescTab.CreateFragment(bundle);
-				case 1: return eventRuleTab.CreateFragment(bundle);
-				case 2: return eventResultTab.CreateFragment(bundle);
+				case 0: return new homeFragment();
+				case 1: return new newsListFragment();
+				case 2: return new ongoingFragment();
+				case 3: return new upcomingFragment();
+				case 4: return new scheduleFragment();
 				default:
 					return null;
 			}
