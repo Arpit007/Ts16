@@ -34,7 +34,7 @@ public class Splash extends AppCompatActivity
 			@Override
 			public void run()
 			{
-				Intent intent=new Intent(Splash.this,homePage.class);
+				Intent intent=new Intent(Splash.this,mainActivity.class);
 				startActivity(intent);
 				finish();
 			}

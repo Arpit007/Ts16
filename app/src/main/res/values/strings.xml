@@ -3,15 +3,16 @@
     <string name="TitleShort">Ts\' 16</string>
     <string name="TitleLong">Talent Show 2K16</string>
     <string name="TitleName">Talent Show</string>
+    <string name="TitleNameNormal">Talent Show 2016</string>
     <string name="TitleYear">2K16</string>
     <string name="AboutTs">About TS</string>
     <string name="AboutTsDesc">Talent Show is ...</string>
-    <string name="AboutUs">About TS</string>
+    <string name="AboutUs">Developers</string>
     <string name="DevName1">Arpit Bhatnagar</string>
     <string name="DevName2">Sahil Singla</string>
     <string name="AboutUsDesc">We...</string>
     <string name="Dev1Profile">http://www.facebook.com/profile.php?id=100001485651736</string>
-    <string name="Dev2Profile">http://www.facebook.com/profile.php?id=100001485651736</string>
+    <string name="Dev2Profile">http://www.facebook.com/profile.php?id=100003193427783</string>
     <string name="eventTab1">Description</string>
     <string name="eventTab2">Rules</string>
     <string name="eventTab3">Result</string>
@@ -53,4 +54,10 @@
         <item>@drawable/location_icon</item>
         <item>@drawable/news_icon</item>
     </integer-array>
+    <string name="title_activity_main">mainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

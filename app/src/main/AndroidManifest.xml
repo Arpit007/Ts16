@@ -8,40 +8,56 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".homePage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".Splash">
-        </activity>
-        <activity android:name=".aboutTs">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nitkkr.gawds.ts16.homePage"/>
         </activity>
         <activity android:name=".aboutUs">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nitkkr.gawds.ts16.homePage"/>
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
         <activity android:name=".eventDetail">
         </activity>
         <activity android:name=".newsDetails">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nitkkr.gawds.ts16.homePage"/>
         </activity>
         <activity android:name=".sponsors">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
+        <activity android:name=".eventCategory">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
+        <activity
+            android:name=".mainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".eventCategory">
+        <activity android:name=".starredEvents">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
+        <activity android:name=".galleryPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
+        <activity android:name=".eventResult">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
+        <activity android:name=".organizerPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
     </application>
 

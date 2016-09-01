@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/events_icon"
+            android:title="Events" />
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/schedule_icon"
+            android:title="Schedule" />
+        <item android:id="@+id/nav_starred"
+              android:icon="@drawable/notify_icon"
+              android:title="Starred Events" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/gallery_icon"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_results"
+            android:icon="@drawable/result_icon"
+            android:title="Results"
+            />
+        <item
+            android:id="@+id/nav_organizers"
+            android:title="Organizers"
+            android:icon="@drawable/contact_icon"/>
+        <item
+            android:id="@+id/nav_sponsor"
+            android:title="Organizers"
+            android:icon="@drawable/contact_icon"/>
+    </group>
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_dev"
+                android:icon="@drawable/about_icon"
+                android:title="About Developers"/>
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/notify_icon"
+                android:title="Rate the App"/>
+        </menu>
+    </item>
+</menu>
