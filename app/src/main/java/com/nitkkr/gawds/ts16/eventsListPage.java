@@ -37,6 +37,8 @@ public class eventsListPage extends AppCompatActivity
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		LoadEvents(CategoryId);
 
+
+
 	}
 	public void LoadEvents(final int CategoryId)
 	{
