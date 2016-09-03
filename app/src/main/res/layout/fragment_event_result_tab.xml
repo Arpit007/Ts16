@@ -2,11 +2,25 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.nitkkr.gawds.ts16.eventResultTab"  android:background="#12ab56">
+             tools:context="com.nitkkr.gawds.ts16.eventResultTab">
 
     <ScrollView
         android:layout_width="match_parent" android:layout_height="wrap_content">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/resultText" android:textAlignment="gravity"
+                android:gravity="left" android:textSize="20sp"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:layout_centerVertical="true" android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true" android:id="@+id/NoResult"
+        android:text="@string/NoResult" android:visibility="invisible"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

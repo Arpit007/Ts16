@@ -26,17 +26,17 @@
             android:icon="@drawable/result_icon"
             android:title="Results"
             />
-        <item
-            android:id="@+id/nav_organizers"
-            android:title="Organizers"
-            android:icon="@drawable/contact_icon"/>
-        <item
-            android:id="@+id/nav_sponsor"
-            android:title="Organizers"
-            android:icon="@drawable/contact_icon"/>
     </group>
-    <item android:title="">
+    <item android:title="About">
         <menu>
+            <item
+                android:id="@+id/nav_organizers"
+                android:title="Organizers"
+                android:icon="@drawable/contact_icon"/>
+            <item
+                android:id="@+id/nav_sponsor"
+                android:title="Sponsors"
+                android:icon="@drawable/sponsor_icon"/>
             <item
                 android:id="@+id/nav_dev"
                 android:icon="@drawable/about_icon"
@@ -46,5 +46,5 @@
                 android:icon="@drawable/notify_icon"
                 android:title="Rate the App"/>
         </menu>
-    </item>
+        </item>
 </menu>

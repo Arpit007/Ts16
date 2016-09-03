@@ -3,92 +3,32 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.nitkkr.gawds.ts16.homeFragment">
-    <ScrollView
-    android:layout_width="match_parent" android:layout_height="match_parent">
-        <RelativeLayout
+    <LinearLayout
+        android:weightSum="100" android:orientation="vertical"
             android:layout_width="match_parent" android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:id="@+id/HomePageGallery"
-                android:src="@drawable/gallery_icon"/>
+        <ImageView
+            android:layout_weight="30"
+            android:paddingTop="60dp" android:src="@drawable/contact_icon"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="vertical" android:layout_weight="40" android:paddingTop="60dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="100">
+        <Button
+            android:id="@+id/newsButton"
+            android:drawableLeft="@drawable/news_icon" android:text="News"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/liveButton"
+                android:drawableLeft="@drawable/ongoing_icon" android:text="Live Events"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/upcomingButton"
+                android:drawableLeft="@drawable/upcoming_icon" android:text="Upcoming Events"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/scheduleButton"
+                android:drawableLeft="@drawable/schedule_icon" android:text="Schedule"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/mainPageLiveLabel"
-                android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/HomePageGallery"
-                android:textSize="20sp"
-                android:text=" Live Events"
-                android:paddingTop="2dp"
-                android:drawableLeft="@drawable/ongoing_icon"
-
-                android:textAllCaps="true"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_below="@id/mainPageLiveLabel"
-                android:padding="10dp"
-                android:text="Data Here"
-                android:id="@+id/mainPageLiveDisplay"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/mainPageLiveDisplay"
-                android:id="@+id/mainPageUpcomingLabel"
-                android:textSize="20sp"
-                android:drawableLeft="@drawable/upcoming_icon"
-                android:text="Upcoming Events"
-                android:gravity="bottom"
-                android:textAllCaps="true"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_below="@id/mainPageUpcomingLabel"
-                android:padding="10dp"
-                android:text="ldms"
-                android:id="@+id/mainPageUpcomingDisplay"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:paddingLeft="10dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/mainPageUpcomingDisplay"
-                android:id="@+id/mainPageMessageLabel"
-                android:textSize="20sp"
-                android:text="Messages"
-                android:drawableLeft="@drawable/news_icon"
-                android:paddingTop="2dp"
-                android:textAllCaps="true"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_below="@id/mainPageMessageLabel"
-                android:padding="10dp"
-                android:id="@+id/mainPageMessageDisplay"
-                android:text="ldms"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/mainPageMessageDisplay"
-                android:height="25dp"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:text="@string/TitleNameNormal"/>
-        </RelativeLayout>
-</ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

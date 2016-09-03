@@ -21,9 +21,14 @@
     <string name="homeTab3">Active</string>
     <string name="homeTab4">Upcoming</string>
     <string name="homeTab5">Schedule</string>
-
+    <string name="EventID">EventID</string>
+    <string name="TabID">TabID</string>
+    <string name="NoResult">No Result Yet!</string>
     <string name="hello_blank_fragment">Temporary String</string>
+    <string name="Categories">http://127.0.0.1/categories.php</string>
 
+    <string name="EventsJSONArray">events</string>
+    <string name="EventsByCategory">http://127.0.0.1/ts16/events.php?category=</string>
     <string-array name="sponsorLabelList">
         <item>Microsoft</item>
         <item>Google</item>
@@ -60,4 +65,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="CategoryID">CategoryId</string>
 </resources>

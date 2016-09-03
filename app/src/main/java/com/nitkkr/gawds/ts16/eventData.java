@@ -1,24 +1,35 @@
 package com.nitkkr.gawds.ts16;
 
+import android.util.TimeUtils;
+
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class eventData
 {
 	public int eventID;
+	public int Category;
+	public String Duration;
+	public String EventCoordinators;
 	public String eventName;
 	public int bookmark;
 	public String Day;
 	public String Time;
+	public String EndTime;
 	public int Status;
-	public String Location;
+	public String Venue;
 	public String Description;
 	public String Rules;
 	public String Result;
-	public boolean ResultDeclared;
 	public String Contact;
-	public int ImageID;
-	private int TimeStamp;
+	public String ImageID;
+	public long TimeStamp;
 
+	boolean isResultDeclared()
+	{
+		return (Result.equals(""))? true:false;
+	}
 
 	public interface eventDataListener
 	{
@@ -37,6 +48,11 @@ public class eventData
 		eventListenerList.add(dataListener);
 	}
 
+	public void removeDataListener(eventDataListener dataListener)
+	{
+		eventListenerList.remove(dataListener);
+	}
+
 	public void UpdateEvent()
 	{
 		for(eventDataListener listener:eventListenerList)
@@ -45,19 +61,23 @@ public class eventData
 
 	public void UpdateEvent(eventData data)
 	{
+		EndTime=data.EndTime;
 		eventID=data.eventID;
+		Category=data.Category;
+		Duration=data.Duration;
+		EventCoordinators=data.EventCoordinators;
 		eventName=data.eventName;
 		bookmark=data.bookmark;
 		Day=data.Day;
 		Time=data.Time;
 		Status= data.Status;
-		Location=data.Location;
+		Venue=data.Venue;
 		Description=data.Description;
 		Rules=data.Rules;
 		Result=data.Result;
-		ResultDeclared=data.ResultDeclared;
 		Contact=data.Contact;
 		ImageID=data.ImageID;
+		TimeStamp=data.TimeStamp;
 		TimeStamp=data.TimeStamp;
 		UpdateEvent();
 	}

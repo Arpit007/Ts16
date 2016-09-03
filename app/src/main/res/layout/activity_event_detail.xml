@@ -60,15 +60,15 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_weight="40"/>
         <TextView
-            android:paddingLeft="20dp" android:id="@+id/eventDetailTime"
+            android:paddingLeft="20dp" android:id="@+id/eventDetailDate"
             android:textSize="15sp" android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/time_icon" android:text="9:30 AM"
+            android:drawableLeft="@drawable/date_icon" android:text="21 Aug"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_weight="40"/>
         <TextView
-            android:paddingLeft="20dp" android:id="@+id/eventDetailDuration"
+            android:paddingLeft="20dp" android:id="@+id/eventDetailTime"
             android:textSize="15sp" android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/duration_icon" android:text="2 hours"
+            android:drawableLeft="@drawable/time_icon" android:text="9:30 AM"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_weight="40"/>
     </LinearLayout>

@@ -1,22 +1,10 @@
 package com.nitkkr.gawds.ts16;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-public class eventCategory extends AppCompatActivity
+/**
+ * Created by SAHIL SINGLA on 29-08-2016.
+ */
+public class EventCategory
 {
-	public static class eventCategoryData
-	{
-		public int id;
-		public Uri imageUri;
-		public String category;
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_category);
-	}
+    public int id;
+    public String category;
 }

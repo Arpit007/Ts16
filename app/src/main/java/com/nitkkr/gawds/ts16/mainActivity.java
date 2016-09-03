@@ -52,7 +52,7 @@ public class mainActivity extends AppCompatActivity
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
-		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
+		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
@@ -86,6 +86,15 @@ public class mainActivity extends AppCompatActivity
 		}
 	}
 
+	public void navigateToTab(int Index)
+	{
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
+		if(Index<tabLayout.getTabCount())
+		{
+			tabLayout.getTabAt(Index).select();
+		}
+	}
+
 	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item)
@@ -99,7 +108,7 @@ public class mainActivity extends AppCompatActivity
 		}
 		else if (id == R.id.nav_events)
 		{
-			Intent intent=new Intent(this,eventCategory.class);
+			Intent intent=new Intent(this,eventCategoryPage.class);
 			startActivity(intent);
 		}
 		else if (id == R.id.nav_starred)
@@ -145,17 +154,21 @@ public class mainActivity extends AppCompatActivity
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
+		AppCompatActivity activity;
 
-		public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+		public PagerAdapter(FragmentManager fm, int NumOfTabs, AppCompatActivity activity) {
 			super(fm);
 			this.mNumOfTabs = NumOfTabs;
+			this.activity=activity;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
 
 			switch (position) {
-				case 0: return new homeFragment();
+				case 0: homeFragment fragment=new homeFragment();
+						fragment.setActivity(activity);
+					return fragment;
 				case 1: return new newsListFragment();
 				case 2: return new ongoingFragment();
 				case 3: return new upcomingFragment();
