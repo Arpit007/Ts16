@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nitkkr.gawds.ts16.mainActivity"
+    tools:showIn="@layout/app_bar_main">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/HomePageGallery"
+        android:src="@drawable/gallery_icon"/>
+
+    <TextView
+        android:id="@+id/mainPageLiveLabel"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/HomePageGallery"
+        android:textSize="20sp"
+        android:text=" Live Events"
+        android:paddingTop="2dp"
+        android:drawableLeft="@drawable/ongoing_icon"
+
+        android:textAllCaps="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/mainPageLiveLabel"
+        android:padding="10dp"
+        android:text="Data Here"
+        android:id="@+id/mainPageLiveDisplay"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/mainPageLiveDisplay"
+        android:id="@+id/mainPageUpcomingLabel"
+        android:textSize="20sp"
+        android:drawableLeft="@drawable/upcoming_icon"
+        android:text="Upcoming Events"
+        android:gravity="bottom"
+        android:textAllCaps="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/mainPageUpcomingLabel"
+        android:padding="10dp"
+        android:text="ldms"
+        android:id="@+id/mainPageUpcomingDisplay"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/mainPageUpcomingDisplay"
+        android:id="@+id/mainPageMessageLabel"
+        android:textSize="20sp"
+        android:text="Messages"
+        android:drawableLeft="@drawable/news_icon"
+        android:paddingTop="2dp"
+        android:textAllCaps="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/mainPageMessageLabel"
+        android:padding="10dp"
+        android:id="@+id/mainPageMessageDisplay"
+        android:text="ldms"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainPageMessageDisplay"
+        android:height="25dp"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:text="@string/TitleNameNormal"/>
+</RelativeLayout>-->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nitkkr.gawds.ts16.mainActivity"
+    tools:showIn="@layout/app_bar_main">
+    <android.support.design.widget.TabLayout
+        android:id="@+id/homeTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/homePager" android:isScrollContainer="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

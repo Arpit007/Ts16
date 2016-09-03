@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="100"
+    android:id="@+id/category_recycler">
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:minHeight="100dp"
+    android:layout_weight="80"
+    android:id="@+id/category_image"
+    android:src="@drawable/schedule_icon"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Hey There"
+        android:id="@+id/category_name"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_height="100dp"
+        android:layout_weight="20"/>
+</LinearLayout>
