@@ -1,11 +1,15 @@
 package com.nitkkr.gawds.ts16;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -48,8 +52,20 @@ class MessageDbHelper extends SQLiteOpenHelper {
             int rows=db.update(TABLE_MESSAGES,messageValues,id+"="+MessageId,null);
             if(rows<1) {
                 db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
-                Intent messageService=new Intent(this.context,NotificationService.class);
-                context.startService(messageService);
+                NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
+                builder.setContentTitle("Talent Show Notification");
+                builder.setContentText(message);
+                builder.setTicker(message);
+//                builder.setSmallIcon()
+                Intent i=new Intent(context,mainActivity.class);
+                i.putExtra(context.getString(R.string.TabID),1);
+                TaskStackBuilder stackBuilder=TaskStackBuilder.create(context);
+                stackBuilder.addParentStack(mainActivity.class);
+                stackBuilder.addNextIntent(i);
+                PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(pendingIntent);
+                NotificationManager notification=(NotificationManager ) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notification.notify("MessageNotification",120,builder.build());
             }
             db.setTransactionSuccessful();
         }
