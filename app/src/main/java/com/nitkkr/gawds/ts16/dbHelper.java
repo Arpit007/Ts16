@@ -241,6 +241,7 @@ Context context;
         eventValues.put(dbHelper.result,event.Result);
         eventValues.put(dbHelper.last_updated,event.TimeStamp);
     }
+
     public void updateBookmarkStatus(int status,int ids)
     {
         SQLiteDatabase db=getReadableDatabase();
