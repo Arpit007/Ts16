@@ -27,6 +27,12 @@ public class NotificationService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final Context c=this;
         final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -66,16 +72,10 @@ public class NotificationService extends Service {
                 }
             }
         });
-        Thread messageNotification=new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-            }
-        });
-        messageNotification.start();
         upcomingNotification.start();
 
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
 }
