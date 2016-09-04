@@ -1,29 +1,18 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by SAHIL SINGLA on 01-09-2016.
  */
-    public class dbHelper extends SQLiteOpenHelper{
-
-    public static dbHelper DbHelper;
+public class dbHelper extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_EVENTS="events";
@@ -45,11 +34,9 @@ import java.util.Date;
     private static final String result="result";
     private static final String last_updated="last_updated";
 
-Context context;
+
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        DbHelper=this;
-        this.context=context;
     }
 
     @Override
@@ -80,6 +67,7 @@ Context context;
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_EVENTS);
         onCreate(sqLiteDatabase);
     }
+
     public void addEvent(eventData Event)
     {
         SQLiteDatabase db=getWritableDatabase();
@@ -98,50 +86,28 @@ Context context;
     }
 
     private void addorUpdateEvent(eventData event) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db=getWritableDatabase();
         db.beginTransaction();
-        try {
-            ContentValues eventValues = new ContentValues();
-            setEventContentValues(eventValues, event);
-            try {
-                String query="Select "+result+" from "+TABLE_EVENTS+" where id="+event.eventID;
-                Cursor c=db.rawQuery(query,null);
-                c.moveToFirst();
-                String DatabaseResultValue=c.getString(c.getColumnIndex(result));
-                if((event.Result.compareToIgnoreCase(DatabaseResultValue))!=0)
-                {
-                    NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
-                    builder.setContentTitle("Results for "+event.eventName+" declared");
-//                builder.setSmallIcon()
-                    Intent i=new Intent(context,eventDetail.class);
-                    i.putExtra(context.getString(R.string.TabID),2);
-                    i.putExtra(context.getString(R.string.EventID),event.eventID);
-                    TaskStackBuilder stackBuilder=TaskStackBuilder.create(context);
-                    stackBuilder.addParentStack(eventDetail.class);
-                    stackBuilder.addNextIntent(i);
-                    PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(pendingIntent);
-                    NotificationManager notification=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notification.notify("ResultNotification",140,builder.build());
-                }
-            } catch (Exception e) {
-                    e.printStackTrace();
-            } finally {
-
-
-                int affectedRows = db.update(TABLE_EVENTS, eventValues, id + " = " + event.eventID, null);
-                if (affectedRows == 0) {
-                    db.insertOrThrow(TABLE_EVENTS, null, eventValues);
-                    db.setTransactionSuccessful();
-                }
+        try{
+            ContentValues eventValues=new ContentValues();
+            setEventContentValues(eventValues,event);
+            int affectedRows=db.update(TABLE_EVENTS,eventValues,id+" = "+ event.eventID,null);
+            if(affectedRows!=1)
+            {
+                db.insertOrThrow(TABLE_EVENTS,null,eventValues);
+                db.setTransactionSuccessful();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             db.endTransaction();
         }
     }
+
     public ArrayList<eventData> ReadDatabaseEvents(int category)
     {
         SQLiteDatabase db=getReadableDatabase();
@@ -195,32 +161,6 @@ Context context;
         }while(object.moveToNext());
         return list;
     }
-    public ArrayList<eventData> GetUpcominEvents()
-    {
-        ArrayList<eventData> all=this.ReadDatabaseEvents(0);
-        ArrayList<eventData> upcoming=new ArrayList<>();
-        int length=all.size();
-        for(int i=0;i<length;i++)
-        {
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Calendar calendar=Calendar.getInstance();
-            eventData item=all.get(i);
-            try {
-                Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
-                Long eventTimeStamp=(eventDate.getTime())/1000;
-                Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                if(eventTimeStamp<=currentTimeStamp+10800)
-                {
-                    upcoming.add(item);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return upcoming;
-
-    }
 
     private void setEventContentValues(ContentValues eventValues,eventData event) {
         eventValues.put(dbHelper.id,event.eventID);
@@ -241,19 +181,4 @@ Context context;
         eventValues.put(dbHelper.result,event.Result);
         eventValues.put(dbHelper.last_updated,event.TimeStamp);
     }
-
-    public void updateBookmarkStatus(int status,int ids)
-    {
-        SQLiteDatabase db=getReadableDatabase();
-        String query="Update "+TABLE_EVENTS+" set "+special+" = "+status+" where "+id+"="+ids;
-        try {
-            db.execSQL(query);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-    }
-
 }
