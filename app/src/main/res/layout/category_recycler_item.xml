@@ -4,14 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_weight="100"
     android:id="@+id/category_recycler">
-
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:minHeight="100dp"
-    android:layout_weight="80"
-    android:id="@+id/category_image"
-    android:src="@drawable/schedule_icon"/>
     <TextView
         android:layout_width="match_parent"
         android:text="Hey There"
@@ -20,4 +12,11 @@
         android:gravity="center"
         android:layout_height="100dp"
         android:layout_weight="20"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:minHeight="100dp"
+        android:layout_weight="80"
+        android:src="@drawable/arrow_right_icon"/>
 </LinearLayout>

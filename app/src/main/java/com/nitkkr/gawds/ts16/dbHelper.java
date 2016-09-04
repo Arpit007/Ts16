@@ -181,5 +181,4 @@ public class dbHelper extends SQLiteOpenHelper{
         eventValues.put(dbHelper.result,event.Result);
         eventValues.put(dbHelper.last_updated,event.TimeStamp);
     }
-
 }

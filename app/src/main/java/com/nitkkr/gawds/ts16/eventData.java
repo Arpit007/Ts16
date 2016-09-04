@@ -31,6 +31,17 @@ public class eventData
 		return (Result.equals(""))? true:false;
 	}
 
+	boolean isBookmarked()
+	{
+		return (bookmark==1)? true:false;
+	}
+
+	void updateBookmark(boolean bookmarked)
+	{
+		bookmark=(bookmarked)?1:0;
+		UpdateEvent();
+	}
+
 	public interface eventDataListener
 	{
 		void eventUpdated(eventData event);
@@ -80,6 +91,20 @@ public class eventData
 		TimeStamp=data.TimeStamp;
 		TimeStamp=data.TimeStamp;
 		UpdateEvent();
+	}
+
+	public int getImageResourceID()
+	{
+		int resID=-1;
+		try
+		{
+			resID=Integer.parseInt(ImageID);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return resID;
 	}
 
 }

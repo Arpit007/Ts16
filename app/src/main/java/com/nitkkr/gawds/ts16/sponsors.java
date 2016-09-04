@@ -27,6 +27,8 @@ public class sponsors extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sponsors);
 
+		setTitle("Sponsors");
+
 		GridView gridView=(GridView)findViewById(R.id.sponsorGrid);
 		gridView.setAdapter(new sponsorListAdapter(this));
 

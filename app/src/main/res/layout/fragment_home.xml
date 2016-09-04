@@ -2,30 +2,31 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:paddingTop="?attr/actionBarSize"
              tools:context="com.nitkkr.gawds.ts16.homeFragment">
     <LinearLayout
         android:weightSum="100" android:orientation="vertical"
             android:layout_width="match_parent" android:layout_height="match_parent">
         <ImageView
-            android:layout_weight="30"
+            android:layout_weight="30" android:scaleType="fitCenter"
             android:paddingTop="60dp" android:src="@drawable/contact_icon"
             android:layout_width="match_parent" android:layout_height="wrap_content"/>
         <LinearLayout android:orientation="vertical" android:layout_weight="40" android:paddingTop="60dp"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="100">
         <Button
-            android:id="@+id/newsButton"
+            android:id="@+id/newsButton" style="@style/Widget.AppCompat.Button.Borderless"
             android:drawableLeft="@drawable/news_icon" android:text="News"
             android:layout_width="match_parent" android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/liveButton"
+                android:id="@+id/liveButton" style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:drawableLeft="@drawable/ongoing_icon" android:text="Live Events"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/upcomingButton"
+                android:id="@+id/upcomingButton" style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:drawableLeft="@drawable/upcoming_icon" android:text="Upcoming Events"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/scheduleButton"
+                android:id="@+id/scheduleButton" style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:drawableLeft="@drawable/schedule_icon" android:text="Schedule"
                 android:layout_width="match_parent" android:layout_height="wrap_content"/>
 

@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.sponsors">
+    <ImageView
+        android:src="@drawable/ab"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:scaleType="center"/>
 <GridView
     android:id="@+id/sponsorGrid"
     android:layout_width="fill_parent"

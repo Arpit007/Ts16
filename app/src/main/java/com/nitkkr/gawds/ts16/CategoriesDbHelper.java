@@ -34,6 +34,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_CATEGORIES);
     }
+
     public void addCategory(EventCategory Category)
     {
         SQLiteDatabase db=getWritableDatabase();

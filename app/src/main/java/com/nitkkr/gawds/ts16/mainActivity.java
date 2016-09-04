@@ -44,11 +44,11 @@ public class mainActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
-		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab1)).setIcon(R.drawable.home_icon));
-		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab2)).setIcon(R.drawable.news_icon));
-		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab3)).setIcon(R.drawable.ongoing_icon));
-		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab4)).setIcon(R.drawable.upcoming_icon));
-		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.homeTab5)).setIcon(R.drawable.schedule_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.schedule_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
@@ -114,11 +114,6 @@ public class mainActivity extends AppCompatActivity
 		else if (id == R.id.nav_starred)
 		{
 			Intent intent=new Intent(this,starredEvents.class);
-			startActivity(intent);
-		}
-		else if (id == R.id.nav_gallery)
-		{
-			Intent intent=new Intent(this,galleryPage.class);
 			startActivity(intent);
 		}
 		else if (id == R.id.nav_results)
