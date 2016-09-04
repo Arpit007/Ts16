@@ -11,27 +11,20 @@ import android.widget.TextView;
 public class eventRuleTab extends Fragment implements eventData.eventDataListener
 {
 	private int EventID;
-	private eventData data;
 
 	public static eventRuleTab CreateFragment(Bundle bundle)
 	{
 		eventRuleTab tab = new eventRuleTab();
 		tab.EventID=bundle.getInt(tab.getString(R.string.EventID));
-		tab.data = eventDatabase.Database.getEventData(tab.EventID);
-		eventDatabase.Database.getEventData(tab.EventID).addEventDataListener(tab);
+		eventData data = eventDatabase.Database.getEventData(tab.EventID);
+		data.addEventDataListener(tab);
 		return tab;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Populate();
-	}
-
-	private void Populate()
-	{
-		View view=getView();
-		((TextView)(view.findViewById(R.id.eventRuleText))).setText(data.Rules);
+		eventUpdated(eventDatabase.Database.getEventData(EventID));
 	}
 
 	@Override
@@ -45,7 +38,8 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	public void eventUpdated(eventData event)
 	{
 		EventID=event.eventID;
-		Populate();
+		View view=getView();
+		((TextView)(view.findViewById(R.id.eventRuleText))).setText(eventDatabase.Database.getEventData(EventID).Rules);
 	}
 
 	@Override

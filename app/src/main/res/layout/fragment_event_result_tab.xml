@@ -5,15 +5,9 @@
              tools:context="com.nitkkr.gawds.ts16.eventResultTab">
 
     <ScrollView
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/resultText" android:textAlignment="gravity"
-                android:gravity="left" android:textSize="20sp"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        </RelativeLayout>
+        android:layout_width="match_parent" android:layout_height="match_parent">
+        <WebView android:id="@+id/resultView"
+            android:layout_width="match_parent" android:layout_height="wrap_content"></WebView>
     </ScrollView>
 
     <TextView

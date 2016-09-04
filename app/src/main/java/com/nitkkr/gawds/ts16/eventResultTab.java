@@ -3,9 +3,12 @@ package com.nitkkr.gawds.ts16;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 
@@ -15,36 +18,22 @@ import android.widget.TextView;
 public class eventResultTab extends Fragment implements eventData.eventDataListener
 {
 	private int EventID;
-	private eventData data;
 
 	public static eventResultTab CreateFragment(Bundle bundle)
 	{
 		eventResultTab tab = new eventResultTab();
 		tab.EventID=bundle.getInt(tab.getString(R.string.EventID));
-		tab.data = eventDatabase.Database.getEventData(tab.EventID);
-		eventDatabase.Database.getEventData(tab.EventID).addEventDataListener(tab);
+		eventData data = eventDatabase.Database.getEventData(tab.EventID);
+		data.addEventDataListener(tab);
 		return tab;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Populate();
+		eventUpdated(eventDatabase.Database.getEventData(EventID));
 	}
 
-	private void Populate()
-	{
-		View view=getView();
-		if(!data.isResultDeclared())
-		{
-			(view.findViewById(R.id.NoResult)).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			view.findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
-			( (TextView) ( view.findViewById(R.id.resultText) ) ).setText(data.Result);
-		}
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +46,18 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	public void eventUpdated(eventData event)
 	{
 		EventID=event.eventID;
-		Populate();
+		View view=getView();
+		if(!eventDatabase.Database.getEventData(EventID).isResultDeclared())
+		{
+			(view.findViewById(R.id.NoResult)).setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			view.findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
+			WebView webView=(WebView)view.findViewById(R.id.resultView);
+			webView.setWebViewClient(new Callback());
+			webView.loadData(eventDatabase.Database.getEventData(EventID).Result,"text/html","UTF-8");
+		}
 	}
 
 	@Override
@@ -72,5 +72,14 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	{
 		super.onStop();
 		eventDatabase.Database.getEventData(EventID).removeDataListener(this);
+	}
+
+	private class Callback extends WebViewClient
+	{
+		@Override
+		public boolean shouldOverrideUrlLoading(WebView view, String url)
+		{
+			return false;
+		}
 	}
 }
