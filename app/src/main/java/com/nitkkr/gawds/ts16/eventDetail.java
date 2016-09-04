@@ -91,7 +91,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				eventDatabase.Database.getEventData(EventId).updateBookmark(isChecked,getBaseContext());
+				eventDatabase.Database.getEventData(EventId).updateBookmark(isChecked);
 			}
 		});
 		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener(((TextView)findViewById(R.id.eventDetailStatus)),this));

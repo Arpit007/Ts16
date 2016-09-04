@@ -1,6 +1,5 @@
 package com.nitkkr.gawds.ts16;
 
-import android.content.Context;
 import android.util.TimeUtils;
 
 import java.sql.Time;
@@ -27,8 +26,6 @@ public class eventData
 	public String ImageID;
 	public long TimeStamp;
 	public Boolean notificationGenerated;
-
-
 	boolean isResultDeclared()
 	{
 		return (Result.equals(""))? true:false;
@@ -39,10 +36,10 @@ public class eventData
 		return (bookmark==1)? true:false;
 	}
 
-	void updateBookmark(boolean bookmarked, Context c)
+	void updateBookmark(boolean bookmarked)
 	{
 		bookmark=(bookmarked)?1:0;
-		new dbHelper(c).updateBookmarkStatus(bookmark,this.eventID);
+		dbHelper.DbHelper.updateBookmarkStatus(bookmark,this.eventID);
 		UpdateEvent();
 	}
 

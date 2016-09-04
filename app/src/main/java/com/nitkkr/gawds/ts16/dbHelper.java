@@ -17,6 +17,9 @@ import java.util.Date;
  * Created by SAHIL SINGLA on 01-09-2016.
  */
 public class dbHelper extends SQLiteOpenHelper{
+
+    public static dbHelper DbHelper;
+
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_EVENTS="events";
@@ -41,6 +44,7 @@ public class dbHelper extends SQLiteOpenHelper{
 
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        DbHelper=this;
     }
 
     @Override
@@ -140,6 +144,31 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         return list;
     }
+
+    private ArrayList<eventData> LoadEvents(Cursor object,ArrayList<eventData> list) {
+        do{
+            eventData item=new eventData();
+            item.eventID=object.getInt(object.getColumnIndex(id));
+            item.eventName=object.getString(object.getColumnIndex(name));
+            item.Category=object.getInt(object.getColumnIndex(category));
+            item.Venue=object.getString(object.getColumnIndex(venue));
+            item.Day=object.getString(object.getColumnIndex(date));
+            item.Status=object.getInt(object.getColumnIndex(status));
+            item.Time=object.getString(object.getColumnIndex(scheduled_start));
+            item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
+            item.Duration=object.getString(object.getColumnIndex(duration));
+            item.Status=object.getInt(object.getColumnIndex(delay_status));
+            item.ImageID=object.getString(object.getColumnIndex(poster_name));
+            item.Description=object.getString(object.getColumnIndex(description));
+            item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
+            item.bookmark=object.getInt(object.getColumnIndex(special));
+            item.Result=object.getString(object.getColumnIndex(result));
+            item.Rules=object.getString(object.getColumnIndex(rules));
+            item.TimeStamp=object.getLong(object.getColumnIndex(last_updated));
+            list.add(item);
+        }while(object.moveToNext());
+        return list;
+    }
     public ArrayList<eventData> GetUpcominEvents()
     {
         ArrayList<eventData> all=this.ReadDatabaseEvents(0);
@@ -166,30 +195,6 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         return upcoming;
 
-    }
-    private ArrayList<eventData> LoadEvents(Cursor object,ArrayList<eventData> list) {
-        do{
-            eventData item=new eventData();
-            item.eventID=object.getInt(object.getColumnIndex(id));
-            item.eventName=object.getString(object.getColumnIndex(name));
-            item.Category=object.getInt(object.getColumnIndex(category));
-            item.Venue=object.getString(object.getColumnIndex(venue));
-            item.Day=object.getString(object.getColumnIndex(date));
-            item.Status=object.getInt(object.getColumnIndex(status));
-            item.Time=object.getString(object.getColumnIndex(scheduled_start));
-            item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
-            item.Duration=object.getString(object.getColumnIndex(duration));
-            item.Status=object.getInt(object.getColumnIndex(delay_status));
-            item.ImageID=object.getString(object.getColumnIndex(poster_name));
-            item.Description=object.getString(object.getColumnIndex(description));
-            item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
-            item.bookmark=object.getInt(object.getColumnIndex(special));
-            item.Result=object.getString(object.getColumnIndex(result));
-            item.Rules=object.getString(object.getColumnIndex(rules));
-            item.TimeStamp=object.getLong(object.getColumnIndex(last_updated));
-            list.add(item);
-        }while(object.moveToNext());
-        return list;
     }
 
     private void setEventContentValues(ContentValues eventValues,eventData event) {
