@@ -67,7 +67,12 @@
         <item>Upcoming</item>
         <item>None</item>
     </string-array>
-
+    <integer-array name="EventStateColors">
+        <item>@color/Live</item>
+        <item>@color/Over</item>
+        <item>@color/Upcoming</item>
+        <item>@color/None</item>
+    </integer-array>
     <string name="title_activity_main">mainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

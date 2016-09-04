@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class eventResult extends AppCompatActivity
 {
 	ArrayList<eventData> datas;
-	int ScrollPosition=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -28,7 +27,7 @@ public class eventResult extends AppCompatActivity
 
 		setTitle("Results");
 
-		for(eventData data:eventDatabase.Database.eventDataList)
+		for(eventData data:eventDatabase.Database.getEventList())
 			if(data.isResultDeclared())
 				datas.add(data);
 

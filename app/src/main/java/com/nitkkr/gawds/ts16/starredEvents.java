@@ -17,7 +17,7 @@ public class starredEvents extends AppCompatActivity
 		setTitle("Starred");
 
 		ArrayList<eventData> eventDatas=new ArrayList<>();
-		for(eventData data:eventDatabase.Database.eventDataList)
+		for(eventData data:eventDatabase.Database.getEventList())
 		{
 			if(data.bookmark == 1)
 				eventDatas.add(data);

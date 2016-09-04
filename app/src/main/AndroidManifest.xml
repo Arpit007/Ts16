@@ -22,8 +22,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity
-            android:name=".mainActivity"
+        <activity android:name=".mainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
