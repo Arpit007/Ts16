@@ -2,6 +2,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,8 +19,10 @@ class MessageDbHelper extends SQLiteOpenHelper {
     private static final String TABLE_MESSAGES="messages";
     private static final String id="id";
     private static final String name="message";
+    Context context;
     public MessageDbHelper(Context context) {
         super(context, name, null, DATABASE_VERSION);
+        this.context=context;
     }
 
     @Override
@@ -42,8 +45,12 @@ class MessageDbHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try
         {
-            int rows=db.update(TABLE_MESSAGES,messageValues,null,null);
-            db.insertOrThrow(TABLE_MESSAGES,name,messageValues);
+            int rows=db.update(TABLE_MESSAGES,messageValues,id+"="+MessageId,null);
+            if(rows<1) {
+                db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
+                Intent messageService=new Intent(this.context,NotificationService.class);
+                context.startService(messageService);
+            }
             db.setTransactionSuccessful();
         }
         catch (Exception e)

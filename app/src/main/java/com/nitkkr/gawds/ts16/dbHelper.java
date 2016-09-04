@@ -211,4 +211,18 @@ public class dbHelper extends SQLiteOpenHelper{
         eventValues.put(dbHelper.result,event.Result);
         eventValues.put(dbHelper.last_updated,event.TimeStamp);
     }
+    public void updateBookmarkStatus(int status,int ids)
+    {
+        SQLiteDatabase db=getReadableDatabase();
+        String query="Update "+TABLE_EVENTS+" set "+special+" = "+status+" where "+id+"="+ids;
+        try {
+            db.execSQL(query);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 }

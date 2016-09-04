@@ -1,5 +1,6 @@
 package com.nitkkr.gawds.ts16;
 
+import android.content.Context;
 import android.util.TimeUtils;
 
 import java.sql.Time;
@@ -38,9 +39,10 @@ public class eventData
 		return (bookmark==1)? true:false;
 	}
 
-	void updateBookmark(boolean bookmarked)
+	void updateBookmark(boolean bookmarked, Context c)
 	{
 		bookmark=(bookmarked)?1:0;
+		new dbHelper(c).updateBookmarkStatus(bookmark,this.eventID);
 		UpdateEvent();
 	}
 
