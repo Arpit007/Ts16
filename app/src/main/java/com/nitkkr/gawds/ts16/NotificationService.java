@@ -61,9 +61,6 @@ public class NotificationService extends Service {
                             notification.notify("UpcomingEventNotification",100,builder.build());
                         }
                     }
-                    Thread.sleep(120000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -78,6 +75,7 @@ public class NotificationService extends Service {
         messageNotification.start();
         upcomingNotification.start();
 
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY;
     }
+
 }
