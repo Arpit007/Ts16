@@ -26,8 +26,10 @@ public class MessageLoaderService extends Service {
         final MessageDbHelper messageDbHelper=new MessageDbHelper(this);
 
         try {
-            JSONObject jsonObject=new JSONObject(getString(R.string.ServerMessagePage));
-            JSONArray messages=jsonObject.getJSONArray(getString(R.string.ServerMessageTable));
+            httpRequest rh=new httpRequest();
+            String MessageJson=rh.SendGetRequest("http://www.xyz.com/ts16/messages.php");
+            JSONObject jsonObject=new JSONObject(MessageJson);
+            JSONArray messages=jsonObject.getJSONArray("messages");
             int length=messages.length();
             for(int i=0;i<length;i++)
             {

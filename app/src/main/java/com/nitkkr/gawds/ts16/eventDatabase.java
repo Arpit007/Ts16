@@ -27,4 +27,9 @@ public class eventDatabase
 		return this;
 	}
 
+
+	public final ArrayList<eventData> getEventList()
+	{
+		return eventDataList;
+	}
 }

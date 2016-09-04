@@ -18,7 +18,7 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 		eventRuleTab tab = new eventRuleTab();
 		tab.EventID=bundle.getInt(tab.getString(R.string.EventID));
 		tab.data = eventDatabase.Database.getEventData(tab.EventID);
-		eventDatabase.Database.eventDataList.get(tab.EventID).addEventDataListener(tab);
+		eventDatabase.Database.getEventData(tab.EventID).addEventDataListener(tab);
 		return tab;
 	}
 
@@ -52,13 +52,13 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	public void onDestroy()
 	{
 		super.onDestroy();
-		eventDatabase.Database.eventDataList.get(EventID).removeDataListener(this);
+		eventDatabase.Database.getEventData(EventID).removeDataListener(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		eventDatabase.Database.eventDataList.get(EventID).removeDataListener(this);
+		eventDatabase.Database.getEventData(EventID).removeDataListener(this);
 	}
 }

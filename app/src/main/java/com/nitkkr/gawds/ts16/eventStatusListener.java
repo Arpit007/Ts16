@@ -29,7 +29,7 @@ public class eventStatusListener implements TextWatcher
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count)
 	{
-		String[] array=context.getResources().getStringArray(R.array.EventStatus);
+		String[] array=context.getResources().getStringArray(R.array.EventStateColors);
 		int color=0;
 		int[] colorArray=context.getResources().getIntArray(R.array.EventStateColors);
 		if(s.equals(array[0]))

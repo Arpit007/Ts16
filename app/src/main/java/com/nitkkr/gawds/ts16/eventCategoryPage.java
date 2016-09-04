@@ -115,12 +115,10 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 		return 0;
 	}
 	public class ViewHolder extends RecyclerView.ViewHolder{
-		ImageView CategoryImage;
 		TextView CategoryName;
 		LinearLayout CategoryRecyclerItem;
 		public ViewHolder(View itemView) {
 			super(itemView);
-			CategoryImage=(ImageView) itemView.findViewById(R.id.category_image);
 			CategoryName=(TextView) itemView.findViewById(R.id.category_name);
 			CategoryRecyclerItem=(LinearLayout) itemView.findViewById(R.id.category_recycler);
 		}

@@ -4,10 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <integer-array name="EventStateColors">
-        <item>#00ff00</item>
-        <item>#ff0000</item>
-        <item>#828c0c</item>
-        <item>#00ffffff</item>
-    </integer-array>
+
+    <color name="Live">#00ff00</color>
+    <color name="Over">#ff0000</color>
+    <color name="Upcoming">#828c0c</color>
+    <color name="None">#00ffffff</color>
 </resources>

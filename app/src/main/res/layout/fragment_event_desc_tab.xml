@@ -3,21 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventDescTab">
-<ScrollView
-    android:layout_width="match_parent" android:layout_height="wrap_content">
     <RelativeLayout
-    android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView
-        android:textSize="20sp" android:id="@+id/eventDescriptionDuration"
-        android:text="Duration" android:drawableLeft="@drawable/time_icon" android:drawablePadding="5dp"
-        android:layout_alignParentRight="true" android:layout_alignParentTop="true"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/eventDescriptionText"
-            android:layout_below="@id/eventDescriptionDuration" android:textAlignment="gravity"
-            android:gravity="left" android:textSize="20sp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-</RelativeLayout>
-</ScrollView>
-
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="20sp" android:id="@+id/eventDescriptionDuration"
+                  android:text="Duration" android:drawableLeft="@drawable/time_icon" android:drawablePadding="5dp"
+                  android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <ScrollView android:layout_below="@id/eventDescriptionDuration"
+                    android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:id="@+id/eventDescriptionText" android:textAlignment="gravity"
+                      android:gravity="left" android:textSize="20sp"
+                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        </ScrollView>
+    </RelativeLayout>
 </FrameLayout>

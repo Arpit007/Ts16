@@ -35,8 +35,8 @@ public class NotificationService extends Service {
             @Override
             public void run() {
                 try {
-                    dbHelper helper=new dbHelper(getBaseContext());
-                    ArrayList<eventData> list=helper.GetUpcominEvents();
+
+                    ArrayList<eventData> list=dbHelper.DbHelper.GetUpcominEvents();
                     int length=list.size();
                     for(int i=0;i<length;i++)
                     {
