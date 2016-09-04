@@ -7,7 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by SAHIL SINGLA on 01-09-2016.
@@ -136,7 +140,33 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         return list;
     }
+    public ArrayList<eventData> GetUpcominEvents()
+    {
+        ArrayList<eventData> all=this.ReadDatabaseEvents(0);
+        ArrayList<eventData> upcoming=new ArrayList<>();
+        int length=all.size();
+        for(int i=0;i<length;i++)
+        {
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Calendar calendar=Calendar.getInstance();
 
+            eventData item=all.get(i);
+            try {
+                Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
+                Long eventTimeStamp=(eventDate.getTime())/1000;
+                Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
+                if(eventTimeStamp<=currentTimeStamp+10800)
+                {
+                    upcoming.add(item);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return upcoming;
+
+    }
     private ArrayList<eventData> LoadEvents(Cursor object,ArrayList<eventData> list) {
         do{
             eventData item=new eventData();

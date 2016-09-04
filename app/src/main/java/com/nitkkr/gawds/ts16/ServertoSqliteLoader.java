@@ -33,43 +33,51 @@ public class ServertoSqliteLoader extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        httpRequest rh=new httpRequest();
-        String EventJsonString;
-        EventJsonString=rh.SendGetRequest(getString(R.string.EventsByCategory));
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                httpRequest rh=new httpRequest();
+                String EventJsonString;
+                EventJsonString=rh.SendGetRequest(getString(R.string.EventsByCategory));
 
-        try {
+                try {
 
-            JSONObject EventsObject = new JSONObject(EventJsonString);
-            JSONArray EventsArray = EventsObject.getJSONArray(getString(R.string.EventsJSONArray));
-            int length=EventsArray.length();
-            dbHelper helper=new dbHelper(getBaseContext());
-            for(int i=0;i<length;i++)
-            {
-                JSONObject object=EventsArray.getJSONObject(i);
-                eventData item=new eventData();
-                item.eventID=object.getInt(id);
-                item.eventName=object.getString(name);
-                item.Category=object.getInt(category);
-                item.Venue=object.getString(venue);
-                item.Day=object.getString(date);
-                item.Status=object.getInt(status);
-                item.Time=object.getString(scheduled_start);
-                item.EndTime=object.getString(scheduled_end);
-                item.Duration=object.getString(duration);
-                item.Status=object.getInt(delay_status);
-                item.ImageID=object.getString(poster_name);
-                item.Description=object.getString(description);
-                item.EventCoordinators=object.getString(event_coordinator);
-                item.bookmark=object.getInt(special);
-                item.Result=object.getString(result);
-                item.Rules=object.getString(rules);
-                item.TimeStamp=object.getLong(last_updated);
-                helper.addEvent(item);
+                    JSONObject EventsObject = new JSONObject(EventJsonString);
+                    JSONArray EventsArray = EventsObject.getJSONArray(getString(R.string.EventsJSONArray));
+                    int length=EventsArray.length();
+                    dbHelper helper=new dbHelper(getBaseContext());
+                    for(int i=0;i<length;i++)
+                    {
+                        JSONObject object=EventsArray.getJSONObject(i);
+                        eventData item=new eventData();
+                        item.eventID=object.getInt(id);
+                        item.eventName=object.getString(name);
+                        item.Category=object.getInt(category);
+                        item.Venue=object.getString(venue);
+                        item.Day=object.getString(date);
+                        item.Status=object.getInt(status);
+                        item.Time=object.getString(scheduled_start);
+                        item.EndTime=object.getString(scheduled_end);
+                        item.Duration=object.getString(duration);
+                        item.Status=object.getInt(delay_status);
+                        item.ImageID=object.getString(poster_name);
+                        item.Description=object.getString(description);
+                        item.EventCoordinators=object.getString(event_coordinator);
+                        item.bookmark=object.getInt(special);
+                        item.Result=object.getString(result);
+                        item.Rules=object.getString(rules);
+                        item.TimeStamp=object.getLong(last_updated);
+                        helper.addEvent(item);
+                    }
+                    Thread.sleep(10000);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        });
+        thread.start();
         return Service.START_STICKY;
     }
 
