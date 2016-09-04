@@ -1,6 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -63,21 +65,9 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			bar.setDisplayHomeAsUpEnabled(true);
 
 		eventDatabase.Database.getEventData(EventId).addEventDataListener(this);
-
-		Populate();
+	eventUpdated(eventDatabase.Database.getEventData(EventId));
 	}
 
-	private void Populate()
-	{
-		eventData data=eventDatabase.Database.getEventData(EventId);
-		(( ImageView)findViewById(R.id.eventDetailImage)).setImageResource(data.eventID);
-		((TextView)findViewById(R.id.eventDetailName)).setText(data.eventName);
-		((TextView)findViewById(R.id.eventDetailStatus)).setText(data.Status);
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(((data.bookmark==1)?true:false));
-		((TextView)findViewById(R.id.eventDetailLocation)).setText(data.Venue);
-		((TextView)findViewById(R.id.eventDetailDate)).setText(data.Day);
-		((TextView)findViewById(R.id.eventDetailTime)).setText(data.Time);
-	}
 
 	@Override
 	protected void onStop()
@@ -89,7 +79,27 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 	@Override
 	public void eventUpdated(eventData event)
 	{
-		Populate();
+		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(event.eventID);
+		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
+		((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
+		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
+		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
+		((TextView)findViewById(R.id.eventDetailDate)).setText(event.Day);
+		((TextView)findViewById(R.id.eventDetailTime)).setText(event.Time);
+		((CheckBox)findViewById(R.id.eventDetailNotify)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		{
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				eventDatabase.Database.getEventData(EventId).updateBookmark(isChecked);
+			}
+		});
+		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener(((TextView)findViewById(R.id.eventDetailStatus)),this));
+		int ImageId=event.getImageResourceID();
+		if(ImageId!=-1)
+			((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
+		else
+			((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
 	}
 
 	public static class PagerAdapter extends FragmentStatePagerAdapter

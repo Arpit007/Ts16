@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public class CategoryLoaderService extends Service{
     private static final String id="id";
     private static final String name="name";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         httpRequest rh=new httpRequest();

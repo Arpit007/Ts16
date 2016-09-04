@@ -29,6 +29,7 @@
 
     <string name="EventsJSONArray">events</string>
     <string name="EventsByCategory">http://127.0.0.1/ts16/events.php?category=</string>
+
     <string-array name="sponsorLabelList">
         <item>Microsoft</item>
         <item>Google</item>
@@ -59,6 +60,14 @@
         <item>@drawable/location_icon</item>
         <item>@drawable/news_icon</item>
     </integer-array>
+
+    <string-array name="EventStatus">
+        <item>Live</item>
+        <item>Over</item>
+        <item>Upcoming</item>
+        <item>None</item>
+    </string-array>
+
     <string name="title_activity_main">mainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
