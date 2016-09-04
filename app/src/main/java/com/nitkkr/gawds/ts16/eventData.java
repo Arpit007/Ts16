@@ -25,6 +25,8 @@ public class eventData
 	public String Contact;
 	public String ImageID;
 	public long TimeStamp;
+	public Boolean notificationGenerated;
+
 
 	boolean isResultDeclared()
 	{
@@ -41,6 +43,7 @@ public class eventData
 	public eventData()
 	{
 		eventListenerList=new ArrayList<>();
+		this.notificationGenerated = false;
 	}
 
 	public void addEventDataListener(eventDataListener dataListener)
