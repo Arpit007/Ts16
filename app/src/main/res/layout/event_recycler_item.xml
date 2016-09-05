@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:textSize="35sp"
-           android:layout_weight="20"
+        android:layout_weight="20"
         android:id="@+id/event_name"
         android:gravity="center_vertical"/>
        <CheckBox
@@ -23,7 +23,7 @@
            android:layout_height="40dp"
            android:layout_weight="80"
            android:src="@drawable/notify_icon"
-           android:id="@+id/recycler_bookmark_image"
+           android:id="@+id/starrred"
            />
    </LinearLayout>
     <LinearLayout

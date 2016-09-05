@@ -24,6 +24,7 @@
     <string name="EventID">EventID</string>
     <string name="TabID">TabID</string>
     <string name="NoResult">No Result Yet!</string>
+    <string name="NoStar">No Events Starred!</string>
     <string name="hello_blank_fragment">Temporary String</string>
     <string name="Categories">http://127.0.0.1/categories.php</string>
     <string name="EventsJSONArray">events</string>
