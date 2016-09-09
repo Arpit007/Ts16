@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +20,7 @@ public class CategoryLoaderService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         httpRequest rh=new httpRequest();
         String CategoryJson=rh.SendGetRequest(getString(R.string.Categories));
+        Log.d("CategoryJson",CategoryJson);
         try {
             JSONObject CategoriesJson = new JSONObject(CategoryJson);
             JSONArray CategoryArray = CategoriesJson.getJSONArray("cats");

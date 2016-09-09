@@ -25,7 +25,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
     private static final String name="message";
     Context context;
     public MessageDbHelper(Context context) {
-        super(context, name, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
     }
 
@@ -34,6 +34,8 @@ class MessageDbHelper extends SQLiteOpenHelper {
         String query="Create table "+TABLE_MESSAGES+" (" + id
                 +" INTEGER PRIMARY KEY,"+name
                 +" TEXT;";
+
+        sqLiteDatabase.execSQL(query);
     }
 
     @Override
@@ -91,6 +93,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
             if(categoryCursor.moveToFirst())
             {
                 list.add(categoryCursor.getString(categoryCursor.getColumnIndex(name)));
+                Log.d("Mesage ",categoryCursor.getString(categoryCursor.getColumnIndex(name)));
             }
         }
         catch (Exception e)

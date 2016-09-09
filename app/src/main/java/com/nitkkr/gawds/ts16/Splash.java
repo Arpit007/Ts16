@@ -4,8 +4,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.hardware.display.DisplayManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,6 +19,10 @@ public class Splash extends AppCompatActivity
 		{
 			this.getSupportActionBar().hide();
 		}
+		startService(new Intent(this,MessageLoaderService.class));
+		startService(new Intent(this,NotificationService.class));
+		startService(new Intent(this,ServertoSqliteLoader.class));
+		startService(new Intent(this,CategoryLoaderService.class));
 	}
 
 	@Override

@@ -19,6 +19,8 @@ public class newsListFragment extends Fragment
 	                         Bundle savedInstanceState)
 	{
 		// Inflate the layout for this fragment
+		MessageDbHelper helper=new MessageDbHelper(getContext());
+		helper.ReadDatabaseMessage();
 		return inflater.inflate(R.layout.fragment_news_list, container, false);
 	}
 

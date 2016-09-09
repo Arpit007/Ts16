@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class ServertoSqliteLoader extends Service {
                 httpRequest rh=new httpRequest();
                 String EventJsonString;
                 EventJsonString=rh.SendGetRequest(getString(R.string.EventsByCategory));
-
+                Log.d("EventJSon ", EventJsonString );
                 try {
 
                     JSONObject EventsObject = new JSONObject(EventJsonString);

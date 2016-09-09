@@ -26,7 +26,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query="Create table "+TABLE_CATEGORIES+" (" + id
                 +" INTEGER PRIMARY KEY,"+name
-                +" TEXT;";
+                +" TEXT);";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -88,13 +88,15 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
                 query="Select * from "+TABLE_CATEGORIES+";";
 
             Cursor categoryCursor=db.rawQuery(query,null);
-            if(categoryCursor.moveToFirst())
+            categoryCursor.moveToFirst();
+            do
             {
                 EventCategory item=new EventCategory();
                 item.id=(categoryCursor.getInt(categoryCursor.getColumnIndex(id)));
                 item.category=(categoryCursor.getString(categoryCursor.getColumnIndex(name)));
+                Log.d("categoryfdb",item.category);
                 list.add(item);
-            }
+            }while(categoryCursor.moveToNext());
         }
         catch (Exception e)
         {

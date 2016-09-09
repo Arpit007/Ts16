@@ -141,7 +141,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 			EventName=(TextView) itemView.findViewById(R.id.event_name);
 			Day=(TextView) itemView.findViewById(R.id.recycler_event_date);
 			Time=(TextView)itemView.findViewById(R.id.recycler_event_time);
-			Bookmark=(CheckBox) itemView.findViewById(R.id.recycler_bookmark_image);
+			Bookmark=(CheckBox) itemView.findViewById(R.id.starrred);
 			ID=(TextView) itemView.findViewById(R.id.recycler_event_id);
 		}
 	}
