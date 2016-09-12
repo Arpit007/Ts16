@@ -100,8 +100,10 @@ public class sponsors extends AppCompatActivity
 			}
 			((ImageView)convertView.findViewById(R.id.sponsorItemImage)).setImageResource(sponsorList.get(position).imageId);
 			(( TextView)convertView.findViewById(R.id.sponsorItemLabel)).setText(sponsorList.get(position).label);
-			convertView.setMinimumWidth(getWindowManager().getDefaultDisplay().getWidth()/2);
-			convertView.setMinimumHeight(getWindowManager().getDefaultDisplay().getWidth()/2);
+
+			convertView.setMinimumWidth(parent.getWidth()/2);
+			convertView.setMinimumHeight(parent.getWidth()/2);
+
 			return convertView;
 		}
 

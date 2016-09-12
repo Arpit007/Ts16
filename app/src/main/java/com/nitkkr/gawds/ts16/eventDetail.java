@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
 	private int EventId, TabID;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -65,7 +66,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			bar.setDisplayHomeAsUpEnabled(true);
 
 		eventDatabase.Database.getEventData(EventId).addEventDataListener(this);
-	eventUpdated(eventDatabase.Database.getEventData(EventId));
+		eventUpdated(eventDatabase.Database.getEventData(EventId));
 	}
 
 
