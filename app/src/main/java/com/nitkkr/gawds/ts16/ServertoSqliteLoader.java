@@ -1,13 +1,25 @@
 package com.nitkkr.gawds.ts16;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by SAHIL SINGLA on 01-09-2016.
@@ -36,18 +48,20 @@ public class ServertoSqliteLoader extends Service {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
+                //event
                 httpRequest rh=new httpRequest();
                 String EventJsonString;
-                EventJsonString=rh.SendGetRequest(getString(R.string.EventsByCategory));
-
+                EventJsonString=rh.SendGetRequest("http://192.168.43.210/TS/events.php?category=0");
+                Log.d("EventJSon ", EventJsonString );
                 try {
 
                     JSONObject EventsObject = new JSONObject(EventJsonString);
                     JSONArray EventsArray = EventsObject.getJSONArray(getString(R.string.EventsJSONArray));
                     int length=EventsArray.length();
-                    dbHelper helper=new dbHelper(getBaseContext());
+
                     for(int i=0;i<length;i++)
                     {
+                        dbHelper helper=new dbHelper(getBaseContext());
                         JSONObject object=EventsArray.getJSONObject(i);
                         eventData item=new eventData();
                         item.eventID=object.getInt(id);
@@ -66,15 +80,74 @@ public class ServertoSqliteLoader extends Service {
                         item.bookmark=object.getInt(special);
                         item.Result=object.getString(result);
                         item.Rules=object.getString(rules);
-                        item.TimeStamp=object.getLong(last_updated);
-                        helper.addEvent(item);
+                        item.TimeStamp=object.getString(last_updated);
+                        helper.addEvent(helper.getWritableDatabase(),item);
+                        helper.close();
                     }
-                    Thread.sleep(10000);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    // Category
+                    String CategoryJson=rh.SendGetRequest(getString(R.string.Categories));
+                    Log.d("CategoryJson",CategoryJson);
+                    JSONObject CategoriesJson = new JSONObject(CategoryJson);
+                    JSONArray CategoryArray = CategoriesJson.getJSONArray("cats");
+                    int length2=CategoryArray.length();
+                    for (int i=0;i<length2;i++)
+                    {
+                        CategoriesDbHelper categoriesDbHelper=new CategoriesDbHelper(getBaseContext());
+                        JSONObject object=CategoryArray.getJSONObject(i);
+                        EventCategory category=new EventCategory();
+                        category.id=object.getInt(id);
+                        category.category=object.getString(name);
+                        categoriesDbHelper.addCategory(categoriesDbHelper.getWritableDatabase(),category);
+                        categoriesDbHelper.close();
+                    }
+                    // Notification
+                    final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    final Calendar calendar=Calendar.getInstance();
+                    dbHelper NotificationDbHelper=new dbHelper(getBaseContext());
+                    ArrayList<eventData> list=NotificationDbHelper.GetUpcominEvents();
+                    int length3=list.size();
+                    for(int i=0;i<length3;i++)
+                    {
+                        eventData item=list.get(i);
+                        Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
+                        Long eventTimeStamp=(eventDate.getTime())/1000;
+                        Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
+                        if(item.bookmark==1 && item.notificationGenerated==false && currentTimeStamp+1800<=eventTimeStamp)
+                        {
+                            item.notificationGenerated=true;
+                            NotificationCompat.Builder builder=new NotificationCompat.Builder(getBaseContext());
+                            builder.setContentTitle(item.eventName+" Beginning Soon");
+                            builder.setContentText(item.eventName+" is beginning in about 30 minutes from now.\n"+item.Venue);
+                            builder.setTicker(item.eventName+" is beginning in about 30 minutes from now.\n"+item.Venue);
+                            Intent resultIntent=new Intent(getBaseContext(),eventDetail.class);
+                            TaskStackBuilder stackBuilder=TaskStackBuilder.create(getBaseContext());
+                            stackBuilder.addParentStack(eventDetail.class);
+                            stackBuilder.addNextIntent(resultIntent);
+                            PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                            builder.setContentIntent(pendingIntent);
+                            NotificationManager notification=(NotificationManager )getSystemService(Context.NOTIFICATION_SERVICE);
+                            notification.notify("UpcomingEventNotification",100,builder.build());
+                        }
+                    }
+                    NotificationDbHelper.close();
+                    //messages
+                    MessageDbHelper MessageHelper= new MessageDbHelper(getBaseContext());
+                    String MessageJson=rh.SendGetRequest("http://192.168.43.210/TS/messages.php");
+                    JSONObject jsonObject=new JSONObject(MessageJson);
+                    Log.d("MESSAGEJSON ", MessageJson);
+                    JSONArray messages=jsonObject.getJSONArray("messages");
+                    int length4=messages.length();
+                    for(int i=0;i<length4;i++)
+                    {
+                        JSONObject object=messages.getJSONObject(i);
+                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"));
+                    }
+                    MessageHelper.close();
                 }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             }
         });
         thread.start();
@@ -85,5 +158,10 @@ public class ServertoSqliteLoader extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

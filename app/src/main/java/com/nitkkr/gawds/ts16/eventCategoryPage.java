@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,13 @@ public class eventCategoryPage extends AppCompatActivity
 {
 	RecyclerView EventsRecyclerView;
 	CategoryAdapter categoryAdapter;
-
+	Context c;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_category_page);
-
+		c=this;
 		EventsRecyclerView =(RecyclerView) findViewById(R.id.category_recycler);
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		CategoryJSON();
@@ -40,8 +41,7 @@ public class eventCategoryPage extends AppCompatActivity
 			ProgressDialog dialog;
 			@Override
 			protected void onPreExecute() {
-				dialog= new ProgressDialog(getBaseContext()); // this = YourActivity
-				dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				dialog= new ProgressDialog(c); // this = YourActivity
 				dialog.setMessage("Loading, Please wait...");
 				dialog.setIndeterminate(true);
 				dialog.setCanceledOnTouchOutside(false);
@@ -63,8 +63,9 @@ public class eventCategoryPage extends AppCompatActivity
 
 			private void loadArrays()  {
 				CategoriesDbHelper helper=new CategoriesDbHelper(getBaseContext());
-				ArrayList<EventCategory> list=helper.ReadDatabaseCategory();
-				categoryAdapter=new CategoryAdapter(getBaseContext(),list);
+				ArrayList<EventCategory> list=helper.ReadDatabaseCategory(helper.getWritableDatabase());
+				helper.close();
+				categoryAdapter=new CategoryAdapter(c,list);
 				EventsRecyclerView.setAdapter(categoryAdapter);
 			}
 
@@ -98,6 +99,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 	@Override
 	public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
 		final EventCategory thisCategory=categories.get(position);
+		Log.d("Category",thisCategory.category );
 		holder.CategoryName.setText(thisCategory.category);
 //        Glide.with(context).load(context.getString(R.string.CategoryImagePath)+thisCategory.getImage()).crossFade().placeholder(R.drawable.ic_menu_gallery).into(holder.CategoryImage);
 		holder.CategoryRecyclerItem.setOnClickListener(new View.OnClickListener() {

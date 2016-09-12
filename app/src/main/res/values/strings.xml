@@ -26,9 +26,9 @@
     <string name="NoResult">No Result Yet!</string>
     <string name="NoStar">No Events Starred!</string>
     <string name="hello_blank_fragment">Temporary String</string>
-    <string name="Categories">http://127.0.0.1/categories.php</string>
+    <string name="Categories">http://192.168.43.210/TS/categories.php</string>
     <string name="EventsJSONArray">events</string>
-    <string name="EventsByCategory">http://127.0.0.1/ts16/events.php?category=</string>
+    <string name="EventsByCategory">http://192.168.43.210/TS/events.php?category=0</string>
 
     <string-array name="sponsorLabelList">
         <item>Microsoft</item>
