@@ -24,7 +24,7 @@ public class eventData
 	public String Result;
 	public String Contact;
 	public String ImageID;
-	public long TimeStamp;
+	public String TimeStamp;
 	public Boolean notificationGenerated;
 	boolean isResultDeclared()
 	{
@@ -90,7 +90,6 @@ public class eventData
 		Result=data.Result;
 		Contact=data.Contact;
 		ImageID=data.ImageID;
-		TimeStamp=data.TimeStamp;
 		TimeStamp=data.TimeStamp;
 		UpdateEvent();
 	}

@@ -24,7 +24,7 @@ import java.util.Date;
     public class dbHelper extends SQLiteOpenHelper{
 
     public static dbHelper DbHelper;
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_EVENTS="events";
     private static final String id="id";
@@ -71,7 +71,7 @@ Context context;
                 +" INTEGER,"+rules
                 +" TEXT,"+result
                 +" TEXT,"+last_updated
-                +" INTEGER);";
+                +" TEXT);";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -80,61 +80,69 @@ Context context;
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_EVENTS);
         onCreate(sqLiteDatabase);
     }
-    public void addEvent(eventData Event)
+    public void addEvent(SQLiteDatabase sqLiteDatabase,eventData Event)
     {
-        SQLiteDatabase db=getWritableDatabase();
-        db.beginTransaction();
         try{
-            addorUpdateEvent(Event);
+            addorUpdateEvent(sqLiteDatabase,Event);
         }
         catch (Exception e)
         {
             Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
             e.printStackTrace();
         }
-        finally {
-            db.endTransaction();
-        }
     }
 
-    private void addorUpdateEvent(eventData event) {
-        SQLiteDatabase db = getWritableDatabase();
+    private void addorUpdateEvent(SQLiteDatabase db,eventData event) {
         db.beginTransaction();
         try {
             ContentValues eventValues = new ContentValues();
-            setEventContentValues(eventValues, event);
-            try {
-                String query="Select "+result+" from "+TABLE_EVENTS+" where id="+event.eventID;
-                Cursor c=db.rawQuery(query,null);
+            eventValues=setEventContentValues(eventValues, event);
+            String query="Select * from "+TABLE_EVENTS+" where "+id+"="+event.eventID+";";
+            Cursor c=db.rawQuery(query,null);
+            int count=c.getCount();
+            if(count!=0)
+            {
                 c.moveToFirst();
-                String DatabaseResultValue=c.getString(c.getColumnIndex(result));
-                if((event.Result.compareToIgnoreCase(DatabaseResultValue))!=0)
+                if(((c.getString(c.getColumnIndex(venue))).compareToIgnoreCase(event.Venue)!=0 ||
+                        (c.getString(c.getColumnIndex(scheduled_start))).compareToIgnoreCase(event.Time)!=0)
+                        && (c.getInt(c.getColumnIndex(special))==1))
                 {
-                    NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
-                    builder.setContentTitle("Results for "+event.eventName+" declared");
-//                builder.setSmallIcon()
-                    Intent i=new Intent(context,eventDetail.class);
-                    i.putExtra(context.getString(R.string.TabID),2);
-                    i.putExtra(context.getString(R.string.EventID),event.eventID);
-                    TaskStackBuilder stackBuilder=TaskStackBuilder.create(context);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                    builder.setContentTitle(event.eventName);
+                    builder.setContentText(event.eventName+" has been updated! Check Here.");
+                    Intent i = new Intent(context, eventDetail.class);
+                    i.putExtra(context.getString(R.string.TabID), 2);
+                    i.putExtra(context.getString(R.string.EventID), event.eventID);
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                     stackBuilder.addParentStack(eventDetail.class);
                     stackBuilder.addNextIntent(i);
-                    PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
-                    NotificationManager notification=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notification.notify("ResultNotification",140,builder.build());
+                    NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    notification.notify("ResultNotification", 140, builder.build());
                 }
-            } catch (Exception e) {
-                    e.printStackTrace();
-            } finally {
-
-
-                int affectedRows = db.update(TABLE_EVENTS, eventValues, id + " = " + event.eventID, null);
-                if (affectedRows == 0) {
-                    db.insertOrThrow(TABLE_EVENTS, null, eventValues);
-                    db.setTransactionSuccessful();
+                if((c.getString(c.getColumnIndex(result))).compareToIgnoreCase(event.Result)!=0)
+                {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                        builder.setContentTitle("Results for " + event.eventName + " declared");
+                        Intent i = new Intent(context, eventDetail.class);
+                        i.putExtra(context.getString(R.string.TabID), 2);
+                        i.putExtra(context.getString(R.string.EventID), event.eventID);
+                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                        stackBuilder.addParentStack(eventDetail.class);
+                        stackBuilder.addNextIntent(i);
+                        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                        builder.setContentIntent(pendingIntent);
+                        NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        notification.notify("ResultNotification", 140, builder.build());
                 }
+                db.update(TABLE_EVENTS,eventValues,"id = "+event.eventID,null);
             }
+            else
+            {
+                db.insertOrThrow(TABLE_EVENTS,null,eventValues);
+            }
+            c.close();
         } catch (Exception e) {
             Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
             e.printStackTrace();
@@ -154,12 +162,12 @@ Context context;
             query="Select * from "+TABLE_EVENTS+" where category = "+category+";";
             else
             query="Select * from "+TABLE_EVENTS+";";
-
             Cursor eventCursor=db.rawQuery(query,null);
             if(eventCursor.moveToFirst())
             {
                 list=LoadEvents(eventCursor,list);
             }
+            eventCursor.close();
         }
         catch (Exception e)
         {
@@ -167,6 +175,7 @@ Context context;
         }
         finally {
             db.endTransaction();
+            db.close();
         }
         return list;
     }
@@ -190,7 +199,7 @@ Context context;
             item.bookmark=object.getInt(object.getColumnIndex(special));
             item.Result=object.getString(object.getColumnIndex(result));
             item.Rules=object.getString(object.getColumnIndex(rules));
-            item.TimeStamp=object.getLong(object.getColumnIndex(last_updated));
+            item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
             list.add(item);
         }while(object.moveToNext());
         return list;
@@ -222,7 +231,7 @@ Context context;
 
     }
 
-    private void setEventContentValues(ContentValues eventValues,eventData event) {
+    private ContentValues setEventContentValues(ContentValues eventValues,eventData event) {
         eventValues.put(dbHelper.id,event.eventID);
         eventValues.put(dbHelper.name,event.eventName);
         eventValues.put(dbHelper.category,event.Category);
@@ -240,6 +249,7 @@ Context context;
         eventValues.put(dbHelper.rules,event.Rules);
         eventValues.put(dbHelper.result,event.Result);
         eventValues.put(dbHelper.last_updated,event.TimeStamp);
+        return eventValues;
     }
 
     public void updateBookmarkStatus(int status,int ids)
@@ -253,7 +263,7 @@ Context context;
         {
             e.printStackTrace();
         }
-
+        db.close();
     }
 
 }

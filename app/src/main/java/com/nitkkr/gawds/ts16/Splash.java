@@ -19,11 +19,20 @@ public class Splash extends AppCompatActivity
 		{
 			this.getSupportActionBar().hide();
 		}
-		startService(new Intent(this,MessageLoaderService.class));
-		startService(new Intent(this,NotificationService.class));
+		try {
+			MessageDbHelper helper = new MessageDbHelper(this);
+			helper.onCreate(helper.getWritableDatabase());
+			CategoriesDbHelper helper2 = new CategoriesDbHelper(this);
+			helper2.onCreate(helper2.getWritableDatabase());
+			dbHelper helper1 = new dbHelper(this);
+			helper1.onCreate(helper1.getWritableDatabase());;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		startService(new Intent(this,ServertoSqliteLoader.class));
-		startService(new Intent(this,CategoryLoaderService.class));
-	}
+		}
 
 	@Override
 	protected void onPostCreate(@Nullable Bundle savedInstanceState)

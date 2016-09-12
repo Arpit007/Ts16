@@ -63,7 +63,8 @@ public class eventCategoryPage extends AppCompatActivity
 
 			private void loadArrays()  {
 				CategoriesDbHelper helper=new CategoriesDbHelper(getBaseContext());
-				ArrayList<EventCategory> list=helper.ReadDatabaseCategory();
+				ArrayList<EventCategory> list=helper.ReadDatabaseCategory(helper.getWritableDatabase());
+				helper.close();
 				categoryAdapter=new CategoryAdapter(c,list);
 				EventsRecyclerView.setAdapter(categoryAdapter);
 			}

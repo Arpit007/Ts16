@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by SAHIL SINGLA on 01-09-2016.
  */
 public class CategoriesDbHelper  extends SQLiteOpenHelper{
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_CATEGORIES="categories";
     private static final String id="id";
@@ -35,27 +35,21 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_CATEGORIES);
     }
 
-    public void addCategory(EventCategory Category)
+    public void addCategory(SQLiteDatabase db,EventCategory Category)
     {
-        SQLiteDatabase db=getWritableDatabase();
-        db.beginTransaction();
         try{
-            addorUpdateCategory(Category);
+            addorUpdateCategory(db,Category);
         }
         catch (Exception e)
         {
             Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
             e.printStackTrace();
         }
-        finally {
-            db.endTransaction();
-        }
+
     }
 
-    private void addorUpdateCategory(EventCategory category) {
+    private void addorUpdateCategory(SQLiteDatabase db,EventCategory category) {
 
-        SQLiteDatabase db=getWritableDatabase();
-        db.beginTransaction();
         try{
             ContentValues categoryValues=new ContentValues();
             categoryValues.put(id,category.id);
@@ -64,7 +58,6 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
             if(affectedRows!=1)
             {
                 db.insertOrThrow(TABLE_CATEGORIES,null,categoryValues);
-                db.setTransactionSuccessful();
             }
         }
         catch (Exception e)
@@ -72,14 +65,10 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
             Log.d("addorUpdateCategory", "Error while trying to add or update category");
             e.printStackTrace();
         }
-        finally {
-            db.endTransaction();
-        }
     }
-    public ArrayList<EventCategory> ReadDatabaseCategory()
+    public ArrayList<EventCategory> ReadDatabaseCategory(SQLiteDatabase db)
     {
-        SQLiteDatabase db=getReadableDatabase();
-        db.beginTransaction();
+
         ArrayList<EventCategory> list=new ArrayList<>();
         try
         {
@@ -88,22 +77,24 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
                 query="Select * from "+TABLE_CATEGORIES+";";
 
             Cursor categoryCursor=db.rawQuery(query,null);
-            categoryCursor.moveToFirst();
-            do
-            {
-                EventCategory item=new EventCategory();
-                item.id=(categoryCursor.getInt(categoryCursor.getColumnIndex(id)));
-                item.category=(categoryCursor.getString(categoryCursor.getColumnIndex(name)));
-                Log.d("categoryfdb",item.category);
-                list.add(item);
-            }while(categoryCursor.moveToNext());
+            if(categoryCursor.getCount()>0) {
+                categoryCursor.moveToFirst();
+                do {
+                    EventCategory item = new EventCategory();
+                    item.id = (categoryCursor.getInt(categoryCursor.getColumnIndex(id)));
+                    item.category = (categoryCursor.getString(categoryCursor.getColumnIndex(name)));
+                    Log.d("categoryfdb", item.category);
+                    list.add(item);
+                } while (categoryCursor.moveToNext());
+            }
+            categoryCursor.close();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         finally {
-            db.endTransaction();
+
         }
         return list;
     }
