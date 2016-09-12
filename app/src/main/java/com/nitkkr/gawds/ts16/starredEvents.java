@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class starredEvents extends AppCompatActivity
+public class starredEvents extends AppCompatActivity implements eventItemAdapter.bookMarkListener
 {
 
 	ArrayList<eventData> eventDataList;
@@ -23,6 +23,13 @@ public class starredEvents extends AppCompatActivity
 
 		setTitle("Starred");
 
+		bookMarkChanged();
+
+	}
+
+	@Override
+	public void bookMarkChanged()
+	{
 		eventDataList=new ArrayList<>();
 		for(eventData data:eventDatabase.Database.getEventList())
 		{
@@ -39,7 +46,10 @@ public class starredEvents extends AppCompatActivity
 			findViewById(R.id.NoStar).setVisibility(View.INVISIBLE);
 			ListView listView=(ListView)findViewById(R.id.starList);
 
-			listView.setAdapter(new eventItemAdapter(eventDataList, this));
+			eventItemAdapter adapter=new eventItemAdapter(eventDataList, this, true);
+			adapter.setBookmarkListener(this);
+
+			listView.setAdapter(adapter);
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 			{

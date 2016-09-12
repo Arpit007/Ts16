@@ -204,7 +204,8 @@ Context context;
         }while(object.moveToNext());
         return list;
     }
-    public ArrayList<eventData> GetUpcominEvents()
+
+    public ArrayList<eventData> GetUpcomingEvents()
     {
         ArrayList<eventData> all=this.ReadDatabaseEvents(0);
         ArrayList<eventData> upcoming=new ArrayList<>();
@@ -228,7 +229,32 @@ Context context;
 
         }
         return upcoming;
+    }
 
+
+    public ArrayList<eventData> GetOngoingEvents()
+    {
+        ArrayList<eventData> all=this.ReadDatabaseEvents(0);
+        ArrayList<eventData> ongoing=new ArrayList<>();
+        int length=all.size();
+        for(int i=0;i<length;i++)
+        {
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Calendar calendar=Calendar.getInstance();
+            eventData item=all.get(i);
+            try {
+                Date eventDate=simpleDateFormat.parse(item.Day+" "+item.EndTime);
+                Long eventTimeStamp=(eventDate.getTime())/1000;
+                Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
+                if(eventTimeStamp>=currentTimeStamp)
+                {
+                    ongoing.add(item);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return ongoing;
     }
 
     private ContentValues setEventContentValues(ContentValues eventValues,eventData event) {

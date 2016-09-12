@@ -1,10 +1,6 @@
 package com.nitkkr.gawds.ts16;
 
-import android.util.TimeUtils;
-
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class eventData
 {
@@ -26,6 +22,7 @@ public class eventData
 	public String ImageID;
 	public String TimeStamp;
 	public Boolean notificationGenerated;
+
 	boolean isResultDeclared()
 	{
 		return (Result.equals("") || Result==null)? true:false;
