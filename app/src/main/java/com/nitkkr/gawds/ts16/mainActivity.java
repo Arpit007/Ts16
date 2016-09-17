@@ -182,7 +182,6 @@ public class mainActivity extends AppCompatActivity
 				case 1: return new newsListFragment();
 				case 2: return new ongoingFragment();
 				case 3: return new upcomingFragment();
-//				case 4: return new scheduleFragment();
 				default:
 					return null;
 			}
