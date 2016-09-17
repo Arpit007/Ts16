@@ -93,9 +93,17 @@ public class mainActivity extends AppCompatActivity
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		navigationView.setCheckedItem(R.id.nav_home);
+	protected void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		super.onRestoreInstanceState(savedInstanceState);
+		navigateToTab(savedInstanceState.getInt(getString(R.string.TabID)));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putInt(getString(R.string.TabID),((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition());
 	}
 
 	@SuppressWarnings("StatementWithEmptyBody")
