@@ -23,7 +23,7 @@ public class eventItemAdapter extends BaseAdapter
 	public interface bookMarkListener
 	{
 		void bookMarkChanged();
-	};
+	}
 
 	private bookMarkListener listener;
 	private ArrayList<eventData> dataList;

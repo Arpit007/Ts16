@@ -57,8 +57,16 @@
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
         <activity android:name=".eventsListPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.eventCategoryPage"/>
         </activity>
 
+        <activity android:name=".schedule">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.mainActivity"/>
+        </activity>
         <receiver
             android:name=".serviceStartBroadcast"
             android:enabled="true"
@@ -70,8 +78,6 @@
 
         <service android:name=".ServertoSqliteLoader"/>
 
-        <activity android:name=".eventListExperimental">
-        </activity>
     </application>
 
 </manifest>

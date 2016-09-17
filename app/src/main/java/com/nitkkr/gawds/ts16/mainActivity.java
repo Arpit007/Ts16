@@ -42,7 +42,6 @@ public class mainActivity extends AppCompatActivity
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
-		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.schedule_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
@@ -91,9 +90,17 @@ public class mainActivity extends AppCompatActivity
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		navigationView.setCheckedItem(R.id.nav_home);
+	protected void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		super.onRestoreInstanceState(savedInstanceState);
+		navigateToTab(savedInstanceState.getInt(getString(R.string.TabID)));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putInt(getString(R.string.TabID),((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition());
 	}
 
 	@SuppressWarnings("StatementWithEmptyBody")
@@ -114,7 +121,8 @@ public class mainActivity extends AppCompatActivity
 		}
 		else if (id == R.id.nav_schedule)
 		{
-			navigateToTab(4);
+			Intent intent=new Intent(this,schedule.class);
+			startActivity(intent);
 		}
 		else if (id == R.id.nav_starred)
 		{
