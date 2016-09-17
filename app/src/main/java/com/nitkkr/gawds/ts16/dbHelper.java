@@ -24,7 +24,7 @@ import java.util.Date;
     public class dbHelper extends SQLiteOpenHelper{
 
     public static dbHelper DbHelper;
-    private static final int DATABASE_VERSION=2;
+    private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_EVENTS="events";
     private static final String id="id";

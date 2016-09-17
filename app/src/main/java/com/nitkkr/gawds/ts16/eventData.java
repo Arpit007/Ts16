@@ -106,17 +106,5 @@ public class eventData
 		return resID;
 	}
 
-	public boolean isEventOngoing()
-	{
-		//===================================================================
-		return false;
-	}
-
-	public boolean isEventUpcoming()
-	{
-		//===================================================================
-		return false;
-	}
-
 
 }
