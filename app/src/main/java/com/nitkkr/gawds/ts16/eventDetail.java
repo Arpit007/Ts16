@@ -68,8 +68,6 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		eventDatabase.Database.getEventData(EventId).addEventDataListener(this);
 		eventUpdated(eventDatabase.Database.getEventData(EventId));
 	}
-
-
 	@Override
 	protected void onStop()
 	{

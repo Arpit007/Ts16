@@ -21,10 +21,8 @@ public class serviceStartBroadcast extends BroadcastReceiver
 	{
 		if(!ServiceRunning)
 		{
-			context.startService(new Intent(context, MessageLoaderService.class));
-			context.startService(new Intent(context, NotificationService.class));
+
 			context.startService(new Intent(context, ServertoSqliteLoader.class));
-			context.startService(new Intent(context, CategoryLoaderService.class));
 			ServiceRunning = true;
 		}
 	}

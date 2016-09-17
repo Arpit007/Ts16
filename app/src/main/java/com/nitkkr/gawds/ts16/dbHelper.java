@@ -45,7 +45,7 @@ import java.util.Date;
     private static final String result="result";
     private static final String last_updated="last_updated";
 
-Context context;
+    Context context;
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         DbHelper=this;
@@ -54,7 +54,7 @@ Context context;
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query="Create table "+TABLE_EVENTS+" (" + id
+        String query="Create table IF NOT EXISTS "+TABLE_EVENTS+" (" + id
                 +" INTEGER PRIMARY KEY,"+name
                 +" TEXT,"+category
                 +" INTEGER,"+venue
@@ -93,7 +93,6 @@ Context context;
     }
 
     private void addorUpdateEvent(SQLiteDatabase db,eventData event) {
-        db.beginTransaction();
         try {
             ContentValues eventValues = new ContentValues();
             eventValues=setEventContentValues(eventValues, event);
@@ -140,20 +139,24 @@ Context context;
             }
             else
             {
-                db.insertOrThrow(TABLE_EVENTS,null,eventValues);
+                try {
+                    db.insertOrThrow(TABLE_EVENTS, null, eventValues);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
             c.close();
         } catch (Exception e) {
             Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
             e.printStackTrace();
         } finally {
-            db.endTransaction();
         }
     }
-    public ArrayList<eventData> ReadDatabaseEvents(int category)
+    public ArrayList<eventData> ReadDatabaseEvents( SQLiteDatabase db,int category)
     {
-        SQLiteDatabase db=getReadableDatabase();
-        db.beginTransaction();
+
         ArrayList<eventData> list=new ArrayList<>();
         try
         {
@@ -162,52 +165,52 @@ Context context;
             query="Select * from "+TABLE_EVENTS+" where category = "+category+";";
             else
             query="Select * from "+TABLE_EVENTS+";";
-            Cursor eventCursor=db.rawQuery(query,null);
-            if(eventCursor.moveToFirst())
+            Cursor object=db.rawQuery(query,null);
+
+            Log.d("cnt", String.valueOf(object.getCount()));
+
+            Log.d("cnt", "sas,");
+            Log.d("cnt", String.valueOf(object.getCount()));
+            Log.d("cnt", String.valueOf(object.getCount()));
+
+            if(object.getCount()>0)
             {
-                list=LoadEvents(eventCursor,list);
+                object.moveToFirst();
+                do{
+                    eventData item=new eventData();
+                    item.eventID=object.getInt(object.getColumnIndex(id));
+                    item.eventName=object.getString(object.getColumnIndex(name));
+                    item.Category=object.getInt(object.getColumnIndex("category"));
+                    item.Venue=object.getString(object.getColumnIndex(venue));
+                    item.Day=object.getString(object.getColumnIndex(date));
+                    item.Status=object.getInt(object.getColumnIndex(status));
+                    item.Time=object.getString(object.getColumnIndex(scheduled_start));
+                    item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
+                    item.Duration=object.getString(object.getColumnIndex(duration));
+                    item.Status=object.getInt(object.getColumnIndex(delay_status));
+                    item.ImageID=object.getString(object.getColumnIndex(poster_name));
+                    item.Description=object.getString(object.getColumnIndex(description));
+                    item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
+                    item.bookmark=object.getInt(object.getColumnIndex(special));
+                    item.Result=object.getString(object.getColumnIndex(result));
+                    item.Rules=object.getString(object.getColumnIndex(rules));
+                    item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
+                    list.add(item);
+                    Log.d("categoryf  ", String.valueOf(item.eventID));
+                }while(object.moveToNext());
+                object.close();
             }
-            eventCursor.close();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
-        finally {
-            db.endTransaction();
-            db.close();
-        }
+
         return list;
     }
-
-    private ArrayList<eventData> LoadEvents(Cursor object,ArrayList<eventData> list) {
-        do{
-            eventData item=new eventData();
-            item.eventID=object.getInt(object.getColumnIndex(id));
-            item.eventName=object.getString(object.getColumnIndex(name));
-            item.Category=object.getInt(object.getColumnIndex(category));
-            item.Venue=object.getString(object.getColumnIndex(venue));
-            item.Day=object.getString(object.getColumnIndex(date));
-            item.Status=object.getInt(object.getColumnIndex(status));
-            item.Time=object.getString(object.getColumnIndex(scheduled_start));
-            item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
-            item.Duration=object.getString(object.getColumnIndex(duration));
-            item.Status=object.getInt(object.getColumnIndex(delay_status));
-            item.ImageID=object.getString(object.getColumnIndex(poster_name));
-            item.Description=object.getString(object.getColumnIndex(description));
-            item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
-            item.bookmark=object.getInt(object.getColumnIndex(special));
-            item.Result=object.getString(object.getColumnIndex(result));
-            item.Rules=object.getString(object.getColumnIndex(rules));
-            item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
-            list.add(item);
-        }while(object.moveToNext());
-        return list;
-    }
-
-    public ArrayList<eventData> GetUpcomingEvents()
+    public ArrayList<eventData> GetUpcominEvents(SQLiteDatabase db)
     {
-        ArrayList<eventData> all=this.ReadDatabaseEvents(0);
+        ArrayList<eventData> all=this.ReadDatabaseEvents(db,0);
         ArrayList<eventData> upcoming=new ArrayList<>();
         int length=all.size();
         for(int i=0;i<length;i++)
@@ -229,12 +232,15 @@ Context context;
 
         }
         return upcoming;
+
     }
 
 
-    public ArrayList<eventData> GetOngoingEvents()
+
+
+    public ArrayList<eventData> GetOngoingEvents(SQLiteDatabase db)
     {
-        ArrayList<eventData> all=this.ReadDatabaseEvents(0);
+        ArrayList<eventData> all=this.ReadDatabaseEvents(db,0);
         ArrayList<eventData> ongoing=new ArrayList<>();
         int length=all.size();
         for(int i=0;i<length;i++)
@@ -291,5 +297,4 @@ Context context;
         }
         db.close();
     }
-
 }

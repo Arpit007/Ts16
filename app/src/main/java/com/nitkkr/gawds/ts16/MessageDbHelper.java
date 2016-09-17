@@ -31,7 +31,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query="Create table "+TABLE_MESSAGES+" (" + id
+        String query="Create table IF NOT EXISTS "+TABLE_MESSAGES+" (" + id
                 +" INTEGER PRIMARY KEY,"+name
                 +" TEXT);";
         try {

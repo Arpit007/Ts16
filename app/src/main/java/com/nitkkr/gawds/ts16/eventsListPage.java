@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,55 +36,14 @@ public class eventsListPage extends AppCompatActivity
 		int CategoryId=b.getInt(getString(R.string.CategoryID));
 		EventsRecyclerView=(RecyclerView) findViewById(R.id.event_recycler);
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		LoadEvents(CategoryId);
-
+		dbHelper helper=new dbHelper(this);
+		ArrayList<eventData> list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
+		helper.close();
+		eventAdapter=new EventAdapter(getBaseContext(),list);
+		EventsRecyclerView.setAdapter(eventAdapter);
 
 
 	}
-	public void LoadEvents(final int CategoryId)
-	{
-		class EventLoader extends AsyncTask<Void,Void, String>
-		{
-			ProgressDialog dialog;
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				dialog= new ProgressDialog(getBaseContext()); // this = YourActivity
-				dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-				dialog.setMessage("Loading, Please wait...");
-				dialog.setIndeterminate(true);
-				dialog.setCanceledOnTouchOutside(false);
-				dialog.show();
-			}
-
-			@Override
-			protected void onPostExecute(String s) {
-				super.onPostExecute(s);
-				try {
-					loadArrays();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				dialog.dismiss();
-			}
-
-			private void loadArrays() {
-				dbHelper helper=new dbHelper(getBaseContext());
-				ArrayList<eventData> list=helper.ReadDatabaseEvents(CategoryId);
-
-				eventAdapter=new EventAdapter(getBaseContext(),list);
-				EventsRecyclerView.setAdapter(eventAdapter);
-			}
-
-			@Override
-			protected String doInBackground(Void... voids) {
-				return null;
-			}
-		}
-		EventLoader ob=new EventLoader();
-		ob.execute();
-	}
-
 }
 
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
@@ -107,7 +67,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 		holder.EventName.setText(item.eventName);
 		holder.Time.setText(item.Time);
 		holder.Day.setText(item.Day);
-		holder.ID.setText(item.eventID);
+		Log.d("tag id", String.valueOf(item.eventID));
 		holder.Bookmark.setChecked(((item.bookmark==1)?true:false));
 		holder.EventRecyclerItem.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -115,6 +75,8 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 				Intent i=new Intent(context,eventDetail.class);
 				i.putExtra(context.getString(R.string.EventID),item.eventID);
 				i.putExtra(context.getString(R.string.TabID),0);
+
+				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(i);
 			}
 		});
@@ -128,11 +90,11 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
 	@Override
 	public int getItemCount() {
-		return 0;
+		return eventItems.size();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder{
-		TextView EventName,Day,Time,ID;
+		TextView EventName,Day,Time,eventi;
 		CheckBox Bookmark;
 		LinearLayout EventRecyclerItem;
 		public ViewHolder(View itemView) {
@@ -142,7 +104,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 			Day=(TextView) itemView.findViewById(R.id.recycler_event_date);
 			Time=(TextView)itemView.findViewById(R.id.recycler_event_time);
 			Bookmark=(CheckBox) itemView.findViewById(R.id.starrred);
-			ID=(TextView) itemView.findViewById(R.id.recycler_event_id);
+
 		}
 	}
 }

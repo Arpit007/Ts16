@@ -5,17 +5,20 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -104,7 +107,8 @@ public class ServertoSqliteLoader extends Service {
                     final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     final Calendar calendar=Calendar.getInstance();
                     dbHelper NotificationDbHelper=new dbHelper(getBaseContext());
-                    ArrayList<eventData> list=NotificationDbHelper.GetUpcominEvents();
+                    ArrayList<eventData> list=NotificationDbHelper.GetUpcominEvents(NotificationDbHelper.getReadableDatabase());
+                    NotificationDbHelper.close();
                     int length3=list.size();
                     for(int i=0;i<length3;i++)
                     {
@@ -163,5 +167,20 @@ public class ServertoSqliteLoader extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    /**
+     * A simple {@link Fragment} subclass.
+     */
+    public static class scheduleFragment extends Fragment
+    {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState)
+        {
+            // Inflate the layout for this fragment
+            return inflater.inflate(R.layout.fragment_schedule, container, false);
+        }
+
     }
 }

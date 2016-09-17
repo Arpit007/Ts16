@@ -17,8 +17,33 @@ public class Splash extends AppCompatActivity
 		{
 			this.getSupportActionBar().hide();
 		}
-
-		serviceStartBroadcast.startServices(this);
+		try {
+			MessageDbHelper helper = new MessageDbHelper(this);
+			helper.onCreate(helper.getWritableDatabase());
+			helper.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		try {
+			CategoriesDbHelper helper2 = new CategoriesDbHelper(this);
+			helper2.onCreate(helper2.getWritableDatabase());
+			helper2.close();
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		try{
+			dbHelper helper1 = new dbHelper(this);
+			helper1.onCreate(helper1.getWritableDatabase());;
+			helper1.close();
+		}
+	catch (Exception e)
+	{
+		e.printStackTrace();
+	}
+	serviceStartBroadcast.startServices(this);
 	}
 
 	@Override

@@ -26,33 +26,33 @@ public class ongoingFragment extends Fragment
 	{
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
-
-		eventDataList=dbHelper.DbHelper.GetOngoingEvents();
-
-		if (eventDataList.size() == 0)
-		{
-			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
-			ListView listView = (ListView) view.findViewById(R.id.OngoingList);
-
-			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
-
-			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-			{
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-				{
-					int EventID = eventDataList.get(position).eventID;
-					Intent intent = new Intent(getContext(), eventDetail.class);
-					intent.putExtra(getString(R.string.EventID), EventID);
-					intent.putExtra(getString(R.string.TabID), 0);
-					startActivity(intent);
-				}
-			});
-		}
+//		dbHelper DbHelper=new dbHelper(getContext());
+//
+//
+//		if (eventDataList.size() == 0)
+//		{
+//			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);
+//		}
+//		else
+//		{
+//			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
+//			ListView listView = (ListView) view.findViewById(R.id.OngoingList);
+//
+//			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
+//
+//			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//			{
+//				@Override
+//				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//				{
+//					int EventID = eventDataList.get(position).eventID;
+//					Intent intent = new Intent(getContext(), eventDetail.class);
+//					intent.putExtra(getString(R.string.EventID), EventID);
+//					intent.putExtra(getString(R.string.TabID), 0);
+//					startActivity(intent);
+//				}
+//			});
+//		}
 		return view;
 	}
 }

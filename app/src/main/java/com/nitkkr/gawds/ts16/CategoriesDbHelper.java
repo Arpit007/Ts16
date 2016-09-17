@@ -24,7 +24,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String query="Create table "+TABLE_CATEGORIES+" (" + id
+        String query="Create table IF NOT EXISTS "+TABLE_CATEGORIES+" (" + id
                 +" INTEGER PRIMARY KEY,"+name
                 +" TEXT);";
         sqLiteDatabase.execSQL(query);

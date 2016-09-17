@@ -18,65 +18,28 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class eventCategoryPage extends AppCompatActivity
-{
+public class eventCategoryPage extends AppCompatActivity {
 	RecyclerView EventsRecyclerView;
 	CategoryAdapter categoryAdapter;
 	Context c;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_category_page);
-		c=this;
-		EventsRecyclerView =(RecyclerView) findViewById(R.id.category_recycler);
+		c = this;
+		EventsRecyclerView = (RecyclerView) findViewById(R.id.category_recycler);
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-		CategoryJSON();
-	}
-
-	public void CategoryJSON()
-	{
-		class GetCategories extends AsyncTask<Void, Void,String>
-		{
-			ProgressDialog dialog;
-			@Override
-			protected void onPreExecute() {
-				dialog= new ProgressDialog(c); // this = YourActivity
-				dialog.setMessage("Loading, Please wait...");
-				dialog.setIndeterminate(true);
-				dialog.setCanceledOnTouchOutside(false);
-				dialog.show();
-			}
-
-			@Override
-			protected void onPostExecute(String s) {
-				super.onPostExecute(s);
-
-				try {
-					loadArrays();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				dialog.dismiss();
-
-			}
-
-			private void loadArrays()  {
-				CategoriesDbHelper helper=new CategoriesDbHelper(getBaseContext());
-				ArrayList<EventCategory> list=helper.ReadDatabaseCategory(helper.getWritableDatabase());
-				helper.close();
-				categoryAdapter=new CategoryAdapter(c,list);
-				EventsRecyclerView.setAdapter(categoryAdapter);
-			}
-
-			@Override
-			protected String doInBackground(Void... voids) {
-				return null;
-			}
+		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
+		ArrayList<EventCategory> list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
+		helper.close();
+		for (int i = 0; i < list.size(); i++) {
+			Log.d("Category:: ", list.get(i).category);
 		}
-		GetCategories gc=new GetCategories();
-		gc.execute();
+		categoryAdapter = new CategoryAdapter(c, list);
+		EventsRecyclerView.setAdapter(categoryAdapter);
 	}
+
 }
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
@@ -114,9 +77,9 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
 	@Override
 	public int getItemCount() {
-		return 0;
+		return categories.size();
 	}
-	public class ViewHolder extends RecyclerView.ViewHolder{
+	class ViewHolder extends RecyclerView.ViewHolder{
 		TextView CategoryName;
 		LinearLayout CategoryRecyclerItem;
 		public ViewHolder(View itemView) {
