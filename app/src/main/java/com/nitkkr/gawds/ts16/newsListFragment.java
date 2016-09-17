@@ -18,39 +18,38 @@ import java.util.ArrayList;
  */
 public class newsListFragment extends Fragment
 {
-	ArrayList<eventData> eventDataList;
+	ArrayList<MessageDbHelper.MessageData> eventDataList;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
 
 		View view = inflater.inflate(R.layout.fragment_news_list, container, false);
-		//eventDataList=dbHelper.DbHelper.GetOngoingEvents();
-
-		if (eventDataList.size() == 0)
-		{
-			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			view.findViewById(R.id.NoNews).setVisibility(View.INVISIBLE);
-			/*ListView listView = (ListView) view.findViewById(R.id.NewsList);
-
-			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
-
-			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-			{
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-				{
-					int EventID = eventDataList.get(position).eventID;
-					Intent intent = new Intent(getContext(), eventDetail.class);
-					intent.putExtra(getString(R.string.EventID), EventID);
-					intent.putExtra(getString(R.string.TabID), 0);
-					startActivity(intent);
-				}
-			});*/
-		}
+		MessageDbHelper helper=new MessageDbHelper(getContext());
+		eventDataList=helper.ReadDatabaseMessage(helper.getReadableDatabase());
+//		helper.close();
+//		if (eventDataList.size() == 0)
+//		{
+//			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
+//		}
+//		else
+//		{
+//			view.findViewById(R.id.NoNews).setVisibility(View.INVISIBLE);
+//			ListView listView = (ListView) view.findViewById(R.id.NewsList);
+//			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
+//			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//			{
+//				@Override
+//				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//				{
+//					int EventID = eventDataList.get(position).eventID;
+//					Intent intent = new Intent(getContext(), eventDetail.class);
+//					intent.putExtra(getString(R.string.EventID), EventID);
+//					intent.putExtra(getString(R.string.TabID), 0);
+//					startActivity(intent);
+//				}
+//			});
+//		}
 		return view;
 	}
 }

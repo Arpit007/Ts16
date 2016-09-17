@@ -144,7 +144,7 @@ public class ServertoSqliteLoader extends Service {
                     for(int i=0;i<length4;i++)
                     {
                         JSONObject object=messages.getJSONObject(i);
-                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"));
+                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getInt("date"),object.getInt("title"));
                     }
                     MessageHelper.close();
                 }

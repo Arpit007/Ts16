@@ -28,8 +28,8 @@ public class ongoingFragment extends Fragment
 
 		View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
 		dbHelper DbHelper=new dbHelper(getContext());
-
-
+		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
+		DbHelper.close();
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);

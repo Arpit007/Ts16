@@ -300,7 +300,6 @@ import java.util.Date;
 
     public SQLiteDatabase getDefaultDatabase()
     {
-        //===========================================
         return null;
     }
 }

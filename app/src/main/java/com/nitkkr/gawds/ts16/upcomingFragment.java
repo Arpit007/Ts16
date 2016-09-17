@@ -22,9 +22,9 @@ public class upcomingFragment extends Fragment
 	{
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
-
-		eventDataList=dbHelper.DbHelper.GetUpcomingEvents(dbHelper.DbHelper.getDefaultDatabase());
-
+		dbHelper helper=new dbHelper(getContext());
+		eventDataList=helper.GetUpcomingEvents(dbHelper.DbHelper.getDefaultDatabase());
+		helper.close();
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.VISIBLE);
