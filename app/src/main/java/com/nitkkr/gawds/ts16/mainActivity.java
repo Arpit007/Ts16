@@ -45,7 +45,6 @@ public class mainActivity extends AppCompatActivity
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
-		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.schedule_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
@@ -117,7 +116,8 @@ public class mainActivity extends AppCompatActivity
 		}
 		else if (id == R.id.nav_schedule)
 		{
-			navigateToTab(4);
+			Intent intent=new Intent(this,schedule.class);
+			startActivity(intent);
 		}
 		else if (id == R.id.nav_starred)
 		{
