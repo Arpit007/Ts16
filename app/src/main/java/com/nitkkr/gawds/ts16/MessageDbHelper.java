@@ -22,8 +22,8 @@ class MessageDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_MESSAGES="messages";
     private static final String id="id";
-    private static final String Date="message";
-    private static final String Title="message";
+    private static final String Date="date";
+    private static final String Title="title";
     private static final String News="message";
     Context context;
     public MessageDbHelper(Context context) {
@@ -34,8 +34,10 @@ class MessageDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String query="Create table IF NOT EXISTS "+TABLE_MESSAGES+" (" + id
-                +" INTEGER PRIMARY KEY,"+name
-                +" TEXT);";
+                +" INTEGER PRIMARY KEY,"+News
+                +" TEXT," +Title+
+                " TEXT," +Date+
+                "TEXT);";
         try {
             sqLiteDatabase.execSQL(query);
         }
@@ -50,11 +52,13 @@ class MessageDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
 
-    public void addMessage(SQLiteDatabase db,String message,int MessageId)
+    public void addMessage(SQLiteDatabase db,String message,int MessageId,int MDateTime,int MTitle)
     {
         ContentValues messageValues=new ContentValues();
         messageValues.put(id,MessageId);
-        messageValues.put(name,message);
+        messageValues.put(News,message);
+        messageValues.put(Date,MDateTime);
+        messageValues.put(Title,MTitle);
         try
         {
             int rows=db.update(TABLE_MESSAGES,messageValues,id+"="+MessageId,null);

@@ -26,16 +26,13 @@ public class mainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		drawer.setDrawerListener(toggle);
 		toggle.syncState();
-
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
@@ -185,7 +182,7 @@ public class mainActivity extends AppCompatActivity
 				case 1: return new newsListFragment();
 				case 2: return new ongoingFragment();
 				case 3: return new upcomingFragment();
-				case 4: return new ServertoSqliteLoader.scheduleFragment();
+//				case 4: return new scheduleFragment();
 				default:
 					return null;
 			}

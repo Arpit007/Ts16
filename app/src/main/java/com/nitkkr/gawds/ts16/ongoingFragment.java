@@ -25,10 +25,11 @@ public class ongoingFragment extends Fragment
 	                         Bundle savedInstanceState)
 	{
 		// Inflate the layout for this fragment
+
 		View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
-
-		eventDataList=dbHelper.DbHelper.GetOngoingEvents(dbHelper.DbHelper.getDefaultDatabase());
-
+		dbHelper DbHelper=new dbHelper(getContext());
+		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
+		DbHelper.close();
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);

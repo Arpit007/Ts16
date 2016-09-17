@@ -144,7 +144,7 @@ public class ServertoSqliteLoader extends Service {
                     for(int i=0;i<length4;i++)
                     {
                         JSONObject object=messages.getJSONObject(i);
-                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"));
+                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getInt("date"),object.getInt("title"));
                     }
                     MessageHelper.close();
                 }
@@ -172,15 +172,5 @@ public class ServertoSqliteLoader extends Service {
     /**
      * A simple {@link Fragment} subclass.
      */
-    public static class scheduleFragment extends Fragment
-    {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState)
-        {
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_schedule, container, false);
-        }
 
-    }
 }
