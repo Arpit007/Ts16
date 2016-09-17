@@ -208,7 +208,7 @@ import java.util.Date;
 
         return list;
     }
-    public ArrayList<eventData> GetUpcominEvents(SQLiteDatabase db)
+    public ArrayList<eventData> GetUpcomingEvents(SQLiteDatabase db)
     {
         ArrayList<eventData> all=this.ReadDatabaseEvents(db,0);
         ArrayList<eventData> upcoming=new ArrayList<>();
@@ -296,5 +296,11 @@ import java.util.Date;
             e.printStackTrace();
         }
         db.close();
+    }
+
+    public SQLiteDatabase getDefaultDatabase()
+    {
+        //===========================================
+        return null;
     }
 }

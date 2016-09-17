@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class organizerPage extends AppCompatActivity
@@ -34,13 +38,38 @@ public class organizerPage extends AppCompatActivity
 
 	public void setUpOrganizerData()
 	{
-		//============================================================================
+		String Data="Failed to Fetch Data";
+		try
+		{
+			InputStream inputStream = getAssets().open(getString(R.string.organizerFileName));
+			int size = inputStream.available();
+			byte[] buffer = new byte[size];
+			inputStream.read(buffer);
+			inputStream.close();
+			Data = new String(buffer, "UTF-8");
+			JSONObject Root=new JSONObject(Data);
+			JSONArray array=Root.getJSONArray("Organizers");
+
+			for(int i=0; i < array.length(); i++){
+				JSONObject item = array.getJSONObject(i);
+
+				organizerData data=new organizerData();
+				data.Name=item.optString("Name").toString();
+				data.Phone=item.optString("Phone").toString();
+				data.Detail=item.optString("Detail").toString();
+				organizerList.add(data);
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	private class organizerData
 	{
 		public String Name;
-		public String Year;
+		public String Detail;
 		public String Phone;
 	}
 
@@ -82,7 +111,7 @@ public class organizerPage extends AppCompatActivity
 				convertView=inflater.inflate(R.layout.organizer_item,parent,false);
 			}
 			((TextView)convertView.findViewById(R.id.organizerName)).setText(dataList.get(position).Name);
-			((TextView)convertView.findViewById(R.id.organizerYear)).setText(dataList.get(position).Year);
+			((TextView)convertView.findViewById(R.id.organizerDetail)).setText(dataList.get(position).Detail);
 			convertView.findViewById(R.id.organizerCall).setOnClickListener(new View.OnClickListener()
 			{
 				@Override

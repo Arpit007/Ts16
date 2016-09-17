@@ -1,0 +1,19 @@
+{
+  "Organizers": [
+    {
+      "Name": "Person 1",
+      "Detail": "Co-ordinator",
+      "Phone": "9811745628"
+    },
+    {
+      "Name": "Person 2",
+      "Detail": "Co-ordinatorX",
+      "Phone": "98117456514"
+    },
+    {
+      "Name": "Person 3",
+      "Detail": "Co-ordinatorY",
+      "Phone": "9811749200"
+    }
+  ]
+}

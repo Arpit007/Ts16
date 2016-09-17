@@ -27,41 +27,11 @@
     <string name="NoUpcoming">No upcoming events yet!</string>
     <string name="NoOngoing">No active events</string>
     <string name="NoStar">No Events Starred!</string>
+    <string name="NoNews">No new Notifications</string>
     <string name="hello_blank_fragment">Temporary String</string>
     <string name="Categories">http://192.168.43.210/TS/categories.php</string>
     <string name="EventsJSONArray">events</string>
     <string name="EventsByCategory">http://192.168.43.210/TS/events.php?category=0</string>
-
-    <string-array name="sponsorLabelList">
-        <item>Microsoft</item>
-        <item>Google</item>
-        <item>Nvidia</item>
-        <item>Apple</item>
-        <item>Microsoft</item>
-        <item>Google</item>
-        <item>Nvidia</item>
-        <item>Apple</item>
-    </string-array>
-    <string-array name="sponsorUrlList">
-        <item>http://www.microsoft.com</item>
-        <item>http://www.google.com</item>
-        <item>http://www.nvidia.com</item>
-        <item>http://www.apple.com</item>
-        <item>http://www.microsoft.com</item>
-        <item>http://www.google.com</item>
-        <item>http://www.nvidia.com</item>
-        <item>http://www.apple.com</item>
-    </string-array>
-    <integer-array name="sponsorImageIDList">
-        <item>@drawable/home_icon</item>
-        <item>@drawable/duration_icon</item>
-        <item>@drawable/location_icon</item>
-        <item>@drawable/news_icon</item>
-        <item>@drawable/home_icon</item>
-        <item>@drawable/duration_icon</item>
-        <item>@drawable/location_icon</item>
-        <item>@drawable/news_icon</item>
-    </integer-array>
 
     <string-array name="EventStatus">
         <item>Live</item>
@@ -82,4 +52,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="CategoryID">CategoryId</string>
+    <string name="organizerFileName">organizer_data.json</string>
 </resources>
