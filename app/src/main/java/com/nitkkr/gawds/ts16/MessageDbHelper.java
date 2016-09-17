@@ -22,7 +22,9 @@ class MessageDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_MESSAGES="messages";
     private static final String id="id";
-    private static final String name="message";
+    private static final String Date="message";
+    private static final String Title="message";
+    private static final String News="message";
     Context context;
     public MessageDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,6 +49,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
+
     public void addMessage(SQLiteDatabase db,String message,int MessageId)
     {
         ContentValues messageValues=new ContentValues();
@@ -82,9 +85,10 @@ class MessageDbHelper extends SQLiteOpenHelper {
         }
 
     }
-    public ArrayList<String> ReadDatabaseMessage(SQLiteDatabase db)
+
+    public ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
     {
-        ArrayList<String> list=new ArrayList<>();
+        ArrayList<MessageData> list=new ArrayList<>();
         try
         {
             String query;
@@ -94,8 +98,12 @@ class MessageDbHelper extends SQLiteOpenHelper {
             {
                 categoryCursor.moveToFirst();
                 do {
-                    list.add(categoryCursor.getString(categoryCursor.getColumnIndex(name)));
-                    Log.d("Mesage ", categoryCursor.getString(categoryCursor.getColumnIndex(name)));
+                    MessageData data=new MessageData();
+                    data.Date=categoryCursor.getString(categoryCursor.getColumnIndex(Date));
+                    data.Title=categoryCursor.getString(categoryCursor.getColumnIndex(Title));
+                    data.News=categoryCursor.getString(categoryCursor.getColumnIndex(News));
+                    list.add(data);
+                    Log.d("Mesage ", categoryCursor.getString(categoryCursor.getColumnIndex(Title)));
                 }while(categoryCursor.moveToNext());
             }
             categoryCursor.close();
@@ -108,6 +116,13 @@ class MessageDbHelper extends SQLiteOpenHelper {
 
         }
         return list;
+    }
+
+    class MessageData
+    {
+        public String Date;
+        public String Title;
+        public String News;
     }
 }
 
