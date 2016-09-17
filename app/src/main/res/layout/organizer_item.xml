@@ -16,7 +16,7 @@
                       android:layout_gravity="center_vertical"
               android:id="@+id/organizerName" android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
-            <TextView android:id="@+id/organizerYear" android:layout_weight="20"
+            <TextView android:id="@+id/organizerDetail" android:layout_weight="20"
                       android:textSize="15sp" android:text="2nd Year" android:layout_gravity="center_vertical"
                       android:layout_width="match_parent" android:layout_height="wrap_content"/>
 

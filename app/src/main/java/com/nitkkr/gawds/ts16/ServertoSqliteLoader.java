@@ -107,7 +107,7 @@ public class ServertoSqliteLoader extends Service {
                     final SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     final Calendar calendar=Calendar.getInstance();
                     dbHelper NotificationDbHelper=new dbHelper(getBaseContext());
-                    ArrayList<eventData> list=NotificationDbHelper.GetUpcominEvents(NotificationDbHelper.getReadableDatabase());
+                    ArrayList<eventData> list=NotificationDbHelper.GetUpcomingEvents(NotificationDbHelper.getReadableDatabase());
                     NotificationDbHelper.close();
                     int length3=list.size();
                     for(int i=0;i<length3;i++)
