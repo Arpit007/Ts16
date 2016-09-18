@@ -37,7 +37,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
                 +" INTEGER PRIMARY KEY,"+News
                 +" TEXT," +Title+
                 " TEXT," +Date+
-                "TEXT);";
+                " TEXT);";
         try {
             sqLiteDatabase.execSQL(query);
         }
@@ -52,7 +52,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
 
-    public void addMessage(SQLiteDatabase db,String message,int MessageId,int MDateTime,int MTitle)
+    public void addMessage(SQLiteDatabase db,String message,int MessageId,String MDateTime,String MTitle)
     {
         ContentValues messageValues=new ContentValues();
         messageValues.put(id,MessageId);
@@ -107,7 +107,7 @@ class MessageDbHelper extends SQLiteOpenHelper {
                     data.Title=categoryCursor.getString(categoryCursor.getColumnIndex(Title));
                     data.News=categoryCursor.getString(categoryCursor.getColumnIndex(News));
                     list.add(data);
-                    Log.d("Mesage ", categoryCursor.getString(categoryCursor.getColumnIndex(Title)));
+                    Log.d("Mesage ", categoryCursor.getString(categoryCursor.getColumnIndex(News)));
                 }while(categoryCursor.moveToNext());
             }
             categoryCursor.close();

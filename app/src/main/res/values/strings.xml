@@ -29,9 +29,9 @@
     <string name="NoStar">No Events Starred!</string>
     <string name="NoNews">No new Notifications</string>
     <string name="hello_blank_fragment">Temporary String</string>
-    <string name="Categories">http://192.168.43.210/TS/categories.php</string>
+    <string name="Categories">http://www.almerston.com/nitkkr2110/TS/categories.php</string>
     <string name="EventsJSONArray">events</string>
-    <string name="EventsByCategory">http://192.168.43.210/TS/events.php?category=0</string>
+    <string name="EventsByCategory">http://www.almerston.com/nitkkr2110/TS/events.php?category=0</string>
 
     <string-array name="EventStatus">
         <item>Live</item>

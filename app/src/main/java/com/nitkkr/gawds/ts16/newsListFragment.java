@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class newsListFragment extends Fragment
 		View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 		MessageDbHelper dbHelper=new MessageDbHelper(getContext());
 		//==============================
-		MessageDataList=dbHelper.ReadDatabaseMessage(null);
+		MessageDataList=dbHelper.ReadDatabaseMessage(dbHelper.getReadableDatabase());
 
 		if (MessageDataList.size() == 0)
 		{
@@ -41,7 +42,7 @@ public class newsListFragment extends Fragment
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.INVISIBLE);
 			ListView listView = (ListView) view.findViewById(R.id.NewsList);
-
+			Log.d("Mesage count", String.valueOf(MessageDataList.size()));
 			listView.setAdapter(new newsItemAdapter(MessageDataList, getContext()));
 		}
 		return view;

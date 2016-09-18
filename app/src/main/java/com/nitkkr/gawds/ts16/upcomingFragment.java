@@ -23,7 +23,7 @@ public class upcomingFragment extends Fragment
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
 		dbHelper helper=new dbHelper(getContext());
-		eventDataList=helper.GetUpcomingEvents(dbHelper.DbHelper.getDefaultDatabase());
+		eventDataList=helper.GetUpcomingEvents(helper.getReadableDatabase());
 		helper.close();
 		if (eventDataList.size() == 0)
 		{

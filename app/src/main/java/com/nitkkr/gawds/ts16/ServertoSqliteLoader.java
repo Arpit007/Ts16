@@ -54,7 +54,7 @@ public class ServertoSqliteLoader extends Service {
                 //event
                 httpRequest rh=new httpRequest();
                 String EventJsonString;
-                EventJsonString=rh.SendGetRequest("http://192.168.43.210/TS/events.php?category=0");
+                EventJsonString=rh.SendGetRequest("http://www.almerston.com/nitkkr2110/TS/events.php?category=0");
                 Log.d("EventJSon ", EventJsonString );
                 try {
 
@@ -136,7 +136,7 @@ public class ServertoSqliteLoader extends Service {
                     NotificationDbHelper.close();
                     //messages
                     MessageDbHelper MessageHelper= new MessageDbHelper(getBaseContext());
-                    String MessageJson=rh.SendGetRequest("http://192.168.43.210/TS/messages.php");
+                    String MessageJson=rh.SendGetRequest("http://www.almerston.com/nitkkr2110/TS/messages.php");
                     JSONObject jsonObject=new JSONObject(MessageJson);
                     Log.d("MESSAGEJSON ", MessageJson);
                     JSONArray messages=jsonObject.getJSONArray("messages");
@@ -144,7 +144,7 @@ public class ServertoSqliteLoader extends Service {
                     for(int i=0;i<length4;i++)
                     {
                         JSONObject object=messages.getJSONObject(i);
-                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getInt("date"),object.getInt("title"));
+                        MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getString("date"),object.getString("title"));
                     }
                     MessageHelper.close();
                 }
