@@ -15,7 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -31,7 +33,6 @@ public class newsListFragment extends Fragment
 
 		View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 		MessageDbHelper dbHelper=new MessageDbHelper(getContext());
-		//==============================
 		MessageDataList=dbHelper.ReadDatabaseMessage(dbHelper.getReadableDatabase());
 		dbHelper.close();
 		if (MessageDataList.size() == 0)
@@ -87,7 +88,19 @@ public class newsListFragment extends Fragment
 			}
 			MessageDbHelper.MessageData data=list.get(position);
 			(( TextView)convertView.findViewById(R.id.news_Title)).setText(data.Title);
-			(( TextView)convertView.findViewById(R.id.news_date)).setText(data.Date);
+
+			try
+			{
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date date=simpleDateFormat.parse(data.Date);
+				simpleDateFormat.applyPattern("hh:mm a, dd MMM yyyy");
+				(( TextView)convertView.findViewById(R.id.news_date)).setText(simpleDateFormat.format(date));
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
 			(( TextView)convertView.findViewById(R.id.news_content)).setText(data.News);
 			return convertView;
 		}

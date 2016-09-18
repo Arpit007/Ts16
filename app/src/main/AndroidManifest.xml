@@ -32,7 +32,7 @@
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
         <activity android:name=".mainActivity" android:screenOrientation="sensorPortrait"
-            android:label="@string/title_activity_main"
+            android:label="@string/title_activity_main" android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".starredEvents" android:screenOrientation="sensorPortrait">

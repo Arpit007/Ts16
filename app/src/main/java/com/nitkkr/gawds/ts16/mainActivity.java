@@ -63,7 +63,8 @@ public class mainActivity extends AppCompatActivity
 
 			}
 		});
-		navigateToTab(getIntent().getIntExtra(getString(R.string.TabID),0));
+		if(savedInstanceState!=null)
+			onRestoreInstanceState(savedInstanceState);
 	}
 
 	@Override
@@ -97,14 +98,16 @@ public class mainActivity extends AppCompatActivity
 	protected void onRestoreInstanceState(Bundle savedInstanceState)
 	{
 		super.onRestoreInstanceState(savedInstanceState);
-		navigateToTab(savedInstanceState.getInt(getString(R.string.TabID)));
+		int tabPosition=savedInstanceState.getInt(getString(R.string.TabID));
+		navigateToTab(tabPosition);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
-		outState.putInt(getString(R.string.TabID),((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition());
+		int tabPosition=((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition();
+		outState.putInt(getString(R.string.TabID),tabPosition);
 	}
 
 	@SuppressWarnings("StatementWithEmptyBody")

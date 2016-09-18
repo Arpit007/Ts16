@@ -23,7 +23,7 @@
     <string name="homeTab5">Schedule</string>
     <string name="EventID">EventID</string>
     <string name="TabID">TabID</string>
-    <string name="NoResult">No Result Yet!</string>
+    <string name="NoResult">No Results Yet!</string>
     <string name="NoUpcoming">No upcoming events yet!</string>
     <string name="NoOngoing">No active events</string>
     <string name="NoStar">No Events Starred!</string>

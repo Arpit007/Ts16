@@ -23,7 +23,7 @@
                 android:scaleType="fitCenter"/>
             <TextView android:text="@string/DevName1" android:layout_gravity="center_horizontal"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textSize="18sp" android:textColor="#ffffff"/>
+                      android:textSize="18sp"/>
             <ImageView android:src="@drawable/fb_icon" android:layout_gravity="center_horizontal"
                        android:layout_width="40dp" android:layout_height="40dp"/>
         </LinearLayout>
@@ -37,7 +37,7 @@
                        android:scaleType="fitCenter"/>
             <TextView android:text="@string/DevName2" android:layout_gravity="center_horizontal"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textSize="18sp" android:textColor="#ffffff"/>
+                      android:textSize="18sp"/>
             <ImageView android:src="@drawable/fb_icon" android:layout_gravity="center_horizontal"
                        android:layout_width="40dp" android:layout_height="40dp"/>
         </LinearLayout>

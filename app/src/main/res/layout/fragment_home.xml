@@ -14,7 +14,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="100">
         <Button
             android:id="@+id/newsButton" style="@style/Widget.AppCompat.Button.Borderless"
-            android:drawableLeft="@drawable/news_icon" android:text="News"
+            android:drawableLeft="@drawable/news_icon" android:text="Notifications"
             android:layout_width="match_parent" android:layout_height="wrap_content"/>
         <Button
                 android:id="@+id/liveButton" style="@style/Base.Widget.AppCompat.Button.Borderless"

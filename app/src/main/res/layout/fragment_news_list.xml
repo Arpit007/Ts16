@@ -10,11 +10,6 @@
         android:text="@string/NoNews" android:visibility="invisible"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center"/>
-    <ScrollView
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <ListView android:id="@+id/NewsList"
-                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    </ScrollView>
-
-
+    <ListView android:id="@+id/NewsList" android:clickable="false"
+              android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </FrameLayout>
