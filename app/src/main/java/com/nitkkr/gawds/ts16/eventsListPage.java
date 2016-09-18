@@ -94,7 +94,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder{
-		TextView EventName,Day,Time,eventi;
+		TextView EventName,Day,Time;
 		CheckBox Bookmark;
 		LinearLayout EventRecyclerItem;
 		public ViewHolder(View itemView) {
