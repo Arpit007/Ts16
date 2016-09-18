@@ -4,6 +4,7 @@ package com.nitkkr.gawds.ts16;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class ongoingFragment extends Fragment
 		dbHelper DbHelper=new dbHelper(getContext());
 		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
 		DbHelper.close();
+		Log.d("Ongoing Size", String.valueOf(eventDataList.size()));
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);

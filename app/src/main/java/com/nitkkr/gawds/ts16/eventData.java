@@ -1,6 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,10 +26,11 @@ public class eventData
 	public String ImageID;
 	public String TimeStamp;
 	public Boolean notificationGenerated;
+	public int DelayStatus;
 
 	boolean isResultDeclared()
 	{
-		return (Result.equals("") || Result==null)? true:false;
+		return (Result.equals("") || Result==null)? false:true;
 	}
 
 	boolean isBookmarked()
@@ -39,6 +41,7 @@ public class eventData
 	void updateBookmark(Context c,boolean bookmarked)
 	{
 		bookmark=(bookmarked)?1:0;
+		Log.d("bookmarks", bookmarked+" and "+bookmark);
 		dbHelper helper=new dbHelper(c);
 		if(helper.updateBookmarkStatus(helper.getReadableDatabase(),bookmark,this.eventID))
 		{
@@ -79,6 +82,7 @@ public class eventData
 
 	public void UpdateEvent(eventData data)
 	{
+		DelayStatus=data.DelayStatus;
 		EndTime=data.EndTime;
 		eventID=data.eventID;
 		Category=data.Category;

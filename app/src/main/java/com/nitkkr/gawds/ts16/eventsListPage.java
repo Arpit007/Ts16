@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -80,10 +81,12 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 				context.startActivity(i);
 			}
 		});
-		holder.Bookmark.setOnClickListener(new View.OnClickListener() {
+//		final dbHelper helper=new dbHelper(context);
+
+		holder.Bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onClick(View view) {
-				//SharedPreferences to be edited
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				item.updateBookmark(context,b);
 			}
 		});
 	}

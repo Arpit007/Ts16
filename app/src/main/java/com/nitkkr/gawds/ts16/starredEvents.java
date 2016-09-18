@@ -19,10 +19,8 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_starred_events);
-
+		setContentView(R.layout.starred_events2);
 		setTitle("Starred");
-
 		bookMarkChanged();
 
 	}

@@ -101,6 +101,7 @@ import java.util.Date;
             int count=c.getCount();
             if(count!=0)
             {
+                Log.d("Updating ",event.eventID+"");
                 c.moveToFirst();
                 if(((c.getString(c.getColumnIndex(venue))).compareToIgnoreCase(event.Venue)!=0 ||
                         (c.getString(c.getColumnIndex(scheduled_start))).compareToIgnoreCase(event.Time)!=0)
@@ -139,6 +140,9 @@ import java.util.Date;
                         notification.notify("ResultNotification", 140, builder.build());
                 }
                 db.update(TABLE_EVENTS,eventValues,"id = "+event.eventID,null);
+                Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
+                cu.moveToFirst();
+                Log.d("Updating ",event.eventID+" "+eventValues.get("status")+" "+cu.getString(cu.getColumnIndex(status)));
             }
             else
             {
@@ -190,7 +194,7 @@ import java.util.Date;
                     item.Time=object.getString(object.getColumnIndex(scheduled_start));
                     item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
                     item.Duration=object.getString(object.getColumnIndex(duration));
-                    item.Status=object.getInt(object.getColumnIndex(delay_status));
+                    item.DelayStatus=object.getInt(object.getColumnIndex(delay_status));
                     item.ImageID=object.getString(object.getColumnIndex(poster_name));
                     item.Description=object.getString(object.getColumnIndex(description));
                     item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
@@ -225,7 +229,7 @@ import java.util.Date;
                 Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
                 Long eventTimeStamp=(eventDate.getTime())/1000;
                 Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                if(eventTimeStamp<=currentTimeStamp+10800)
+                if(eventTimeStamp<=currentTimeStamp+10800 && currentTimeStamp<eventTimeStamp)
                 {
                     upcoming.add(item);
                 }
@@ -248,18 +252,14 @@ import java.util.Date;
         int length=all.size();
         for(int i=0;i<length;i++)
         {
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Calendar calendar=Calendar.getInstance();
-            eventData item=all.get(i);
+            Log.d("Status ",all.get(i).Status+" "+all.get(i).eventID);
             try {
-                Date eventDate=simpleDateFormat.parse(item.Day+" "+item.EndTime);
-                Long eventTimeStamp=(eventDate.getTime())/1000;
-                Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                if(eventTimeStamp>=currentTimeStamp)
+                if(all.get(i).Status==1)
                 {
-                    ongoing.add(item);
+                    Log.d("Adding ",all.get(i).eventID+"");
+                    ongoing.add(all.get(i));
                 }
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -276,7 +276,7 @@ import java.util.Date;
         eventValues.put(dbHelper.scheduled_start,event.Time);
         eventValues.put(dbHelper.scheduled_end,event.EndTime);
         eventValues.put(dbHelper.duration,event.Duration);
-        eventValues.put(dbHelper.delay_status,event.Status);
+        eventValues.put(dbHelper.delay_status,event.DelayStatus);
         eventValues.put(dbHelper.poster_name,event.ImageID);
         eventValues.put(dbHelper.description,event.Description);
         eventValues.put(dbHelper.event_coordinator,event.EventCoordinators);
@@ -289,7 +289,6 @@ import java.util.Date;
 
     public boolean updateBookmarkStatus(SQLiteDatabase db,int status,int ids)
     {
-        db=getReadableDatabase();
         String query="Update "+TABLE_EVENTS+" set "+special+" = "+status+" where "+id+"="+ids;
         try {
             db.execSQL(query);
@@ -340,7 +339,7 @@ import java.util.Date;
                     item.Time=object.getString(object.getColumnIndex(scheduled_start));
                     item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
                     item.Duration=object.getString(object.getColumnIndex(duration));
-                    item.Status=object.getInt(object.getColumnIndex(delay_status));
+                    item.DelayStatus=object.getInt(object.getColumnIndex(delay_status));
                     item.ImageID=object.getString(object.getColumnIndex(poster_name));
                     item.Description=object.getString(object.getColumnIndex(description));
                     item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
