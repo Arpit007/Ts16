@@ -33,7 +33,7 @@ public class newsListFragment extends Fragment
 		MessageDbHelper dbHelper=new MessageDbHelper(getContext());
 		//==============================
 		MessageDataList=dbHelper.ReadDatabaseMessage(dbHelper.getReadableDatabase());
-
+		dbHelper.close();
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
