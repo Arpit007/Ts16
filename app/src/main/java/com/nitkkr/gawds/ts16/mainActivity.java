@@ -74,6 +74,10 @@ public class mainActivity extends AppCompatActivity
 		{
 			drawer.closeDrawer(GravityCompat.START);
 		}
+		else if(((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition()>0)
+		{
+			navigateToTab(0);
+		}
 		else
 		{
 			super.onBackPressed();

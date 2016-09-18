@@ -97,7 +97,7 @@ public class ServertoSqliteLoader extends Service {
                     {
                         CategoriesDbHelper categoriesDbHelper=new CategoriesDbHelper(getBaseContext());
                         JSONObject object=CategoryArray.getJSONObject(i);
-                        EventCategory category=new EventCategory();
+                        eventCategory category=new eventCategory();
                         category.id=object.getInt(id);
                         category.category=object.getString(name);
                         categoriesDbHelper.addCategory(categoriesDbHelper.getWritableDatabase(),category);

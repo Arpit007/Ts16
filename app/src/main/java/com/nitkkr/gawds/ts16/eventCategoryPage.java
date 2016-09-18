@@ -1,9 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +28,7 @@ public class eventCategoryPage extends AppCompatActivity {
 		EventsRecyclerView = (RecyclerView) findViewById(R.id.category_recycler);
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
-		ArrayList<EventCategory> list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
+		ArrayList<eventCategory> list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
 		helper.close();
 		for (int i = 0; i < list.size(); i++) {
 			Log.d("Category:: ", list.get(i).category);
@@ -44,9 +41,9 @@ public class eventCategoryPage extends AppCompatActivity {
 
 class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 	Context context;
-	ArrayList<EventCategory> categories;
+	ArrayList<eventCategory> categories;
 
-	public CategoryAdapter(Context context,ArrayList<EventCategory> categories)
+	public CategoryAdapter(Context context,ArrayList<eventCategory> categories)
 	{
 		this.context = context;
 		this.categories=categories;
@@ -61,7 +58,7 @@ class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
 	@Override
 	public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
-		final EventCategory thisCategory=categories.get(position);
+		final eventCategory thisCategory=categories.get(position);
 		Log.d("Category",thisCategory.category );
 		holder.CategoryName.setText(thisCategory.category);
 //        Glide.with(context).load(context.getString(R.string.CategoryImagePath)+thisCategory.getImage()).crossFade().placeholder(R.drawable.ic_menu_gallery).into(holder.CategoryImage);

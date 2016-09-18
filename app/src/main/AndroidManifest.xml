@@ -12,63 +12,61 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash">
+        <activity android:name=".Splash" android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".aboutUs">
+        <activity android:name=".aboutUs" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity android:name=".eventDetail">
+        <activity android:name=".eventDetail" android:screenOrientation="sensorPortrait">
         </activity>
-        <activity android:name=".sponsors">
+        <activity android:name=".sponsors" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity
-            android:name=".mainActivity"
+        <activity android:name=".mainActivity" android:screenOrientation="sensorPortrait"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".starredEvents">
+        <activity android:name=".starredEvents" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity android:name=".eventResult">
+        <activity android:name=".eventResult" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity android:name=".organizerPage">
+        <activity android:name=".organizerPage" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity android:name=".eventCategoryPage">
+        <activity android:name=".eventCategoryPage" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <activity android:name=".eventsListPage">
+        <activity android:name=".eventsListPage" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.eventCategoryPage"/>
         </activity>
-
-        <activity android:name=".schedule">
+        <activity android:name=".schedule" android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
-        <receiver
-            android:name=".serviceStartBroadcast"
+
+        <receiver android:name=".serviceStartBroadcast"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

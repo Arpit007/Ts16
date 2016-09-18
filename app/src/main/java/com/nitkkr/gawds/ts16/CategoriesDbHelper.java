@@ -36,7 +36,7 @@ CategoriesDbHelper  extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_CATEGORIES);
     }
 
-    public void addCategory(SQLiteDatabase db,EventCategory Category)
+    public void addCategory(SQLiteDatabase db,eventCategory Category)
     {
         try{
             addorUpdateCategory(db,Category);
@@ -49,7 +49,7 @@ CategoriesDbHelper  extends SQLiteOpenHelper{
 
     }
 
-    private void addorUpdateCategory(SQLiteDatabase db,EventCategory category) {
+    private void addorUpdateCategory(SQLiteDatabase db,eventCategory category) {
 
         try{
             ContentValues categoryValues=new ContentValues();
@@ -67,10 +67,10 @@ CategoriesDbHelper  extends SQLiteOpenHelper{
             e.printStackTrace();
         }
     }
-    public ArrayList<EventCategory> ReadDatabaseCategory(SQLiteDatabase db)
+    public ArrayList<eventCategory> ReadDatabaseCategory(SQLiteDatabase db)
     {
 
-        ArrayList<EventCategory> list=new ArrayList<>();
+        ArrayList<eventCategory> list=new ArrayList<>();
         try
         {
             String query;
@@ -81,7 +81,7 @@ CategoriesDbHelper  extends SQLiteOpenHelper{
             if(categoryCursor.getCount()>0) {
                 categoryCursor.moveToFirst();
                 do {
-                    EventCategory item = new EventCategory();
+                    eventCategory item = new eventCategory();
                     item.id = (categoryCursor.getInt(categoryCursor.getColumnIndex(id)));
                     item.category = (categoryCursor.getString(categoryCursor.getColumnIndex(name)));
                     Log.d("categoryfdb", item.category);
