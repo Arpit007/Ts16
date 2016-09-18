@@ -80,7 +80,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 	{
 		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(event.eventID);
 		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
-		((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
+//		((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
 		((TextView)findViewById(R.id.eventDetailDate)).setText(event.Day);

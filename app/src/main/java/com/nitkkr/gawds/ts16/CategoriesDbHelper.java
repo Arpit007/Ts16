@@ -12,7 +12,8 @@ import java.util.ArrayList;
 /**
  * Created by SAHIL SINGLA on 01-09-2016.
  */
-public class CategoriesDbHelper  extends SQLiteOpenHelper{
+public class
+CategoriesDbHelper  extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_CATEGORIES="categories";
