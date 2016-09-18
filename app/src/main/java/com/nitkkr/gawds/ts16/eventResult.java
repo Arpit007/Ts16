@@ -26,11 +26,11 @@ public class eventResult extends AppCompatActivity
 		datas=new ArrayList<>();
 
 		setTitle("Results");
-
-		for(eventData data:eventDatabase.Database.getEventList())
+		dbHelper helper=new dbHelper(this);
+		for(eventData data:helper.ReadDatabaseEvents(helper.getReadableDatabase(),0))
 			if(data.isResultDeclared())
 				datas.add(data);
-
+helper.close();
 		if(datas.size()==0)
 		{
 			findViewById(R.id.NoResult).setVisibility(View.VISIBLE);

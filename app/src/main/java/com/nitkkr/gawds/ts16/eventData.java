@@ -1,5 +1,8 @@
 package com.nitkkr.gawds.ts16;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class eventData
@@ -33,10 +36,15 @@ public class eventData
 		return (bookmark==1)? true:false;
 	}
 
-	void updateBookmark(boolean bookmarked)
+	void updateBookmark(Context c,boolean bookmarked)
 	{
 		bookmark=(bookmarked)?1:0;
-		dbHelper.DbHelper.updateBookmarkStatus(bookmark,this.eventID);
+		dbHelper helper=new dbHelper(c);
+		if(helper.updateBookmarkStatus(helper.getReadableDatabase(),bookmark,this.eventID))
+		{
+			Toast.makeText(c,"Success",Toast.LENGTH_SHORT).show();
+		}
+		helper.close();
 		UpdateEvent();
 	}
 

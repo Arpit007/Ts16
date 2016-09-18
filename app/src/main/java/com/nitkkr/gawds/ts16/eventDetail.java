@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
 	private int EventId, TabID;
-
+	static eventData data;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -64,19 +64,22 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		ActionBar bar=getSupportActionBar();
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
-
-		eventDatabase.Database.getEventData(EventId).addEventDataListener(this);
-		eventUpdated(eventDatabase.Database.getEventData(EventId));
+		dbHelper helper=new dbHelper(this);
+		data=helper.GetEventById(helper.getReadableDatabase(),EventId);
+		helper.close();
+		data.addEventDataListener(this);
+		eventUpdated(data);
 	}
 	@Override
 	protected void onStop()
 	{
 		super.onStop();
-		eventDatabase.Database.getEventData(EventId).removeDataListener(this);
+
+		data.removeDataListener(this);
 	}
 
 	@Override
-	public void eventUpdated(eventData event)
+	public void eventUpdated(final eventData event)
 	{
 		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(event.eventID);
 		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
@@ -90,7 +93,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				eventDatabase.Database.getEventData(EventId).updateBookmark(isChecked);
+				event.updateBookmark(getBaseContext(),isChecked);
 			}
 		});
 		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener(((TextView)findViewById(R.id.eventDetailStatus)),this));

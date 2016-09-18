@@ -31,7 +31,8 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 	public void bookMarkChanged()
 	{
 		eventDataList=new ArrayList<>();
-		for(eventData data:eventDatabase.Database.getEventList())
+		dbHelper helper=new dbHelper(this);
+		for(eventData data:helper.ReadDatabaseEvents(helper.getReadableDatabase(),0))
 		{
 			if(data.isBookmarked())
 				eventDataList.add(data);

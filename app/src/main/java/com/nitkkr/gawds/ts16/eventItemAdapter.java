@@ -83,7 +83,7 @@ public class eventItemAdapter extends BaseAdapter
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				dataList.get(position).updateBookmark(isChecked);
+				dataList.get(position).updateBookmark(context,isChecked);
 				listener.bookMarkChanged();
 			}
 		});

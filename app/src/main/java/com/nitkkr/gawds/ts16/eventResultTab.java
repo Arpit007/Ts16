@@ -18,12 +18,14 @@ import android.widget.TextView;
 public class eventResultTab extends Fragment implements eventData.eventDataListener
 {
 	private int EventID;
-
+	static eventData data;
 	public static eventResultTab CreateFragment(Bundle bundle)
 	{
 		eventResultTab tab = new eventResultTab();
 		tab.EventID=bundle.getInt(tab.getString(R.string.EventID));
-		eventData data = eventDatabase.Database.getEventData(tab.EventID);
+		dbHelper helper=new dbHelper(tab.getContext());
+		data =helper.GetEventById(helper.getReadableDatabase(),tab.EventID);
+		helper.close();
 		data.addEventDataListener(tab);
 		return tab;
 	}
@@ -31,14 +33,13 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		eventUpdated(eventDatabase.Database.getEventData(EventID));
+		eventUpdated(data);
 	}
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_event_result_tab, container, false);
 	}
 
@@ -47,7 +48,7 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	{
 		EventID=event.eventID;
 		View view=getView();
-		if(!eventDatabase.Database.getEventData(EventID).isResultDeclared())
+		if(!data.isResultDeclared())
 		{
 			(view.findViewById(R.id.NoResult)).setVisibility(View.VISIBLE);
 		}
@@ -56,7 +57,7 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 			view.findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
 			WebView webView=(WebView)view.findViewById(R.id.resultView);
 			webView.setWebViewClient(new Callback());
-			webView.loadData(eventDatabase.Database.getEventData(EventID).Result,"text/html","UTF-8");
+			webView.loadData(data.Result,"text/html","UTF-8");
 		}
 	}
 
@@ -64,14 +65,14 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	public void onDestroy()
 	{
 		super.onDestroy();
-		eventDatabase.Database.getEventData(EventID).removeDataListener(this);
+		data.removeDataListener(this);
 	}
 
 	@Override
 	public void onStop()
 	{
 		super.onStop();
-		eventDatabase.Database.getEventData(EventID).removeDataListener(this);
+		data.removeDataListener(this);
 	}
 
 	private class Callback extends WebViewClient

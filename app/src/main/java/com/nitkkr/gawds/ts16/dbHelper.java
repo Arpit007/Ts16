@@ -115,6 +115,8 @@ import java.util.Date;
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                     stackBuilder.addParentStack(eventDetail.class);
                     stackBuilder.addNextIntent(i);
+
+                    builder.setSmallIcon(R.drawable.notify_icon);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -124,6 +126,7 @@ import java.util.Date;
                 {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                         builder.setContentTitle("Results for " + event.eventName + " declared");
+                    builder.setSmallIcon(R.drawable.notify_icon);
                         Intent i = new Intent(context, eventDetail.class);
                         i.putExtra(context.getString(R.string.TabID), 2);
                         i.putExtra(context.getString(R.string.EventID), event.eventID);
@@ -284,22 +287,79 @@ import java.util.Date;
         return eventValues;
     }
 
-    public void updateBookmarkStatus(int status,int ids)
+    public boolean updateBookmarkStatus(SQLiteDatabase db,int status,int ids)
     {
-        SQLiteDatabase db=getReadableDatabase();
+        db=getReadableDatabase();
         String query="Update "+TABLE_EVENTS+" set "+special+" = "+status+" where "+id+"="+ids;
         try {
             db.execSQL(query);
+            return true;
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         db.close();
+        return false;
     }
 
     public SQLiteDatabase getDefaultDatabase()
     {
         return null;
+    }
+
+    public eventData GetEventById(SQLiteDatabase db, int eventID) {
+
+        eventData item=new eventData();
+        try
+        {
+            String query;
+//            if(category>0)
+                query="Select * from "+TABLE_EVENTS+" where id= "+category+";";
+//            else
+//                query="Select * from "+TABLE_EVENTS+";";
+            Cursor object=db.rawQuery(query,null);
+
+//            Log.d("cnt", String.valueOf(object.getCount()));
+//
+//            Log.d("cnt", "sas,");
+//            Log.d("cnt", String.valueOf(object.getCount()));
+//            Log.d("cnt", String.valueOf(object.getCount()));
+
+            if(object.getCount()>0)
+            {
+                object.moveToFirst();
+                do{
+//                    eventData item=new eventData();
+                    item.eventID=object.getInt(object.getColumnIndex(id));
+                    item.eventName=object.getString(object.getColumnIndex(name));
+                    item.Category=object.getInt(object.getColumnIndex("category"));
+                    item.Venue=object.getString(object.getColumnIndex(venue));
+                    item.Day=object.getString(object.getColumnIndex(date));
+                    item.Status=object.getInt(object.getColumnIndex(status));
+                    item.Time=object.getString(object.getColumnIndex(scheduled_start));
+                    item.EndTime=object.getString(object.getColumnIndex(scheduled_end));
+                    item.Duration=object.getString(object.getColumnIndex(duration));
+                    item.Status=object.getInt(object.getColumnIndex(delay_status));
+                    item.ImageID=object.getString(object.getColumnIndex(poster_name));
+                    item.Description=object.getString(object.getColumnIndex(description));
+                    item.EventCoordinators=object.getString(object.getColumnIndex(event_coordinator));
+                    item.bookmark=object.getInt(object.getColumnIndex(special));
+                    item.Result=object.getString(object.getColumnIndex(result));
+                    item.Rules=object.getString(object.getColumnIndex(rules));
+                    item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
+//                    list.add(item);
+//                    Log.d("categoryf  ", String.valueOf(item.eventID));
+                }while(object.moveToNext());
+                object.close();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return item;
+
     }
 }

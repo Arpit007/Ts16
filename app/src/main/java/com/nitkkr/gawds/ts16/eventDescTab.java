@@ -10,12 +10,15 @@ import android.widget.TextView;
 public class eventDescTab extends Fragment implements eventData.eventDataListener
 {
     private int EventID;
-
+    static eventData data;
     public static eventDescTab CreateFragment(Bundle bundle)
     {
         eventDescTab tab = new eventDescTab();
         tab.EventID=bundle.getInt(tab.getString(R.string.EventID));
-        eventData data = eventDatabase.Database.getEventData(tab.EventID);
+        dbHelper helper=new dbHelper(tab.getContext());
+        data=helper.GetEventById(helper.getReadableDatabase(),tab.EventID);
+        helper.close();
+//      eventData data = eventDatabase.Database.getEventData(tab.EventID);
         data.addEventDataListener(tab);
         return tab;
     }
@@ -23,7 +26,7 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        eventUpdated(eventDatabase.Database.getEventData(EventID));
+        eventUpdated(data);
     }
 
     @Override
@@ -46,13 +49,14 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
     public void onDestroy()
     {
         super.onDestroy();
-        eventDatabase.Database.getEventData(EventID).removeDataListener(this);
+        data.removeDataListener(this);
     }
 
     @Override
     public void onStop()
     {
         super.onStop();
-        eventDatabase.Database.getEventData(EventID).removeDataListener(this);
+        data.removeDataListener(this);
+//        eventDatabase.Database.getEventData(EventID).removeDataListener(this);
     }
 }
