@@ -28,6 +28,7 @@ public class mainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		toolbar.setTitle("Talent Show'16");
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -198,5 +199,11 @@ public class mainActivity extends AppCompatActivity
 		public int getCount() {
 			return mNumOfTabs;
 		}
+	}
+
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		navigationView.setCheckedItem(R.id.nav_home);
 	}
 }
