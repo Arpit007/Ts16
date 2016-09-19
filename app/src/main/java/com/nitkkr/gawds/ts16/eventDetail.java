@@ -123,9 +123,12 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			Bundle bundle=new Bundle();
 			bundle.putInt(context.getString(R.string.EventID),EventID);
 			switch (position) {
-				case 0: return eventDescTab.CreateFragment(bundle);
-				case 1: return eventRuleTab.CreateFragment(bundle);
-				case 2: return eventResultTab.CreateFragment(bundle);
+				case 0: eventDescTab tab=new eventDescTab();
+						tab.setUpFragment(EventID, context);return tab;
+				case 1: eventRuleTab tab1=new eventRuleTab();
+						tab1.setUpFragment(EventID, context);return tab1;
+				case 2: eventResultTab tab2=new eventResultTab();
+						tab2.setUpFragment(EventID, context);return tab2;
 				default:
 					return null;
 			}
