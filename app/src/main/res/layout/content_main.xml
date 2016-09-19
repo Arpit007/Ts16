@@ -12,8 +12,8 @@
         android:id="@+id/homeTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#373644"
         android:minHeight="?attr/actionBarSize"
+        app:tabIndicatorColor="#ef5350"
         android:theme="@style/AppTheme.AppBarOverlay"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/homePager" android:isScrollContainer="true"
