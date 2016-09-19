@@ -6,27 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.Splash">
     <ImageView
-        android:src="@drawable/ab"
+        android:src="@drawable/splash"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:scaleType="center"/>
+        android:scaleType="fitXY"/>
     <RelativeLayout
         android:layout_centerInParent="true" android:orientation="vertical"
         android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <ImageView
-            android:layout_centerHorizontal="true"
-            android:id="@+id/SplashIconView" android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <TextView
-            android:paddingTop="10dp"
-            android:layout_centerHorizontal="true" android:id="@+id/SplashTextView"
-            android:layout_below="@id/SplashIconView" android:text="@string/TitleName"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textColor="#ffffff" android:textSize="30sp"/>
-        <TextView
-            android:layout_centerHorizontal="true" android:layout_below="@id/SplashTextView"
-            android:text="@string/TitleYear"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="25sp" android:textColor="#ffffff"/>
+
     </RelativeLayout>
 
 </RelativeLayout>
