@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ public class sponsors extends AppCompatActivity
 		setContentView(R.layout.activity_sponsors);
 
 		setTitle("Sponsors");
-
 		GridView gridView=(GridView)findViewById(R.id.sponsorGrid);
 		gridView.setAdapter(new sponsorListAdapter(this));
 
@@ -100,6 +100,9 @@ public class sponsors extends AppCompatActivity
 			}
 			((ImageView)convertView.findViewById(R.id.sponsorItemImage)).setImageResource(sponsorList.get(position).imageId);
 			(( TextView)convertView.findViewById(R.id.sponsorItemLabel)).setText(sponsorList.get(position).label);
+			Typeface font = Typeface.createFromAsset(context.getAssets(),
+					"fonts/Font1.ttf");
+			(( TextView)convertView.findViewById(R.id.sponsorItemLabel)).setTypeface(font);
 
 			convertView.setMinimumWidth(parent.getWidth()/2);
 			convertView.setMinimumHeight(parent.getWidth()/2);

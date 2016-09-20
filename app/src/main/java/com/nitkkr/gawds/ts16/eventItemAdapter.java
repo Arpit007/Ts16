@@ -3,17 +3,25 @@ package com.nitkkr.gawds.ts16;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.sip.SipAudioCall;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Home Laptop on 05-Sep-16.
@@ -65,13 +73,22 @@ public class eventItemAdapter extends BaseAdapter
 	{
 		if (convertView == null)
 		{
-			LayoutInflater inflater=((Activity)context).getLayoutInflater();
+			LayoutInflater inflater=LayoutInflater.from(context);
 			convertView=inflater.inflate(R.layout.event_recycler_item,parent,false);
 		}
 		((TextView)convertView.findViewById(R.id.event_name)).setText(dataList.get(position).eventName);
 		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(dataList.get(position).isBookmarked());
-		((TextView)convertView.findViewById(R.id.recycler_event_date)).setText(dataList.get(position).Day);
-		((TextView)convertView.findViewById(R.id.recycler_event_time)).setText(dataList.get(position).Time);
+		try
+		{
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date=simpleDateFormat.parse(dataList.get(position).Day+" "+dataList.get(position).Time);
+			simpleDateFormat.applyPattern("hh:mm a, dd MMM yyyy");
+			(( TextView)convertView.findViewById(R.id.recycler_event_date)).setText(simpleDateFormat.format(date));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		if(showBookmark)
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
@@ -87,6 +104,20 @@ public class eventItemAdapter extends BaseAdapter
 //				listener.bookMarkChanged();
 			}
 		});
+		Typeface font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/Font1.ttf");
+		(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
+		font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/Font2.ttf");
+		(( TextView)convertView.findViewById(R.id.recycler_event_date)).setTypeface(font);
+
+		ImageView view=(ImageView)convertView.findViewById(R.id.eventBullet);
+
+		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
+
+		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
+		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%(array.length()+1),0));
+		view.setImageDrawable(drawable);
 		return convertView;
 	}
 }

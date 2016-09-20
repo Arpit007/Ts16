@@ -3,15 +3,23 @@ package com.nitkkr.gawds.ts16;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +54,7 @@ public class newsListFragment extends Fragment
 			Log.d("Mesage count", String.valueOf(MessageDataList.size()));
 			listView.setAdapter(new newsItemAdapter(MessageDataList, getContext()));
 		}
+
 		return view;
 	}
 	class newsItemAdapter extends BaseAdapter
@@ -102,6 +111,22 @@ public class newsListFragment extends Fragment
 			}
 
 			(( TextView)convertView.findViewById(R.id.news_content)).setText(data.News);
+
+			ImageView view=(ImageView)convertView.findViewById(R.id.newsBullet);
+
+			TypedArray array=getResources().obtainTypedArray(R.array.ModernColor);
+
+			Drawable drawable= ResourcesCompat.getDrawable(getResources(), R.drawable.bullet_icon, null);
+			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%(array.length()+1),0));
+			view.setImageDrawable(drawable);
+
+			Typeface font = Typeface.createFromAsset(getContext().getAssets(),
+					"fonts/Font1.ttf");
+			(( TextView)convertView.findViewById(R.id.news_Title)).setTypeface(font);
+			font = Typeface.createFromAsset(getContext().getAssets(),
+					"fonts/Font2.ttf");
+			(( TextView)convertView.findViewById(R.id.news_content)).setTypeface(font);
+			(( TextView)convertView.findViewById(R.id.news_date)).setTypeface(font);
 			return convertView;
 		}
 	}

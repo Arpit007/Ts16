@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.nitkkr.gawds.ts16.newsListFragment">
-
+z
     <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"
         android:layout_centerInParent="true" android:id="@+id/NoNews"
@@ -11,5 +11,8 @@
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <ListView android:id="@+id/NewsList" android:clickable="false"
+              android:divider="#00ffffff" android:dividerHeight="20dp"
+              android:paddingLeft="10dp" android:paddingRight="10dp"
+              android:paddingTop="30dp" android:listSelector="@android:color/transparent"
               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </FrameLayout>

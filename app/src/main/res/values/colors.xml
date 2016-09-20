@@ -9,4 +9,15 @@
     <color name="Over">#ff0000</color>
     <color name="Upcoming">#828c0c</color>
     <color name="None">#00ffffff</color>
+
+    <color name="c1">#f1c40f</color>
+    <color name="c2">#16a085</color>
+    <color name="c3">#9b59b6</color>
+    <color name="c4">#e74c37</color>
+    <color name="c5">#2ecc71</color>
+    <color name="c6">#2980b9</color>
+    <color name="c7">#e67e22</color>
+    <color name="c8">#ec407a</color>
+    <color name="c9">#29b6f6</color>
+    <color name="c10">#f44336</color>
 </resources>

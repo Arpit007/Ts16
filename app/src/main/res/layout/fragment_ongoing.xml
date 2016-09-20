@@ -6,9 +6,11 @@
     <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"
         android:layout_centerInParent="true" android:id="@+id/NoOngoing"
-        android:text="@string/NoOngoing" android:visibility="invisible"
+        android:text="@string/NoUpcoming" android:visibility="invisible"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center"/>
     <ListView android:id="@+id/OngoingList"
-                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
+              android:divider="#00ffffff" android:dividerHeight="20dp"
+              android:paddingTop="30dp" android:paddingLeft="10dp" android:paddingRight="10dp"
+              android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </FrameLayout>

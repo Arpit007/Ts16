@@ -1,12 +1,9 @@
 package com.nitkkr.gawds.ts16;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Size;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,20 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import javax.crypto.NullCipher;
 
 public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
@@ -45,7 +33,7 @@ public class mainActivity extends AppCompatActivity
 		TextView view=(TextView)toolbar.findViewById(R.id.mainLogo);
 
 		Typeface font = Typeface.createFromAsset(getAssets(),
-				"fonts/FREESCPT.TTF");
+				"fonts/Free.ttf");
 		view.setTypeface(font);
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
