@@ -1,6 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -18,8 +21,10 @@ import android.widget.TextView;
 
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
+
+
 	private int EventId, TabID;
-	static eventData data;
+	 static eventData data;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -34,7 +39,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 
 		EventId=getIntent().getIntExtra(getString(R.string.EventID),0);
 		TabID=getIntent().getIntExtra(getString(R.string.TabID),0);
-
+		Log.d("MyEventId", String.valueOf(EventId));
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
 		final PagerAdapter adapter = new PagerAdapter
 				(getSupportFragmentManager(), tabLayout.getTabCount(), EventId, this);
@@ -64,8 +69,11 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		ActionBar bar=getSupportActionBar();
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
+
 		dbHelper helper=new dbHelper(this);
+		Log.d("nsxjnj", String.valueOf(EventId));
 		data=helper.GetEventById(helper.getReadableDatabase(),EventId);
+		Log.d("EventDetail",data.eventName);
 		helper.close();
 		data.addEventDataListener(this);
 		eventUpdated(data);
@@ -81,9 +89,20 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 	@Override
 	public void eventUpdated(final eventData event)
 	{
-//		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(event.eventID);
+//		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(""+event.eventID);
 		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
-//		((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
+		if(event.Status==-1)
+		{
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Finished");
+		}
+		else if(event.Status==0)
+		{
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Not Started");
+		}
+		else if(event.Status==1)
+		{
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Live");
+		}
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
 		((TextView)findViewById(R.id.eventDetailDate)).setText(event.Day);
@@ -104,6 +123,22 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
 	}
 
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+			{
+				onBackPressed();
+			}
+		}
+		return true;
+	}
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
@@ -112,7 +147,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 
 		public PagerAdapter(FragmentManager fm, int NumOfTabs, int eventID, Context context) {
 			super(fm);
-			EventID=eventID;
+			this.EventID=eventID;
 			this.context=context;
 			this.mNumOfTabs = NumOfTabs;
 		}

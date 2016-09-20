@@ -47,11 +47,14 @@ public class ServertoSqliteLoader extends Service {
     private static final String last_updated="last_updated";
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId)
+
+    {
         Thread thread=new Thread(new Runnable() {
             @Override
             public void run() {
                 //event
+                Log.d("ServiceTag","Thread Run");
                 httpRequest rh=new httpRequest();
                 String EventJsonString;
                 EventJsonString=rh.SendGetRequest("http://www.almerston.com/nitkkr2110/TS/events.php?category=0");
@@ -129,6 +132,7 @@ public class ServertoSqliteLoader extends Service {
                             stackBuilder.addNextIntent(resultIntent);
                             PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                             builder.setContentIntent(pendingIntent);
+                            builder.setSmallIcon(R.drawable.notify_icon);
                             NotificationManager notification=(NotificationManager )getSystemService(Context.NOTIFICATION_SERVICE);
                             notification.notify("UpcomingEventNotification",100,builder.build());
                         }
@@ -155,6 +159,7 @@ public class ServertoSqliteLoader extends Service {
             }
         });
         thread.start();
+        Log.d("ServiceTag","Service run");
         return Service.START_STICKY;
     }
 

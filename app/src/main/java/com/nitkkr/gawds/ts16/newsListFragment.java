@@ -86,7 +86,7 @@ public class newsListFragment extends Fragment
 				LayoutInflater inflater=((Activity)context).getLayoutInflater();
 				convertView=inflater.inflate(R.layout.news_item_layout,parent,false);
 			}
-			MessageDbHelper.MessageData data=list.get(position);
+			MessageDbHelper.MessageData data=list.get(getCount()-position-1);
 			(( TextView)convertView.findViewById(R.id.news_Title)).setText(data.Title);
 
 			try

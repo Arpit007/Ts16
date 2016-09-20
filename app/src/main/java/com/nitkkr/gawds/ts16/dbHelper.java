@@ -229,7 +229,7 @@ import java.util.Date;
                 Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
                 Long eventTimeStamp=(eventDate.getTime())/1000;
                 Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                if(eventTimeStamp<=currentTimeStamp+10800 && currentTimeStamp<eventTimeStamp)
+                if(currentTimeStamp<eventTimeStamp)
                 {
                     upcoming.add(item);
                 }
@@ -254,7 +254,11 @@ import java.util.Date;
         {
             Log.d("Status ",all.get(i).Status+" "+all.get(i).eventID);
             try {
-                if(all.get(i).Status==1)
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String eventTimeStatus=all.get(i).Day+" "+all.get(i).EndTime;
+                long eventTimeStamp=(format.parse(eventTimeStatus).getTime())/1000;
+                long currentTimeStamp=Calendar.getInstance().getTimeInMillis()/1000;
+                if(all.get(i).Status==1 && eventTimeStamp>=currentTimeStamp)
                 {
                     Log.d("Adding ",all.get(i).eventID+"");
                     ongoing.add(all.get(i));
@@ -314,7 +318,7 @@ import java.util.Date;
         {
             String query;
 //            if(category>0)
-                query="Select * from "+TABLE_EVENTS+" where id= "+category+";";
+                query="Select * from "+TABLE_EVENTS+" where id= "+eventID+";";
 //            else
 //                query="Select * from "+TABLE_EVENTS+";";
             Cursor object=db.rawQuery(query,null);

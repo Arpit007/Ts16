@@ -27,6 +27,8 @@ import java.util.ArrayList;
 public class eventsListPage extends AppCompatActivity
 { RecyclerView EventsRecyclerView;
 	EventAdapter eventAdapter;
+	int CategoryId;
+	ArrayList<eventData> list;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,24 +36,38 @@ public class eventsListPage extends AppCompatActivity
 
 		Intent i=getIntent();
 		Bundle b=i.getExtras();
-		int CategoryId=b.getInt(getString(R.string.CategoryID));
+		CategoryId=b.getInt(getString(R.string.CategoryID));
 		EventsRecyclerView=(RecyclerView) findViewById(R.id.event_recycler);
 		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		dbHelper helper=new dbHelper(this);
-		ArrayList<eventData> list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
+		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
 		helper.close();
-		eventAdapter=new EventAdapter(getBaseContext(),list);
+		eventAdapter=new EventAdapter(getBaseContext(),list,CategoryId);
 		EventsRecyclerView.setAdapter(eventAdapter);
 
 
+	}
+
+
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		dbHelper helper=new dbHelper(this);
+		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
+		helper.close();
+		eventAdapter=new EventAdapter(getBaseContext(),list,CategoryId);
+		EventsRecyclerView.setAdapter(eventAdapter);
 	}
 }
 
 class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 	Context context;
+	int Categoryid;
 	ArrayList<eventData> eventItems;
-	public EventAdapter(Context c, ArrayList<eventData> list) {
+	public EventAdapter(Context c, ArrayList<eventData> list,int categoryid) {
 		this.context = c;
+		this.Categoryid=categoryid;
 		this.eventItems=list;
 	}
 
@@ -65,18 +81,19 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 	@Override
 	public void onBindViewHolder(final ViewHolder holder, int position) {
 		final eventData item=eventItems.get(position);
+		holder.eid.setText(""+item.eventID);
 		holder.EventName.setText(item.eventName);
 		holder.Time.setText(item.Time);
 		holder.Day.setText(item.Day);
-		Log.d("tag id", String.valueOf(item.eventID));
 		holder.Bookmark.setChecked(((item.bookmark==1)?true:false));
 		holder.EventRecyclerItem.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent i=new Intent(context,eventDetail.class);
-				i.putExtra(context.getString(R.string.EventID),item.eventID);
-				i.putExtra(context.getString(R.string.TabID),0);
 
+				Intent i=new Intent(context,eventDetail.class);
+				Log.d("tag id", holder.eid.getText().toString());
+				i.putExtra(context.getString(R.string.EventID),Integer.parseInt(holder.eid.getText()+""));
+				i.putExtra(context.getString(R.string.TabID),0);
 				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(i);
 			}
@@ -97,7 +114,7 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder{
-		TextView EventName,Day,Time;
+		TextView EventName,Day,Time,eid;
 		CheckBox Bookmark;
 		LinearLayout EventRecyclerItem;
 		public ViewHolder(View itemView) {
@@ -107,7 +124,8 @@ class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 			Day=(TextView) itemView.findViewById(R.id.recycler_event_date);
 			Time=(TextView)itemView.findViewById(R.id.recycler_event_time);
 			Bookmark=(CheckBox) itemView.findViewById(R.id.starrred);
-
+			eid=(TextView) itemView.findViewById(R.id.event_id);
 		}
 	}
+
 }

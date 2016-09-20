@@ -24,7 +24,9 @@
             android:paddingRight="5dp"
             android:id="@+id/eventDetailStatus" android:layout_alignParentRight="true"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="20sp" android:text="Live"/>
+            android:textSize="20sp"
+            android:gravity="bottom"
+            android:paddingTop="7dp"/>
     </RelativeLayout>
     <CheckBox
         android:id="@+id/eventDetailNotify"
