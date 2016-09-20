@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class aboutUs extends AppCompatActivity
 {
@@ -52,5 +54,9 @@ public class aboutUs extends AppCompatActivity
 				startActivity(intent);
 			}
 		});
+		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),
+				"fonts/Free.ttf");
+		((TextView)findViewById(R.id.dev1)).setTypeface(font);
+		((TextView)findViewById(R.id.dev2)).setTypeface(font);
 	}
 }
