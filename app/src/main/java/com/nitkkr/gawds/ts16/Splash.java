@@ -1,5 +1,9 @@
 package com.nitkkr.gawds.ts16;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -43,8 +47,10 @@ public class Splash extends AppCompatActivity
 	{
 		e.printStackTrace();
 	}
-	serviceStartBroadcast.startServices(this);
+//	serviceStartBroadcast.startServices(this);
+		startAlarm(this);
 	}
+
 
 	@Override
 	protected void onPostCreate(@Nullable Bundle savedInstanceState)
@@ -62,5 +68,14 @@ public class Splash extends AppCompatActivity
 				finish();
 			}
 		}, getResources().getInteger(R.integer.splashDuration));
+	}
+	public  void startAlarm(Context c)
+	{
+		Intent intent=new Intent(c, serviceStartBroadcast.class);
+		final PendingIntent pendingIntent=PendingIntent.getBroadcast(c,12345,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+		long firstMillis = System.currentTimeMillis();
+		AlarmManager alarm = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+//		alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,firstMillis,100,pendingIntent);
+		alarm.setRepeating(AlarmManager.RTC_WAKEUP,firstMillis,1000,pendingIntent);
 	}
 }

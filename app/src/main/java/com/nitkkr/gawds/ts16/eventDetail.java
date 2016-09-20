@@ -73,7 +73,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		dbHelper helper=new dbHelper(this);
 		Log.d("nsxjnj", String.valueOf(EventId));
 		data=helper.GetEventById(helper.getReadableDatabase(),EventId);
-		Log.d("EventDetail",data.eventName);
+//		Log.d("EventDetail",data.eventName);
 		helper.close();
 		data.addEventDataListener(this);
 		eventUpdated(data);
