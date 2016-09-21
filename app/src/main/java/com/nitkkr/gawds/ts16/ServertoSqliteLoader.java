@@ -147,7 +147,7 @@ public class ServertoSqliteLoader extends IntentService {
                             builder.setVibrate(new long[] {1000});
                             builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                             builder.setLights(Color.WHITE,1000,500);
-                            builder.setSmallIcon(R.drawable.notify_icon);
+                            builder.setSmallIcon(R.drawable.checked_star);
                             upcomingEditor.putInt(""+item.eventID,item.eventID);
                             upcomingEditor.commit();
                             NotificationManager notification=(NotificationManager )getSystemService(Context.NOTIFICATION_SERVICE);

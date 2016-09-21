@@ -1,9 +1,13 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -12,10 +16,12 @@ import android.widget.TextView;
 public class eventStatusListener implements TextWatcher
 {
 	private TextView textView;
+	ImageView bullet;
 	private Context context;
 
-	public eventStatusListener(TextView textView, Context context)
+	public eventStatusListener(TextView textView, ImageView Bullet, Context context)
 	{
+		bullet=Bullet;
 		this.context=context;
 		this.textView=textView;
 	}
@@ -29,7 +35,7 @@ public class eventStatusListener implements TextWatcher
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count)
 	{
-		String[] array=context.getResources().getStringArray(R.array.EventStateColors);
+		String[] array=context.getResources().getStringArray(R.array.EventStatus);
 		int color=0;
 		int[] colorArray=context.getResources().getIntArray(R.array.EventStateColors);
 		if(s.equals(array[0]))
@@ -46,9 +52,16 @@ public class eventStatusListener implements TextWatcher
 		}
 		else if(s.equals(array[3]))
 		{
-			color=colorArray[3];
+			bullet.setVisibility(View.INVISIBLE);
+			textView.setVisibility(View.INVISIBLE);
+			return;
 		}
-		textView.setTextColor(color);
+
+		bullet.setVisibility(View.VISIBLE);
+		textView.setVisibility(View.VISIBLE);
+		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
+		DrawableCompat.setTint(DrawableCompat.wrap(drawable), color);
+		bullet.setImageDrawable(drawable);
 	}
 
 	@Override
