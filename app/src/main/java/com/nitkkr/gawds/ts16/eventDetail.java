@@ -1,7 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,24 +9,22 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
+
+
 	private int EventId, TabID;
-	static eventData data;
+	 static eventData data;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -41,7 +39,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 
 		EventId=getIntent().getIntExtra(getString(R.string.EventID),0);
 		TabID=getIntent().getIntExtra(getString(R.string.TabID),0);
-
+		Log.d("MyEventId", String.valueOf(EventId));
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
 		final PagerAdapter adapter = new PagerAdapter
 				(getSupportFragmentManager(), tabLayout.getTabCount(), EventId, this);
@@ -71,19 +69,14 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		ActionBar bar=getSupportActionBar();
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
+
 		dbHelper helper=new dbHelper(this);
+		Log.d("nsxjnj", String.valueOf(EventId));
 		data=helper.GetEventById(helper.getReadableDatabase(),EventId);
+//		Log.d("EventDetail",data.eventName);
 		helper.close();
 		data.addEventDataListener(this);
 		eventUpdated(data);
-
-
-		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),
-			"fonts/Font2.ttf");
-		(( TextView)findViewById(R.id.eventDetailStatus)).setTypeface(font);
-		((TextView)findViewById(R.id.eventDetailDate)).setTypeface(font);
-		((TextView)findViewById(R.id.eventDetailTime)).setTypeface(font);
-		((TextView)findViewById(R.id.eventDetailLocation)).setTypeface(font);
 	}
 	@Override
 	protected void onStop()
@@ -96,44 +89,24 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 	@Override
 	public void eventUpdated(final eventData event)
 	{
-		try
+//		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(""+event.eventID);
+		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
+		if(event.Status==-1)
 		{
-			int ImageId=event.getImageResourceID();
-			/*if(ImageId!=-1)
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
-			else
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));*/
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Finished");
 		}
-		catch (Exception e)
+		else if(event.Status==0)
 		{
-			e.printStackTrace();
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Not Started");
 		}
-
-		setTitle(event.eventName);
-
-
+		else if(event.Status==1)
+		{
+			((TextView)findViewById(R.id.eventDetailStatus)).setText("Live");
+		}
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
-
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
-
-		try
-		{
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Date date=simpleDateFormat.parse(event.Day);
-			simpleDateFormat.applyPattern("dd MMM yyyy");
-			((TextView)findViewById(R.id.eventDetailDate)).setText(simpleDateFormat.format(date));
-
-			simpleDateFormat=new SimpleDateFormat("hh:mm:ss");
-			date=simpleDateFormat.parse(event.Time);
-			simpleDateFormat.applyPattern("hh:mm a");
-			((TextView)findViewById(R.id.eventDetailTime)).setText(simpleDateFormat.format(date));
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-
+		((TextView)findViewById(R.id.eventDetailDate)).setText(event.Day);
+		((TextView)findViewById(R.id.eventDetailTime)).setText(event.Time);
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 		{
 			@Override
@@ -142,24 +115,29 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 				event.updateBookmark(getBaseContext(),isChecked);
 			}
 		});
-
 		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener(((TextView)findViewById(R.id.eventDetailStatus)),this));
-
-
-		//((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
-
+		int ImageId=event.getImageResourceID();
+		if(ImageId!=-1)
+			((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
+		else
+			((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
+	public void onBackPressed() {
+		super.onBackPressed();
+	}
 
-		switch (item.getItemId()) {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId())
+		{
 			case android.R.id.home:
-				finish();
-				return true;
+			{
+				onBackPressed();
+			}
 		}
-		return super.onOptionsItemSelected(item);
+		return true;
 	}
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
@@ -169,7 +147,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 
 		public PagerAdapter(FragmentManager fm, int NumOfTabs, int eventID, Context context) {
 			super(fm);
-			EventID=eventID;
+			this.EventID=eventID;
 			this.context=context;
 			this.mNumOfTabs = NumOfTabs;
 		}

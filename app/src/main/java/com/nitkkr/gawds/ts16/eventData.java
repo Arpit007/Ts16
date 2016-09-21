@@ -48,7 +48,7 @@ public class eventData
 			Toast.makeText(c,"Success",Toast.LENGTH_SHORT).show();
 		}
 		helper.close();
-		UpdateEvent();
+//		UpdateEvent();
 	}
 
 	public interface eventDataListener

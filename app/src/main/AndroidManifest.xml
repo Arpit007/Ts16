@@ -25,6 +25,9 @@
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>
         </activity>
         <activity android:name=".eventDetail" android:screenOrientation="sensorPortrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nitkkr.gawds.ts16.eventsListPage"/>
         </activity>
         <activity android:name=".sponsors" android:screenOrientation="sensorPortrait">
             <meta-data
