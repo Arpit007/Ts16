@@ -30,7 +30,14 @@ public class eventsListPage extends AppCompatActivity
 			title+=" Events";
 
 		setTitle(title);
-
-		eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
+		if(list.size()==0)
+		{
+			findViewById(R.id.noEvent).setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
+			eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
+		}
 	}
 }

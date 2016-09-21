@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class mainActivity extends AppCompatActivity
@@ -44,6 +45,13 @@ public class mainActivity extends AppCompatActivity
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
+		navigationView.setItemIconTintList(null);
+
+
+		View header=navigationView.getHeaderView(0);
+		font = Typeface.createFromAsset(getBaseContext().getAssets(),
+				"fonts/Free.ttf");
+		((TextView)header.findViewById(R.id.headerLogo)).setTypeface(font);
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));

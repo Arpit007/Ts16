@@ -117,7 +117,7 @@ import java.util.Date;
                     stackBuilder.addParentStack(eventDetail.class);
                     stackBuilder.addNextIntent(i);
 
-                    builder.setSmallIcon(R.drawable.notify_icon);
+                    builder.setSmallIcon(R.drawable.checked_star);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -127,7 +127,7 @@ import java.util.Date;
                 {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                         builder.setContentTitle("Results for " + event.eventName + " declared");
-                    builder.setSmallIcon(R.drawable.notify_icon);
+                    builder.setSmallIcon(R.drawable.checked_star);
                         Intent i = new Intent(context, eventDetail.class);
                         i.putExtra(context.getString(R.string.TabID), 2);
                         i.putExtra(context.getString(R.string.EventID), event.eventID);

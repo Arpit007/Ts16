@@ -3,73 +3,86 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.nitkkr.gawds.ts16.eventDetail">
-    <ImageView
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="match_parent" android:layout_height="180dp"
-        android:id="@+id/eventDetailImage"/>
-    <RelativeLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/eventDetailImage" android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" android:background="#5c3c3f41">
-        <TextView
-            android:paddingLeft="5dp"
-            android:id="@+id/eventDetailName" android:layout_gravity="left"
+
+        <ImageView
+            android:src="@mipmap/ic_launcher" android:scaleType="fitCenter"
+            android:layout_width="match_parent" android:layout_height="180dp"
+            android:id="@+id/eventDetailImage"/>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/eventDetailImage" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView android:drawablePadding="10dp" android:paddingLeft="5dp"
+                android:paddingRight="10dp" android:layout_centerVertical="true"
+                android:id="@+id/eventDetailStatus" android:layout_alignParentRight="true"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textSize="20sp" android:text="Live"/>
+            <ImageView android:src="@drawable/bullet_icon"
+                       android:layout_width="15dp" android:layout_height="15dp"
+                       android:layout_centerVertical="true" android:paddingRight="5dp"
+                       android:layout_toLeftOf="@+id/eventDetailStatus"
+                       android:layout_toStartOf="@+id/eventDetailStatus"/>
+
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/eventDetailNotify" android:button="@drawable/bookmark_style"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="25sp" android:text="Mirage"/>
+            android:layout_alignParentTop="true" android:paddingTop="5dp" android:paddingRight="5dp"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
 
-        <TextView
-            android:paddingRight="5dp"
-            android:id="@+id/eventDetailStatus" android:layout_alignParentRight="true"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textSize="20sp" android:text="Live"/>
-    </RelativeLayout>
-    <CheckBox
-        android:id="@+id/eventDetailNotify"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        style="?android:attr/starStyle" android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
-    <LinearLayout android:orientation="vertical" android:layout_below="@id/eventDetailImage"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <LinearLayout android:orientation="vertical" android:weightSum="100"
+                      android:layout_below="@id/eventDetailImage"
+                      android:layout_width="match_parent" android:layout_height="wrap_content">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/eventTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            <LinearLayout android:orientation="vertical" android:layout_below="@id/eventDetailImage" android:layout_weight="80"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/container">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/eventPager"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"/>
+                <android.support.design.widget.TabLayout
+                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    android:id="@+id/eventTabLayout" android:theme="@style/AppTheme.AppBarOverlay"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="?attr/actionBarSize" app:tabIndicatorColor="#ef5350"/>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/eventPager"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentBottom="true" android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:paddingBottom="10dp" android:weightSum="120">
+
+            <TextView
+                android:paddingLeft="20dp" android:id="@+id/eventDetailLocation"
+                android:textSize="15sp" android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/location_icon" android:text="ED Hall"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:layout_weight="40"/>
+
+            <TextView
+                android:paddingLeft="20dp" android:id="@+id/eventDetailDate"
+                android:textSize="15sp" android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/date_icon" android:text="21 Aug"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:layout_weight="40"/>
+
+            <TextView
+                android:paddingLeft="20dp" android:id="@+id/eventDetailTime"
+                android:textSize="15sp" android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/time_icon" android:text="9:30 AM"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:layout_weight="40"/>
+
+        </LinearLayout>
+
 </LinearLayout>
-    <LinearLayout
-        android:layout_alignParentBottom="true" android:orientation="horizontal"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:paddingLeft="5dp" android:paddingRight="5dp"
-        android:paddingBottom="5dp" android:weightSum="120">
-        <TextView
-            android:paddingLeft="20dp" android:id="@+id/eventDetailLocation"
-            android:textSize="15sp" android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/location_icon" android:text="ED Hall"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:layout_weight="40"/>
-        <TextView
-            android:paddingLeft="20dp" android:id="@+id/eventDetailDate"
-            android:textSize="15sp" android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/date_icon" android:text="21 Aug"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:layout_weight="40"/>
-        <TextView
-            android:paddingLeft="20dp" android:id="@+id/eventDetailTime"
-            android:textSize="15sp" android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/time_icon" android:text="9:30 AM"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:gravity="center_vertical" android:layout_weight="40"/>
-    </LinearLayout>
 </RelativeLayout>

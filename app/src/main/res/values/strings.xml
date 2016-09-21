@@ -45,12 +45,6 @@
         <item>@color/Upcoming</item>
         <item>@color/None</item>
     </integer-array>
-    <integer-array name="homefragmentimages">
-        <item>@drawable/splash</item>
-        <item>@drawable/ab</item>
-        <item>@drawable/news_icon</item>
-        <item>@drawable/notify_icon</item>
-    </integer-array>
     <string name="title_activity_main">mainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -60,4 +54,5 @@
     <string name="CategoryID">CategoryId</string>
     <string name="organizerFileName">organizer_data.json</string>
     <string name="talent_show_16">Talent Show\' 16</string>
+    <string name="noEvent">No Events!</string>
 </resources>

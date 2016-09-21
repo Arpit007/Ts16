@@ -1,13 +1,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_height="match_parent" android:padding="5dp"
              tools:context="com.nitkkr.gawds.ts16.eventResultTab">
 
     <ScrollView
         android:layout_width="match_parent" android:layout_height="match_parent">
-        <WebView android:id="@+id/resultView"
-            android:layout_width="match_parent" android:layout_height="wrap_content"></WebView>
+        <TextView android:id="@+id/resultView"
+                  android:textAlignment="gravity" android:paddingTop="10dp"
+                  android:gravity="left" android:textSize="17sp"
+                  android:layout_width="match_parent" android:layout_height="wrap_content"/>
     </ScrollView>
 
     <TextView

@@ -2,6 +2,7 @@ package com.nitkkr.gawds.ts16;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -45,6 +46,9 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 		EventID=event.eventID;
 		if(view== null)
 			return;
+		Typeface font = Typeface.createFromAsset(getContext().getAssets(),
+				"fonts/Font1.ttf");
+		(( TextView)view.findViewById(R.id.eventRuleText)).setTypeface(font);
 		((TextView)(view.findViewById(R.id.eventRuleText))).setText(data.Rules);
 	}
 

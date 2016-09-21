@@ -1,6 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
@@ -71,6 +76,14 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		helper.close();
 		data.addEventDataListener(this);
 		eventUpdated(data);
+
+
+		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),
+			"fonts/Font2.ttf");
+		(( TextView)findViewById(R.id.eventDetailStatus)).setTypeface(font);
+		((TextView)findViewById(R.id.eventDetailDate)).setTypeface(font);
+		((TextView)findViewById(R.id.eventDetailTime)).setTypeface(font);
+		((TextView)findViewById(R.id.eventDetailLocation)).setTypeface(font);
 	}
 	@Override
 	protected void onStop()
@@ -83,13 +96,44 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 	@Override
 	public void eventUpdated(final eventData event)
 	{
-//		((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(event.eventID);
-		((TextView)findViewById(R.id.eventDetailName)).setText(event.eventName);
-//		((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
+		try
+		{
+			int ImageId=event.getImageResourceID();
+			/*if(ImageId!=-1)
+				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
+			else
+				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));*/
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		setTitle(event.eventName);
+
+
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
+
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
-		((TextView)findViewById(R.id.eventDetailDate)).setText(event.Day);
-		((TextView)findViewById(R.id.eventDetailTime)).setText(event.Time);
+
+		try
+		{
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date=simpleDateFormat.parse(event.Day);
+			simpleDateFormat.applyPattern("dd MMM yyyy");
+			((TextView)findViewById(R.id.eventDetailDate)).setText(simpleDateFormat.format(date));
+
+			simpleDateFormat=new SimpleDateFormat("hh:mm:ss");
+			date=simpleDateFormat.parse(event.Time);
+			simpleDateFormat.applyPattern("hh:mm a");
+			((TextView)findViewById(R.id.eventDetailTime)).setText(simpleDateFormat.format(date));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 		{
 			@Override
@@ -98,12 +142,12 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 				event.updateBookmark(getBaseContext(),isChecked);
 			}
 		});
+
 		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener(((TextView)findViewById(R.id.eventDetailStatus)),this));
-		int ImageId=event.getImageResourceID();
-		if(ImageId!=-1)
-			((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
-		else
-			((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
+
+
+		//((TextView)findViewById(R.id.eventDetailStatus)).setText(event.Status);
+
 	}
 
 	@Override

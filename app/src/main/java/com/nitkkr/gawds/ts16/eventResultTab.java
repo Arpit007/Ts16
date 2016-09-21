@@ -2,9 +2,11 @@ package com.nitkkr.gawds.ts16;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaControllerCompat;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +61,10 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 		else
 		{
 			view.findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
-			WebView webView=(WebView)view.findViewById(R.id.resultView);
-			webView.setWebViewClient(new Callback());
-			webView.loadData(data.Result,"text/html","UTF-8");
+			((TextView)view.findViewById(R.id.resultView)).setText(Html.fromHtml(data.Result));
+			Typeface font = Typeface.createFromAsset(getContext().getAssets(),
+					"fonts/Font1.ttf");
+			(( TextView)view.findViewById(R.id.resultView)).setTypeface(font);
 		}
 	}
 
@@ -77,14 +80,5 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	{
 		super.onStop();
 		data.removeDataListener(this);
-	}
-
-	private class Callback extends WebViewClient
-	{
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url)
-		{
-			return false;
-		}
 	}
 }

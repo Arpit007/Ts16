@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/drawerGroup1" android:checkableBehavior="single">
-        <item android:title="" android:enabled="false"/>
         <item android:checked="true"
             android:id="@+id/nav_home"
             android:icon="@drawable/home_icon"
@@ -15,7 +14,7 @@
             android:icon="@drawable/schedule_icon"
             android:title="Schedule" />
         <item android:id="@+id/nav_starred"
-              android:icon="@drawable/notify_icon"
+              android:icon="@drawable/checked_star"
               android:title="Starred Events" />
         <item
             android:id="@+id/nav_results"
@@ -28,7 +27,7 @@
         <item
                 android:id="@+id/nav_organizers"
                 android:title="Organizers"
-                android:icon="@drawable/contact_icon"/>
+                android:icon="@drawable/call_icon"/>
         <item
                 android:id="@+id/nav_sponsor"
                 android:title="Sponsors"
@@ -39,7 +38,7 @@
                 android:title="About Developers"/>
         <item
                 android:id="@+id/nav_rate"
-                android:icon="@drawable/notify_icon"
+                android:icon="@drawable/rate_star"
                 android:title="Rate the App"/>
     </group>
 </menu>
