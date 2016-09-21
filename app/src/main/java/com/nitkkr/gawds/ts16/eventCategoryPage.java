@@ -1,88 +1,114 @@
 package com.nitkkr.gawds.ts16;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class eventCategoryPage extends AppCompatActivity {
-	RecyclerView EventsRecyclerView;
-	CategoryAdapter categoryAdapter;
-	Context c;
+	ListView categoryList;
+	ArrayList<eventCategory> list;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Events");
 		setContentView(R.layout.activity_event_category_page);
-		c = this;
-		EventsRecyclerView = (RecyclerView) findViewById(R.id.category_recycler);
-		EventsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+		categoryList = (ListView) findViewById(R.id.eventCategoryList);
 		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
-		ArrayList<eventCategory> list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
+		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
 		helper.close();
 		for (int i = 0; i < list.size(); i++) {
 			Log.d("Category:: ", list.get(i).category);
 		}
-		categoryAdapter = new CategoryAdapter(c, list);
-		EventsRecyclerView.setAdapter(categoryAdapter);
-	}
-
-}
-
-class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-	Context context;
-	ArrayList<eventCategory> categories;
-
-	public CategoryAdapter(Context context,ArrayList<eventCategory> categories)
-	{
-		this.context = context;
-		this.categories=categories;
-	}
-
-	@Override
-	public CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recycler_item,parent,false);
-		CategoryAdapter.ViewHolder holder=new ViewHolder(v);
-		return holder;
-	}
-
-	@Override
-	public void onBindViewHolder(CategoryAdapter.ViewHolder holder, int position) {
-		final eventCategory thisCategory=categories.get(position);
-		Log.d("Category",thisCategory.category );
-		holder.CategoryName.setText(thisCategory.category);
-//        Glide.with(context).load(context.getString(R.string.CategoryImagePath)+thisCategory.getImage()).crossFade().placeholder(R.drawable.ic_menu_gallery).into(holder.CategoryImage);
-		holder.CategoryRecyclerItem.setOnClickListener(new View.OnClickListener() {
+		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
+		categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
 			@Override
-			public void onClick(View view) {
-				Intent i=new Intent(context,eventsListPage.class);
-				i.putExtra("CategoryId",thisCategory.id);
-				context.startActivity(i);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				Intent i=new Intent(getBaseContext(),eventsListPage.class);
+				i.putExtra("CategoryId",list.get(position).id);
+				eventCategoryPage.this.startActivity(i);
 			}
 		});
 	}
 
-	@Override
-	public int getItemCount() {
-		return categories.size();
+}
+
+class eventCategoryAdapter extends BaseAdapter
+{
+
+	ArrayList<eventCategory> list;
+	Context context;
+
+	eventCategoryAdapter(ArrayList<eventCategory> list, Context context)
+	{
+		this.context=context;
+		this.list=list;
 	}
-	class ViewHolder extends RecyclerView.ViewHolder{
-		TextView CategoryName;
-		LinearLayout CategoryRecyclerItem;
-		public ViewHolder(View itemView) {
-			super(itemView);
-			CategoryName=(TextView) itemView.findViewById(R.id.category_name);
-			CategoryRecyclerItem=(LinearLayout) itemView.findViewById(R.id.category_recycler);
+
+	@Override
+	public int getCount()
+	{
+		return list.size();
+	}
+
+	@Override
+	public Object getItem(int position)
+	{
+		return null;
+	}
+
+	@Override
+	public long getItemId(int position)
+	{
+		return 0;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
+		if (convertView == null)
+		{
+			LayoutInflater inflater=LayoutInflater.from(context);
+			convertView=inflater.inflate(R.layout.category_recycler_item,parent,false);
 		}
+
+		final eventCategory thisCategory=list.get(position);
+		Log.d("Category",thisCategory.category );
+		((TextView)convertView.findViewById(R.id.category_name)).setText(thisCategory.category);
+
+
+		ImageView view=(ImageView)convertView.findViewById(R.id.categoryBullet);
+
+		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
+
+		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
+		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
+		view.setImageDrawable(drawable);
+
+		Typeface font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/Font1.ttf");
+		(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);
+
+		return convertView;
 	}
 }

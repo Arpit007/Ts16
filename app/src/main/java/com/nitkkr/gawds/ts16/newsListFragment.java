@@ -117,7 +117,7 @@ public class newsListFragment extends Fragment
 			TypedArray array=getResources().obtainTypedArray(R.array.ModernColor);
 
 			Drawable drawable= ResourcesCompat.getDrawable(getResources(), R.drawable.bullet_icon, null);
-			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%(array.length()+1),0));
+			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
 
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(),

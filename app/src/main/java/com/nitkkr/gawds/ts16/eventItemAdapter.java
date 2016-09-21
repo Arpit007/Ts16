@@ -116,7 +116,7 @@ public class eventItemAdapter extends BaseAdapter
 		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
 
 		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
-		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%(array.length()+1),0));
+		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 		view.setImageDrawable(drawable);
 		return convertView;
 	}

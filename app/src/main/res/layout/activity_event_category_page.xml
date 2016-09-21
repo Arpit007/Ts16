@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventCategoryPage">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/category_recycler">
-    </android.support.v7.widget.RecyclerView>
+
+    <ListView
+        android:id="@+id/eventCategoryList" android:paddingTop="30dp"
+        android:divider="#00ffffff" android:dividerHeight="10dp"
+        android:paddingLeft="10dp" android:paddingRight="10dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
 </RelativeLayout>
