@@ -10,15 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class homeFragment extends Fragment
 {
 	AppCompatActivity activity;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
@@ -26,7 +22,6 @@ public class homeFragment extends Fragment
 		Typeface font = Typeface.createFromAsset(activity.getAssets(),
 				"fonts/Font1.ttf");
 
-		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 		Button button=(Button)view.findViewById(R.id.newsButton);

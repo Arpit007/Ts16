@@ -28,16 +28,18 @@ public class eventCategoryPage extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("Events");
 		setContentView(R.layout.activity_event_category_page);
+
+		setTitle("Events");
+
 		categoryList = (ListView) findViewById(R.id.eventCategoryList);
+
 		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
 		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
 		helper.close();
-		for (int i = 0; i < list.size(); i++) {
-			Log.d("Category:: ", list.get(i).category);
-		}
+
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
+
 		categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -51,64 +53,63 @@ public class eventCategoryPage extends AppCompatActivity {
 		});
 	}
 
-}
-
-class eventCategoryAdapter extends BaseAdapter
-{
-
-	ArrayList<eventCategory> list;
-	Context context;
-
-	eventCategoryAdapter(ArrayList<eventCategory> list, Context context)
+	class eventCategoryAdapter extends BaseAdapter
 	{
-		this.context=context;
-		this.list=list;
-	}
 
-	@Override
-	public int getCount()
-	{
-		return list.size();
-	}
+		ArrayList<eventCategory> list=null;
+		Context context;
 
-	@Override
-	public Object getItem(int position)
-	{
-		return null;
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return 0;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
-		if (convertView == null)
+		eventCategoryAdapter(ArrayList<eventCategory> list, Context context)
 		{
-			LayoutInflater inflater=LayoutInflater.from(context);
-			convertView=inflater.inflate(R.layout.category_item_layout,parent,false);
+			this.context=context;
+			this.list=list;
 		}
 
-		final eventCategory thisCategory=list.get(position);
-		Log.d("Category",thisCategory.category );
-		((TextView)convertView.findViewById(R.id.category_name)).setText(thisCategory.category);
+		@Override
+		public int getCount()
+		{
+			return list.size();
+		}
 
+		@Override
+		public Object getItem(int position)
+		{
+			return null;
+		}
 
-		ImageView view=(ImageView)convertView.findViewById(R.id.categoryBullet);
+		@Override
+		public long getItemId(int position)
+		{
+			return 0;
+		}
 
-		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			if (convertView == null)
+			{
+				LayoutInflater inflater=LayoutInflater.from(context);
+				convertView=inflater.inflate(R.layout.category_item_layout,parent,false);
+			}
 
-		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
-		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
-		view.setImageDrawable(drawable);
+			final eventCategory thisCategory=list.get(position);
+			Log.d("Category",thisCategory.category );
 
-		Typeface font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Font1.ttf");
-		(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);
+			((TextView)convertView.findViewById(R.id.category_name)).setText(thisCategory.category);
 
-		return convertView;
+			ImageView view=(ImageView)convertView.findViewById(R.id.categoryBullet);
+
+			TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
+
+			Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
+			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
+			view.setImageDrawable(drawable);
+
+			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
+			(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);
+
+			return convertView;
+		}
 	}
 }
+

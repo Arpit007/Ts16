@@ -9,30 +9,31 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.AndroidCharacter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 public class eventResult extends AppCompatActivity
 {
-	ArrayList<eventData> resultList;
+	ArrayList<eventData> resultList=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_result);
+
+		if(resultList!= null)
+			resultList.clear();
+
 		resultList=new ArrayList<>();
 
 		setTitle("Results");
@@ -50,6 +51,7 @@ public class eventResult extends AppCompatActivity
 		else
 		{
 			findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
+
 			ListView listView=(ListView)findViewById(R.id.resultList);
 
 			listView.setAdapter(new eventResultAdapter(resultList,getBaseContext()));
@@ -120,8 +122,7 @@ public class eventResult extends AppCompatActivity
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
 
-			Typeface font = Typeface.createFromAsset(context.getAssets(),
-					"fonts/Font1.ttf");
+			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.resultName)).setTypeface(font);
 
 			return convertView;

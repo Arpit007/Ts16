@@ -10,7 +10,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,9 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Home Laptop on 05-Sep-16.
- */
 public class eventItemAdapter extends BaseAdapter
 {
 	public interface bookMarkListener
@@ -32,7 +28,7 @@ public class eventItemAdapter extends BaseAdapter
 	}
 
 	private bookMarkListener listener;
-	private ArrayList<eventData> dataList;
+	private ArrayList<eventData> dataList=null;
 	Context context;
 	boolean showBookmark;
 
@@ -74,12 +70,16 @@ public class eventItemAdapter extends BaseAdapter
 			LayoutInflater inflater=LayoutInflater.from(context);
 			convertView=inflater.inflate(R.layout.event_item_layout,parent,false);
 		}
-		((TextView)convertView.findViewById(R.id.event_name)).setText(dataList.get(position).eventName);
-		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(dataList.get(position).isBookmarked());
+
+		final eventData data=dataList.get(position);
+
+		((TextView)convertView.findViewById(R.id.event_name)).setText(data.eventName);
+		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(data.isBookmarked());
+
 		try
 		{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date=simpleDateFormat.parse(dataList.get(position).Day+" "+dataList.get(position).Time);
+			Date date=simpleDateFormat.parse(data.Day+" "+data.Time);
 			simpleDateFormat.applyPattern("hh:mm a, dd MMM yyyy");
 			(( TextView)convertView.findViewById(R.id.recycler_event_date)).setText(simpleDateFormat.format(date));
 		}
@@ -88,8 +88,10 @@ public class eventItemAdapter extends BaseAdapter
 			e.printStackTrace();
 		}
 
-		if(showBookmark)
+		if(showBookmark)// && !data.isResultDeclared())
+		{
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
+		}
 		else
 			convertView.findViewById(R.id.starrred).setVisibility(View.INVISIBLE);
 
@@ -98,24 +100,24 @@ public class eventItemAdapter extends BaseAdapter
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				dataList.get(position).updateBookmark(context,isChecked);
-			//	listener.bookMarkChanged();
+				data.updateBookmark(context,isChecked);
+				//listener.bookMarkChanged();
 			}
 		});
+
 		Typeface font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font1.ttf");
 		(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
+
 		font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font2.ttf");
 		(( TextView)convertView.findViewById(R.id.recycler_event_date)).setTypeface(font);
-
-		ImageView view=(ImageView)convertView.findViewById(R.id.eventBullet);
 
 		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
 
 		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
-		view.setImageDrawable(drawable);
+		((ImageView)convertView.findViewById(R.id.eventBullet)).setImageDrawable(drawable);
 
 		if(showBookmark)
 			convertView.setOnClickListener(new View.OnClickListener()
@@ -124,7 +126,7 @@ public class eventItemAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					Intent i=new Intent(context,eventDetail.class);
-					i.putExtra(context.getString(R.string.EventID),dataList.get(position).eventID);
+					i.putExtra(context.getString(R.string.EventID),data.eventID);
 					i.putExtra(context.getString(R.string.TabID),0);
 
 					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -13,25 +13,23 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ongoingFragment extends Fragment
 {
-	private ArrayList<eventData> eventDataList;
+	private ArrayList<eventData> eventDataList=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
-		// Inflate the layout for this fragment
-
 		View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+
+		if(eventDataList!= null)
+			eventDataList.clear();
+
 		dbHelper DbHelper=new dbHelper(getContext());
 		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
 		DbHelper.close();
-		Log.d("Ongoing Size", String.valueOf(eventDataList.size()));
+
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);
@@ -39,8 +37,8 @@ public class ongoingFragment extends Fragment
 		else
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
-			ListView listView = (ListView) view.findViewById(R.id.OngoingList);
 
+			ListView listView = (ListView) view.findViewById(R.id.OngoingList);
 			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()

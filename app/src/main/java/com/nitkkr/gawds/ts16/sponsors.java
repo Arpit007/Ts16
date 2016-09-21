@@ -29,6 +29,7 @@ public class sponsors extends AppCompatActivity
 		setContentView(R.layout.activity_sponsors);
 
 		setTitle("Sponsors");
+
 		GridView gridView=(GridView)findViewById(R.id.sponsorGrid);
 		gridView.setAdapter(new sponsorListAdapter(this));
 
@@ -63,13 +64,13 @@ public class sponsors extends AppCompatActivity
 		}
 
 		Context context;
-		ArrayList<sponsorData> sponsorList;
+		ArrayList<sponsorData> sponsorList=null;
 
 		public sponsorListAdapter(Context c)
 		{
 			context=c;
-			sponsorList=new ArrayList<>();
-			AppendData();
+			if(sponsorList==null)
+				AppendData();
 		}
 
 		@Override
@@ -98,8 +99,12 @@ public class sponsors extends AppCompatActivity
 				LayoutInflater inflater=(( Activity)context).getLayoutInflater();
 				convertView=inflater.inflate(R.layout.sponsor_item,parent,false);
 			}
-			((ImageView)convertView.findViewById(R.id.sponsorItemImage)).setImageResource(sponsorList.get(position).imageId);
+
+			if(sponsorList.get(position).imageId!=-1)
+				((ImageView)convertView.findViewById(R.id.sponsorItemImage)).setImageResource(sponsorList.get(position).imageId);
+
 			(( TextView)convertView.findViewById(R.id.sponsorItemLabel)).setText(sponsorList.get(position).label);
+
 			Typeface font = Typeface.createFromAsset(context.getAssets(),
 					"fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.sponsorItemLabel)).setTypeface(font);
@@ -115,6 +120,9 @@ public class sponsors extends AppCompatActivity
 			String[] sponsorLabelList=getResources().getStringArray(R.array.sponsorLabelList);
 			String[] sponsorUrlList=getResources().getStringArray(R.array.sponsorUrlList);
 			TypedArray sponsorImageList = getResources().obtainTypedArray(R.array.sponsorImageIDList);
+
+			sponsorList=new ArrayList<>();
+
 			for(int a=0;a<sponsorLabelList.length;a++)
 			{
 				sponsorList.add(new sponsorData(sponsorImageList.getResourceId(a,-1),sponsorLabelList[a],sponsorUrlList[a]));

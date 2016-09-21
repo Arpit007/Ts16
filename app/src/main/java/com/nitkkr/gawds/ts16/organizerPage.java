@@ -15,8 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,39 +27,46 @@ import java.util.ArrayList;
 
 public class organizerPage extends AppCompatActivity
 {
-	private ArrayList<organizerData> organizerList;
+	ArrayList<organizerData> organizerList=null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		organizerList=new ArrayList<>();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_organizer_page);
-		setUpOrganizerData();
+
+		if(organizerList==null)
+			setUpOrganizerData();
+
 		setTitle("Organizers");
+
 		(( ListView)findViewById(R.id.organizerList)).setAdapter(new organizerAdapter(organizerList, this));
 	}
 
 	public void setUpOrganizerData()
 	{
+		organizerList=new ArrayList<>();
+
 		String Data="Failed to Fetch Data";
+
 		try
 		{
 			InputStream inputStream = getAssets().open(getString(R.string.organizerFileName));
-			int size = inputStream.available();
-			byte[] buffer = new byte[size];
+
+			byte[] buffer = new byte[inputStream.available()];
 			inputStream.read(buffer);
 			inputStream.close();
-			Data = new String(buffer, "UTF-8");
-			JSONObject Root=new JSONObject(Data);
+
+			JSONObject Root=new JSONObject(new String(buffer, "UTF-8"));
 			JSONArray array=Root.getJSONArray("Organizers");
 
 			for(int i=0; i < array.length(); i++){
 				JSONObject item = array.getJSONObject(i);
 
 				organizerData data=new organizerData();
-				data.Name=item.optString("Name").toString();
-				data.Phone=item.optString("Phone").toString();
-				data.Detail=item.optString("Detail").toString();
+				data.Name=item.optString("Name");
+				data.Phone=item.optString("Phone");
+				data.Detail=item.optString("Detail");
 				organizerList.add(data);
 			}
 		}
@@ -115,14 +120,18 @@ public class organizerPage extends AppCompatActivity
 				LayoutInflater inflater=((Activity)context).getLayoutInflater();
 				convertView=inflater.inflate(R.layout.organizer_item,parent,false);
 			}
-			((TextView)convertView.findViewById(R.id.organizerName)).setText(dataList.get(position).Name);
-			((TextView)convertView.findViewById(R.id.organizerDetail)).setText(dataList.get(position).Detail);
+
+			final organizerData data=dataList.get(position);
+
+			((TextView)convertView.findViewById(R.id.organizerName)).setText(data.Name);
+			((TextView)convertView.findViewById(R.id.organizerDetail)).setText(data.Detail);
+
 			convertView.findViewById(R.id.organizerCall).setOnClickListener(new View.OnClickListener()
 			{
 				@Override
 				public void onClick(View v)
 				{
-					Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+dataList.get(position).Phone));
+					Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Phone));
 					startActivity(intent);
 				}
 			});
@@ -130,6 +139,7 @@ public class organizerPage extends AppCompatActivity
 			Typeface font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.organizerName)).setTypeface(font);
+
 			font = Typeface.createFromAsset(context.getAssets(),
 					"fonts/Font2.ttf");
 			(( TextView)convertView.findViewById(R.id.organizerDetail)).setTypeface(font);

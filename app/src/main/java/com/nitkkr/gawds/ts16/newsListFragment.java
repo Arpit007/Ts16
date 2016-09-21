@@ -3,11 +3,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -27,22 +23,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class newsListFragment extends Fragment
 {
-	ArrayList<MessageDbHelper.MessageData> MessageDataList;
+	ArrayList<MessageDbHelper.MessageData> MessageDataList=null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
 
 		View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+
 		MessageDbHelper dbHelper=new MessageDbHelper(getContext());
 		MessageDataList=dbHelper.ReadDatabaseMessage(dbHelper.getReadableDatabase());
 		dbHelper.close();
+
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
@@ -57,10 +52,11 @@ public class newsListFragment extends Fragment
 
 		return view;
 	}
+
 	class newsItemAdapter extends BaseAdapter
 	{
 
-		ArrayList<MessageDbHelper.MessageData> list;
+		ArrayList<MessageDbHelper.MessageData> list=null;
 		Context context;
 
 		newsItemAdapter(ArrayList<MessageDbHelper.MessageData> list, Context context)
@@ -95,7 +91,9 @@ public class newsListFragment extends Fragment
 				LayoutInflater inflater=((Activity)context).getLayoutInflater();
 				convertView=inflater.inflate(R.layout.news_item_layout,parent,false);
 			}
+
 			MessageDbHelper.MessageData data=list.get(getCount()-position-1);
+
 			(( TextView)convertView.findViewById(R.id.news_Title)).setText(data.Title);
 
 			try
@@ -120,13 +118,13 @@ public class newsListFragment extends Fragment
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
 
-			Typeface font = Typeface.createFromAsset(getContext().getAssets(),
-					"fonts/Font1.ttf");
+			Typeface font = Typeface.createFromAsset(getContext().getAssets(),"fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.news_Title)).setTypeface(font);
-			font = Typeface.createFromAsset(getContext().getAssets(),
-					"fonts/Font2.ttf");
+
+			font = Typeface.createFromAsset(getContext().getAssets(),"fonts/Font2.ttf");
 			(( TextView)convertView.findViewById(R.id.news_content)).setTypeface(font);
 			(( TextView)convertView.findViewById(R.id.news_date)).setTypeface(font);
+
 			return convertView;
 		}
 	}

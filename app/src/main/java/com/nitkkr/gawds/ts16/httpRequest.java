@@ -7,9 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Home Laptop on 31-Aug-16.
- */
 public class httpRequest
 {
 	public String SendGetRequest(String requestURL)

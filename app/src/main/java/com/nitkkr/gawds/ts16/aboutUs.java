@@ -1,23 +1,12 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,6 +18,7 @@ public class aboutUs extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about_us);
+
 		setTitle(getString(R.string.AboutUs));
 
 		LinearLayout layout=(LinearLayout)findViewById(R.id.aboutDev1);
@@ -54,9 +44,25 @@ public class aboutUs extends AppCompatActivity
 				startActivity(intent);
 			}
 		});
+
 		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),
 				"fonts/Free.ttf");
 		((TextView)findViewById(R.id.dev1)).setTypeface(font);
 		((TextView)findViewById(R.id.dev2)).setTypeface(font);
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+
 }

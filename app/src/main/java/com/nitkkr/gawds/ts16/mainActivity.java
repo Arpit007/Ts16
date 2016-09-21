@@ -23,37 +23,32 @@ public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
 {
 	NavigationView navigationView;
-int TabID;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		TextView view=(TextView)toolbar.findViewById(R.id.mainLogo);
 
-		Typeface font = Typeface.createFromAsset(getAssets(),
-				"fonts/Free.ttf");
-		view.setTypeface(font);
-		TabID=getIntent().getIntExtra(getString(R.string.TabID),0);
-//		navigateToTab(TabID);
+		Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Free.ttf");
+		((TextView)toolbar.findViewById(R.id.mainLogo)).setTypeface(font);
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		drawer.setDrawerListener(toggle);
 		toggle.syncState();
+
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
 		navigationView.setItemIconTintList(null);
 
-
-		View header=navigationView.getHeaderView(0);
-		font = Typeface.createFromAsset(getBaseContext().getAssets(),
-				"fonts/Free.ttf");
-		((TextView)header.findViewById(R.id.headerLogo)).setTypeface(font);
+		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
+		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
@@ -65,7 +60,8 @@ int TabID;
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(TabID);
+		viewPager.setCurrentItem(0);
+
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
@@ -82,6 +78,7 @@ int TabID;
 
 			}
 		});
+
 		if(savedInstanceState!=null)
 			onRestoreInstanceState(savedInstanceState);
 	}
@@ -90,6 +87,7 @@ int TabID;
 	public void onBackPressed()
 	{
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 		if (drawer.isDrawerOpen(GravityCompat.START))
 		{
 			drawer.closeDrawer(GravityCompat.START);
@@ -107,6 +105,7 @@ int TabID;
 	public void navigateToTab(int Index)
 	{
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
+
 		if(Index<tabLayout.getTabCount())
 		{
 			tabLayout.getTabAt(Index).select();
@@ -117,16 +116,14 @@ int TabID;
 	protected void onRestoreInstanceState(Bundle savedInstanceState)
 	{
 		super.onRestoreInstanceState(savedInstanceState);
-		int tabPosition=savedInstanceState.getInt(getString(R.string.TabID));
-		navigateToTab(tabPosition);
+		navigateToTab(savedInstanceState.getInt(getString(R.string.TabID)));
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
-		int tabPosition=((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition();
-		outState.putInt(getString(R.string.TabID),tabPosition);
+		outState.putInt(getString(R.string.TabID),((TabLayout) findViewById(R.id.homeTabLayout)).getSelectedTabPosition());
 	}
 
 	@SuppressWarnings("StatementWithEmptyBody")
@@ -187,9 +184,16 @@ int TabID;
 		return true;
 	}
 
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		navigationView.setCheckedItem(R.id.nav_home);
+	}
+
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
+
 		AppCompatActivity activity;
 
 		public PagerAdapter(FragmentManager fm, int NumOfTabs, AppCompatActivity activity) {
@@ -219,9 +223,4 @@ int TabID;
 		}
 	}
 
-	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-		navigationView.setCheckedItem(R.id.nav_home);
-	}
 }

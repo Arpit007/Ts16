@@ -12,16 +12,15 @@ import android.widget.TextView;
 
 public class eventRuleTab extends Fragment implements eventData.eventDataListener
 {
-	private int EventID;
-	static  eventData data;
+	eventData data;
 	View view;
 
 	public void setUpFragment(int eventID, Context context)
 	{
-		EventID=eventID;
 		dbHelper helper=new dbHelper(context);
-		data=helper.GetEventById(helper.getReadableDatabase(),EventID);
+		data=helper.GetEventById(helper.getReadableDatabase(),eventID);
 		helper.close();
+
 		data.addEventDataListener(this);
 		eventUpdated(data);
 	}
@@ -34,7 +33,7 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
+
 		view= inflater.inflate(R.layout.fragment_event_rule_tab, container, false);
 		eventUpdated(data);
 		return view;
@@ -43,9 +42,9 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	@Override
 	public void eventUpdated(eventData event)
 	{
-		EventID=event.eventID;
 		if(view== null)
 			return;
+
 		Typeface font = Typeface.createFromAsset(getContext().getAssets(),
 				"fonts/Font1.ttf");
 		(( TextView)view.findViewById(R.id.eventRuleText)).setTypeface(font);

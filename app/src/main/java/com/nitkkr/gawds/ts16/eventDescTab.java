@@ -13,19 +13,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.crypto.NullCipher;
 
 public class eventDescTab extends Fragment implements eventData.eventDataListener
 {
-    private int EventID;
-    static eventData data;
+    eventData data;
     View view;
+
     public void setUpFragment(int eventID, Context context)
     {
-        EventID=eventID;
         dbHelper helper=new dbHelper(context);
-        data=helper.GetEventById(helper.getReadableDatabase(),EventID);
+        data=helper.GetEventById(helper.getReadableDatabase(),eventID);
         helper.close();
+
         data.addEventDataListener(this);
         eventUpdated(data);
     }
@@ -38,7 +37,7 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         view= inflater.inflate(R.layout.fragment_event_desc_tab, container, false);
         eventUpdated(data);
         return view;
@@ -47,18 +46,21 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
     @Override
     public void eventUpdated(eventData event)
     {
-        EventID=event.eventID;
         if(view== null)
             return;
+
         try
         {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
             Date date=simpleDateFormat.parse(event.Duration);
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
-            int hours = cal.get(Calendar.HOUR_OF_DAY);
-            int minutes=cal.get(Calendar.MINUTE);
+
+            int hours = cal.get(Calendar.HOUR_OF_DAY), minutes=cal.get(Calendar.MINUTE);
+
             String time=Integer.toString(hours);
+
             if(minutes!=0)
                 time+="."+minutes+" hours";
             else if(hours==1)
@@ -71,11 +73,13 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
         {
             e.printStackTrace();
         }
+
         ((TextView)(view.findViewById(R.id.eventDescriptionText))).setText(event.Description);
 
         Typeface font = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/Font2.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionDuration)).setTypeface(font);
+
         font = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/Font1.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionText)).setTypeface(font);

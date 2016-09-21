@@ -1,35 +1,34 @@
 package com.nitkkr.gawds.ts16;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 public class upcomingFragment extends Fragment
 {
-	private ArrayList<eventData> eventDataList;
+	private ArrayList<eventData> eventDataList=null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
-		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
+
+		if(eventDataList!= null)
+			eventDataList.clear();
+
 		dbHelper helper=new dbHelper(getContext());
 		eventDataList=helper.GetUpcomingEvents(helper.getReadableDatabase());
 		helper.close();
+
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.VISIBLE);
@@ -37,8 +36,8 @@ public class upcomingFragment extends Fragment
 		else
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.INVISIBLE);
-			ListView listView = (ListView) view.findViewById(R.id.upcomingList);
 
+			ListView listView = (ListView) view.findViewById(R.id.upcomingList);
 			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), true));
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -46,7 +45,6 @@ public class upcomingFragment extends Fragment
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 				{
-					Log.d("itemclicked", String.valueOf(position));
 					int EventID = eventDataList.get(position).eventID;
 					Intent intent = new Intent(getContext(), eventDetail.class);
 					intent.putExtra(getString(R.string.EventID), EventID);
