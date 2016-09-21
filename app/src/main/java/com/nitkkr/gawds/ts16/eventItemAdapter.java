@@ -1,13 +1,9 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.net.sip.SipAudioCall;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
@@ -74,7 +70,7 @@ public class eventItemAdapter extends BaseAdapter
 		if (convertView == null)
 		{
 			LayoutInflater inflater=LayoutInflater.from(context);
-			convertView=inflater.inflate(R.layout.event_recycler_item,parent,false);
+			convertView=inflater.inflate(R.layout.event_item_layout,parent,false);
 		}
 		((TextView)convertView.findViewById(R.id.event_name)).setText(dataList.get(position).eventName);
 		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(dataList.get(position).isBookmarked());
@@ -101,7 +97,7 @@ public class eventItemAdapter extends BaseAdapter
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
 				dataList.get(position).updateBookmark(context,isChecked);
-//				listener.bookMarkChanged();
+			//	listener.bookMarkChanged();
 			}
 		});
 		Typeface font = Typeface.createFromAsset(context.getAssets(),

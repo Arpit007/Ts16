@@ -3,7 +3,12 @@ package com.nitkkr.gawds.ts16;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -121,6 +126,21 @@ public class organizerPage extends AppCompatActivity
 					startActivity(intent);
 				}
 			});
+
+			Typeface font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/Font1.ttf");
+			(( TextView)convertView.findViewById(R.id.organizerName)).setTypeface(font);
+			font = Typeface.createFromAsset(context.getAssets(),
+					"fonts/Font2.ttf");
+			(( TextView)convertView.findViewById(R.id.organizerDetail)).setTypeface(font);
+
+			ImageView view=(ImageView)convertView.findViewById(R.id.organizerBullet);
+
+			TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
+
+			Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
+			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
+			view.setImageDrawable(drawable);
 			return convertView;
 		}
 	}

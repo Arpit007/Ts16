@@ -1,6 +1,5 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -89,7 +88,7 @@ class eventCategoryAdapter extends BaseAdapter
 		if (convertView == null)
 		{
 			LayoutInflater inflater=LayoutInflater.from(context);
-			convertView=inflater.inflate(R.layout.category_recycler_item,parent,false);
+			convertView=inflater.inflate(R.layout.category_item_layout,parent,false);
 		}
 
 		final eventCategory thisCategory=list.get(position);

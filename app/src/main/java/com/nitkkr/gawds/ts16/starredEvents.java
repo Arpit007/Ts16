@@ -20,7 +20,7 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_starred_events);
-		setTitle("Starred");
+		setTitle("Starred Events");
 		bookMarkChanged();
 
 	}

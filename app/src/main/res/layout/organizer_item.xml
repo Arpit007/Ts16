@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:layout_weight="100">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="5dp"
+              android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <ImageView
-            android:scaleType="fitCenter"
-            android:src="@drawable/arrow_right_icon" android:layout_weight="10"
-            android:layout_width="wrap_content" android:layout_height="match_parent"/>
+    <LinearLayout android:orientation="vertical"
+    android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-        <LinearLayout android:orientation="vertical" android:layout_weight="80" android:paddingLeft="10dp"
-            android:layout_width="wrap_content" android:layout_height="match_parent">
+        <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:paddingRight="5dp" android:id="@+id/organizerBullet"
+                   android:src="@drawable/bullet_icon" android:layout_gravity="center_vertical"
+                   android:layout_width="15dp" android:layout_height="15dp"/>
+        <TextView
+            android:id="@+id/organizerName" android:text="werty" android:textSize="25sp"
+            android:paddingLeft="5dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-            <TextView android:layout_weight="80" android:text="MyName" android:textSize="20sp"
-                      android:layout_gravity="center_vertical"
-              android:id="@+id/organizerName" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:paddingLeft="15dp"
+                  android:layout_width="match_parent" android:layout_height="wrap_content">
 
-            <TextView android:id="@+id/organizerDetail" android:layout_weight="20"
-                      android:textSize="15sp" android:text="2nd Year" android:layout_gravity="center_vertical"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/organizerDetail" android:text="123"
+                android:textSize="18sp" android:paddingLeft="5dp"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-        <ImageButton android:src="@drawable/call_icon" android:scaleType="fitCenter"
-                     android:id="@+id/organizerCall"
-                     style="@style/Base.Widget.AppCompat.Button.Borderless" android:layout_weight="10"
-                     android:layout_width="wrap_content" android:layout_height="match_parent"/>
-
 </LinearLayout>
+
+    <ImageView android:src="@drawable/call_icon" android:scaleType="fitCenter"
+                 android:id="@+id/organizerCall" android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+</RelativeLayout>
