@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventsListPage">
 
-    <ListView android:id="@+id/eventList" android:clickable="false"
+    <ListView android:id="@+id/eventList"
               android:divider="#00ffffff" android:dividerHeight="20dp"
               android:paddingLeft="10dp" android:paddingRight="10dp"
-              android:paddingTop="30dp" android:listSelector="@android:color/transparent"
+              android:paddingTop="30dp" android:scrollbars="none"
               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </RelativeLayout>

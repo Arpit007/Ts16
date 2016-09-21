@@ -1,6 +1,7 @@
 package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -114,6 +116,22 @@ public class eventItemAdapter extends BaseAdapter
 		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 		view.setImageDrawable(drawable);
+
+		if(showBookmark)
+			convertView.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					Intent i=new Intent(context,eventDetail.class);
+					i.putExtra(context.getString(R.string.EventID),dataList.get(position).eventID);
+					i.putExtra(context.getString(R.string.TabID),0);
+
+					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(i);
+				}
+			});
+
 		return convertView;
 	}
 }

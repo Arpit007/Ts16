@@ -49,19 +49,6 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 			adapter.setBookmarkListener(this);
 
 			listView.setAdapter(adapter);
-
-			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-			{
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-				{
-					int EventID=eventDataList.get(position).eventID;
-					Intent intent=new Intent(getBaseContext(),eventDetail.class);
-					intent.putExtra(getString(R.string.EventID),EventID);
-					intent.putExtra(getString(R.string.TabID),0);
-					startActivity(intent);
-				}
-			});
 		}
 	}
 }

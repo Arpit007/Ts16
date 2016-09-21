@@ -25,20 +25,12 @@ public class eventsListPage extends AppCompatActivity
 		final ArrayList<eventData> list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
 		helper.close();
 
+		String title=b.getString("CategoryName");
+		if(!title.equals("All Events"))
+			title+=" Events";
+
+		setTitle(title);
+
 		eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
-
-		eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				Intent i=new Intent(getBaseContext(),eventDetail.class);
-				i.putExtra(getBaseContext().getString(R.string.EventID),list.get(position).eventID);
-				i.putExtra(getBaseContext().getString(R.string.TabID),0);
-
-				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				getBaseContext().startActivity(i);
-			}
-		});
 	}
 }

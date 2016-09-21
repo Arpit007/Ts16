@@ -45,6 +45,7 @@ public class eventCategoryPage extends AppCompatActivity {
 			{
 				Intent i=new Intent(getBaseContext(),eventsListPage.class);
 				i.putExtra("CategoryId",list.get(position).id);
+				i.putExtra("CategoryName",list.get(position).category);
 				eventCategoryPage.this.startActivity(i);
 			}
 		});
