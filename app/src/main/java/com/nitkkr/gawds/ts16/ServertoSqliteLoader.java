@@ -1,13 +1,19 @@
 package com.nitkkr.gawds.ts16;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.audiofx.BassBoost;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -111,6 +117,8 @@ public class ServertoSqliteLoader extends IntentService {
                     dbHelper NotificationDbHelper=new dbHelper(getBaseContext());
                     ArrayList<eventData> list=NotificationDbHelper.GetUpcomingEvents(NotificationDbHelper.getReadableDatabase());
                     NotificationDbHelper.close();
+                    SharedPreferences upcomingnotificationPreferences=getSharedPreferences("upcomingPreferences",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor upcomingEditor=upcomingnotificationPreferences.edit();
                     int length3=list.size();
                     for(int i=0;i<length3;i++)
                     {
@@ -118,22 +126,32 @@ public class ServertoSqliteLoader extends IntentService {
                         Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
                         Long eventTimeStamp=(eventDate.getTime())/1000;
                         Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                        if(item.bookmark==1 && item.notificationGenerated==false && currentTimeStamp+1800<=eventTimeStamp)
+                        boolean notificationGenerated=upcomingnotificationPreferences.contains(""+item.eventID);
+                        if(item.bookmark==1 && currentTimeStamp+1800<=eventTimeStamp )
                         {
+                            Log.d("Notification Released","notified"+item.eventID);
                             item.notificationGenerated=true;
                             NotificationCompat.Builder builder=new NotificationCompat.Builder(getBaseContext());
                             builder.setContentTitle(item.eventName+" Beginning Soon");
                             builder.setContentText(item.eventName+" is beginning in about 30 minutes from now.\n"+item.Venue);
                             builder.setTicker(item.eventName+" is beginning in about 30 minutes from now.\n"+item.Venue);
                             Intent resultIntent=new Intent(getBaseContext(),eventDetail.class);
+                            resultIntent.putExtra(getBaseContext().getString(R.string.TabID),0);
+                            resultIntent.putExtra(getBaseContext().getString(R.string.EventID),item.eventID);
                             TaskStackBuilder stackBuilder=TaskStackBuilder.create(getBaseContext());
                             stackBuilder.addParentStack(eventDetail.class);
                             stackBuilder.addNextIntent(resultIntent);
                             PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                             builder.setContentIntent(pendingIntent);
+                            builder.setOnlyAlertOnce(true);
+                            builder.setVibrate(new long[] {1000});
+                            builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                            builder.setLights(Color.WHITE,1000,500);
                             builder.setSmallIcon(R.drawable.notify_icon);
+                            upcomingEditor.putInt(""+item.eventID,item.eventID);
+                            upcomingEditor.commit();
                             NotificationManager notification=(NotificationManager )getSystemService(Context.NOTIFICATION_SERVICE);
-                            notification.notify("UpcomingEventNotification",100,builder.build());
+                            notification.notify("UpcomingEventNotification",100+item.eventID,builder.build());
                         }
                     }
                     NotificationDbHelper.close();

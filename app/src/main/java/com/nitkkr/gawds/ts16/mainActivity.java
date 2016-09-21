@@ -34,7 +34,7 @@ public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
 {
 	NavigationView navigationView;
-
+int TabID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -47,6 +47,8 @@ public class mainActivity extends AppCompatActivity
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"fonts/FREESCPT.TTF");
 		view.setTypeface(font);
+		TabID=getIntent().getIntExtra(getString(R.string.TabID),0);
+//		navigateToTab(TabID);
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,6 +69,7 @@ public class mainActivity extends AppCompatActivity
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+		viewPager.setCurrentItem(TabID);
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
