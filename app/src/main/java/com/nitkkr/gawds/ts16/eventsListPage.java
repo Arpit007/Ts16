@@ -12,6 +12,7 @@ public class eventsListPage extends AppCompatActivity
 {
 	ListView eventListView;
 	ArrayList<eventData> list=null;
+	int CategoryID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -20,7 +21,11 @@ public class eventsListPage extends AppCompatActivity
 		setContentView(R.layout.activity_events_list_page);
 
 		Bundle b=getIntent().getExtras();
-		int CategoryId=b.getInt(getString(R.string.CategoryID));
+
+		String string = getString(R.string.CategoryID);
+
+		if(b!=null)
+			CategoryID=b.getInt(string);
 
 		eventListView =(ListView) findViewById(R.id.eventList);
 
@@ -28,10 +33,12 @@ public class eventsListPage extends AppCompatActivity
 			list.clear();
 
 		dbHelper helper=new dbHelper(this);
-		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryId);
+		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryID);
 		helper.close();
 
-		String title=b.getString("CategoryName");
+		String title=null;
+		if(b!=null)
+			title=b.getString("CategoryName");
 
 		if(!title.equals("All Events"))
 			title+=" Events";
@@ -47,5 +54,19 @@ public class eventsListPage extends AppCompatActivity
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
 			eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
 		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putInt(getString(R.string.CategoryID),CategoryID);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		super.onRestoreInstanceState(savedInstanceState);
+		CategoryID=savedInstanceState.getInt(getString(R.string.CategoryID));
 	}
 }

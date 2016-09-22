@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -21,8 +23,7 @@ import java.util.Date;
 
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
-	eventData data=null;
-
+	eventData data;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -39,11 +40,14 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		data=helper.GetEventById(helper.getReadableDatabase(),getIntent().getIntExtra(getString(R.string.EventID),0));
 		helper.close();
 
+		Log.d("MyEventId", String.valueOf(data.eventID));
+
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
-		final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), data.eventID, this);
+		final PagerAdapter adapter = new PagerAdapter
+				(getSupportFragmentManager(), tabLayout.getTabCount(), data.eventID, this);
 		viewPager.setAdapter(adapter);
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(getIntent().getIntExtra(getString(R.string.TabID),0));
+		viewPager.setCurrentItem(0);
 
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
@@ -67,17 +71,16 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		ActionBar bar=getSupportActionBar();
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
-
 		data.addEventDataListener(this);
 		eventUpdated(data);
 
-		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Font2.ttf");
+
+		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),"fonts/Font2.ttf");
 		(( TextView)findViewById(R.id.eventDetailStatus)).setTypeface(font);
 		((TextView)findViewById(R.id.eventDetailDate)).setTypeface(font);
 		((TextView)findViewById(R.id.eventDetailTime)).setTypeface(font);
 		((TextView)findViewById(R.id.eventDetailLocation)).setTypeface(font);
 	}
-
 	@Override
 	protected void onStop()
 	{
@@ -153,7 +156,18 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		}
 	}
 
-	public class PagerAdapter extends FragmentStatePagerAdapter
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
 		Context context;
@@ -167,8 +181,10 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		}
 
 		@Override
-		public Fragment getItem(int position)
-		{
+		public Fragment getItem(int position) {
+
+			Bundle bundle=new Bundle();
+			bundle.putInt(context.getString(R.string.EventID),EventID);
 			switch (position) {
 				case 0: eventDescTab tab=new eventDescTab();
 					tab.setUpFragment(EventID, context);return tab;
