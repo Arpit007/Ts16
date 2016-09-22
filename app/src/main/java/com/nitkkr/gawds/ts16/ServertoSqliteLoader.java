@@ -1,27 +1,16 @@
 package com.nitkkr.gawds.ts16;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.audiofx.BassBoost;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by SAHIL SINGLA on 01-09-2016.
- */
 public class ServertoSqliteLoader extends IntentService
 {
     private static final String id="id";
@@ -45,11 +31,9 @@ public class ServertoSqliteLoader extends IntentService
     private static final String scheduled_start="scheduled_start";
     private static final String scheduled_end="scheduled_end";
     private static final String duration="duration";
-    private static final String delay_status="delay_status";
     private static final String poster_name="poster_name";
     private static final String description="description";
     private static final String rules="rules";
-    private static final String event_coordinator="event_coordinator";
     private static final String special="special";
     private static final String result="result";
     private static final String last_updated="last_updated";
@@ -61,7 +45,8 @@ public class ServertoSqliteLoader extends IntentService
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(Intent intent)
+    {
         ServiceRunning=true;
         Log.d("ServiceTag","Thread Run");
                 httpRequest rh=new httpRequest();
@@ -183,5 +168,4 @@ public class ServertoSqliteLoader extends IntentService
         super.onDestroy();
         ServiceRunning=false;
     }
-
 }

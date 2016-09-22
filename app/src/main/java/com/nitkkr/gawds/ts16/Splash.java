@@ -2,11 +2,10 @@ package com.nitkkr.gawds.ts16;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -21,55 +20,12 @@ public class Splash extends AppCompatActivity
 		{
 			this.getSupportActionBar().hide();
 		}
-		try {
-			MessageDbHelper helper = new MessageDbHelper(this);
-			helper.onCreate(helper.getWritableDatabase());
-			helper.close();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		try {
-			CategoriesDbHelper helper2 = new CategoriesDbHelper(this);
-			helper2.onCreate(helper2.getWritableDatabase());
-			helper2.close();
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		try{
-			dbHelper helper1 = new dbHelper(this);
-			helper1.onCreate(helper1.getWritableDatabase());;
-			helper1.close();
-		}
-	catch (Exception e)
-	{
-		e.printStackTrace();
-	}
-		if(!ServertoSqliteLoader.ServiceRunning)
-			serviceStartBroadcast.startServices(this);
-		startAlarm(this);
+
+		new parallelDataSetup().execute(this.getBaseContext());
+
+		//startAlarm(this);
 	}
 
-
-	@Override
-	protected void onPostCreate(@Nullable Bundle savedInstanceState)
-	{
-		super.onPostCreate(savedInstanceState);
-
-		Handler handler=new Handler();
-		handler.postDelayed(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				Intent intent=new Intent(Splash.this,mainActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		}, getResources().getInteger(R.integer.splashDuration));
-	}
 	public  void startAlarm(Context c)
 	{
 		Intent intent=new Intent(c, serviceStartBroadcast.class);
@@ -79,4 +35,75 @@ public class Splash extends AppCompatActivity
 //		alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,firstMillis,100,pendingIntent);
 		alarm.setRepeating(AlarmManager.RTC_WAKEUP,firstMillis,1000,pendingIntent);
 	}
+
+	class parallelDataSetup extends AsyncTask<Context,Void,Void>
+	{
+		long oldTime, currentTime;
+
+		@Override
+		protected Void doInBackground(Context... params)
+		{
+			oldTime = System.currentTimeMillis();
+
+			if(!ServertoSqliteLoader.ServiceRunning)
+				serviceStartBroadcast.startServices(params[0]);
+
+			try
+			{
+				new MessageDbHelper(params[0]);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				new CategoriesDbHelper(params[0]);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			try
+			{
+				dbHelper helper1 = new dbHelper(params[0]);
+				helper1.onCreate(helper1.getWritableDatabase());;
+				helper1.close();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid)
+		{
+			super.onPostExecute(aVoid);
+			currentTime= System.currentTimeMillis();
+			long milliSeconds=(currentTime-oldTime);
+			long duration=getResources().getInteger(R.integer.splashDuration);
+			if(duration>milliSeconds)
+			{
+				Handler handler=new Handler();
+				handler.postDelayed(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						Intent intent=new Intent(Splash.this,mainActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				}, duration);
+			}
+			else
+			{
+				Intent intent=new Intent(Splash.this,mainActivity.class);
+				startActivity(intent);
+			}
+		}
+	}
+
 }
