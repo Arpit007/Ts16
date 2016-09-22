@@ -11,22 +11,21 @@ public class eventData
 	public int eventID;
 	public int Category;
 	public String Duration;
-	public String EventCoordinators;
 	public String eventName;
 	public int bookmark;
 	public String Day;
 	public String Time;
-	public String EndTime;
+	public String EndTime;//Is Needed??????????????????????
 	public int Status;
+	public eventStatusListener.StatusCode code= eventStatusListener.StatusCode.None;//Implement!!!!!!!!!!!!!!!!!!!!!!
 	public String Venue;
 	public String Description;
 	public String Rules;
 	public String Result;
 	public String Contact;
 	public String ImageID;
-	public String TimeStamp;
+	public String TimeStamp;//Is Needed??????????????????????
 	public Boolean notificationGenerated;
-	public int DelayStatus;
 
 	boolean isResultDeclared()
 	{
@@ -42,13 +41,12 @@ public class eventData
 	{
 		bookmark=(bookmarked)?1:0;
 		Log.d("bookmarks", bookmarked+" and "+bookmark);
+
 		dbHelper helper=new dbHelper(c);
-		if(helper.updateBookmarkStatus(helper.getReadableDatabase(),bookmark,this.eventID))
-		{
-			Toast.makeText(c,"Success",Toast.LENGTH_SHORT).show();
-		}
+		helper.updateBookmarkStatus(helper.getReadableDatabase(),bookmark,this.eventID);
 		helper.close();
-//		UpdateEvent();
+
+		UpdateEvent();
 	}
 
 	public interface eventDataListener
@@ -66,7 +64,8 @@ public class eventData
 
 	public void addEventDataListener(eventDataListener dataListener)
 	{
-		eventListenerList.add(dataListener);
+		if(!eventListenerList.contains(dataListener))
+			eventListenerList.add(dataListener);
 	}
 
 	public void removeDataListener(eventDataListener dataListener)
@@ -76,33 +75,17 @@ public class eventData
 
 	public void UpdateEvent()
 	{
-		for(eventDataListener listener:eventListenerList)
-			listener.eventUpdated(this);
+		try
+		{
+			for (eventDataListener listener : eventListenerList)
+				if(listener!=null)
+					listener.eventUpdated(this);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
-
-	public void UpdateEvent(eventData data)
-	{
-		DelayStatus=data.DelayStatus;
-		EndTime=data.EndTime;
-		eventID=data.eventID;
-		Category=data.Category;
-		Duration=data.Duration;
-		EventCoordinators=data.EventCoordinators;
-		eventName=data.eventName;
-		bookmark=data.bookmark;
-		Day=data.Day;
-		Time=data.Time;
-		Status= data.Status;
-		Venue=data.Venue;
-		Description=data.Description;
-		Rules=data.Rules;
-		Result=data.Result;
-		Contact=data.Contact;
-		ImageID=data.ImageID;
-		TimeStamp=data.TimeStamp;
-		UpdateEvent();
-	}
-
 
 	public int getImageResourceID()
 	{
@@ -115,8 +98,6 @@ public class eventData
 		{
 			e.printStackTrace();
 		}
-		return resID;
+		return -2;//resID;
 	}
-
-
 }

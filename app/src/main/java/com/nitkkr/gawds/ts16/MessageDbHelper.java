@@ -14,10 +14,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by SAHIL SINGLA on 03-09-2016.
- */
-class MessageDbHelper extends SQLiteOpenHelper {
+
+class MessageDbHelper extends SQLiteOpenHelper
+{
     private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_MESSAGES="messages";
@@ -25,20 +24,35 @@ class MessageDbHelper extends SQLiteOpenHelper {
     private static final String Date="date";
     private static final String Title="title";
     private static final String News="message";
+
+    private static ArrayList<MessageData> messageDataArrayList;
+    private static MessageDbHelper messageDbHelper;
     Context context;
-    public MessageDbHelper(Context context) {
+    private boolean Updated=true;
+
+    public MessageDbHelper(Context context)
+    {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
+
+        if(messageDataArrayList==null)
+        {
+            messageDataArrayList=ReadDatabaseMessage(getWritableDatabase());
+            close();
+        }
+        messageDbHelper=this;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
+    {
         String query="Create table IF NOT EXISTS "+TABLE_MESSAGES+" (" + id
                 +" INTEGER PRIMARY KEY,"+News
                 +" TEXT," +Title+
                 " TEXT," +Date+
                 " TEXT);";
-        try {
+        try
+        {
             sqLiteDatabase.execSQL(query);
         }
         catch (Exception e)
@@ -48,7 +62,8 @@ class MessageDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
+    {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
 
@@ -59,16 +74,17 @@ class MessageDbHelper extends SQLiteOpenHelper {
         messageValues.put(News,message);
         messageValues.put(Date,MDateTime);
         messageValues.put(Title,MTitle);
+
         try
         {
             int rows=db.update(TABLE_MESSAGES,messageValues,id+"="+MessageId,null);
-            if(rows<1) {
+            if(rows<1)
+            {
                 db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
                 NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
                 builder.setContentTitle("Talent Show Notification");
                 builder.setContentText(message);
                 builder.setTicker(message);
-//                builder.setSmallIcon()
                 Intent i=new Intent(context,mainActivity.class);
                 i.putExtra(context.getString(R.string.TabID),1);
                 TaskStackBuilder stackBuilder=TaskStackBuilder.create(context);
@@ -87,10 +103,10 @@ class MessageDbHelper extends SQLiteOpenHelper {
             Log.d("addMessage ", "Error while trying to add message");
             e.printStackTrace();
         }
-
+        Updated=true;
     }
 
-    public ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
+    private ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
     {
         ArrayList<MessageData> list=new ArrayList<>();
         try
@@ -116,10 +132,22 @@ class MessageDbHelper extends SQLiteOpenHelper {
         {
             e.printStackTrace();
         }
-        finally {
-
-        }
         return list;
+    }
+
+    static public ArrayList<MessageData> getMessageList(Context context)
+    {
+        if(messageDataArrayList==null)
+            new MessageDbHelper(context);
+
+        messageDbHelper.Updated=false;
+
+        return (ArrayList<MessageData>)messageDbHelper.messageDataArrayList.clone();
+    }
+
+    public static boolean isUpdated()
+    {
+        return messageDbHelper.Updated;
     }
 
     class MessageData

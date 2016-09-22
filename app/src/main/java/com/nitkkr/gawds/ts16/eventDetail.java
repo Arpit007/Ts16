@@ -2,6 +2,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -95,10 +96,12 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		try
 		{
 			int ImageId=event.getImageResourceID();
-			/*if(ImageId!=-1)
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);//or eventId
+			if(ImageId==-2);
 			else
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));*/
+			if(ImageId!=-1)
+				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
+			else
+				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
 		}
 		catch (Exception e)
 		{
@@ -139,21 +142,8 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			}
 		});
 
-		((TextView)findViewById(R.id.eventDetailStatus)).addTextChangedListener(new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this));
-
-
-		if(event.Status==-1)
-		{
-			((TextView)findViewById(R.id.eventDetailStatus)).setText(getBaseContext().getResources().getStringArray(R.array.EventStatus)[1]);
-		}
-		else if(event.Status==0)
-		{
-			((TextView)findViewById(R.id.eventDetailStatus)).setText(getBaseContext().getResources().getStringArray(R.array.EventStatus)[3]);
-		}
-		else if(event.Status==1)
-		{
-			((TextView)findViewById(R.id.eventDetailStatus)).setText(getBaseContext().getResources().getStringArray(R.array.EventStatus)[0]);
-		}
+		eventStatusListener listener=new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this);
+		listener.setStatusCode(event.code);
 	}
 
 	@Override

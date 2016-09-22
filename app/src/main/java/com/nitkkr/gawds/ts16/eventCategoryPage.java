@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class eventCategoryPage extends AppCompatActivity {
 	ListView categoryList;
-	ArrayList<eventCategory> list;
+	ArrayList<eventCategory> list=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,10 @@ public class eventCategoryPage extends AppCompatActivity {
 
 		categoryList = (ListView) findViewById(R.id.eventCategoryList);
 
-		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
-		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
-		helper.close();
+		if(list!=null)
+			list.clear();
+
+		list = CategoriesDbHelper.getEventCategoryArrayList(this);
 
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
 

@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="Dark">@color/primary_material_dark</color>
 
-    <color name="Live">#2ecc71</color>
+    <color name="Ongoing">#2ecc71</color>
     <color name="Over">#e74c37</color>
     <color name="Upcoming">#f1c40f</color>
     <color name="None">#00ffffff</color>

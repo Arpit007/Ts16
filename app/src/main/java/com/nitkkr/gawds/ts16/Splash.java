@@ -47,7 +47,8 @@ public class Splash extends AppCompatActivity
 	{
 		e.printStackTrace();
 	}
-//	serviceStartBroadcast.startServices(this);
+		if(!ServertoSqliteLoader.ServiceRunning)
+			serviceStartBroadcast.startServices(this);
 		startAlarm(this);
 	}
 

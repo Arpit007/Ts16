@@ -26,18 +26,28 @@ import java.util.Date;
 public class newsListFragment extends Fragment
 {
 	ArrayList<MessageDbHelper.MessageData> MessageDataList=null;
+	View view;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
+		view = inflater.inflate(R.layout.fragment_news_list, container, false);
 
-		View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+		UpdateNews();
 
-		MessageDbHelper dbHelper=new MessageDbHelper(getContext());
-		MessageDataList=dbHelper.ReadDatabaseMessage(dbHelper.getReadableDatabase());
-		dbHelper.close();
+		return view;
+	}
 
+	private void UpdateNews()
+	{
+		if(MessageDbHelper.isUpdated() || MessageDataList==null)
+		{
+			if(MessageDataList!=null)
+				MessageDataList.clear();
+
+			MessageDataList = MessageDbHelper.getMessageList(getContext());
+		}
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
@@ -49,8 +59,14 @@ public class newsListFragment extends Fragment
 			Log.d("Mesage count", String.valueOf(MessageDataList.size()));
 			listView.setAdapter(new newsItemAdapter(MessageDataList, getContext()));
 		}
+	}
 
-		return view;
+	@Override
+	public void setMenuVisibility(boolean menuVisible)
+	{
+		super.setMenuVisibility(menuVisible);
+		if(menuVisible)
+			UpdateNews();
 	}
 
 	class newsItemAdapter extends BaseAdapter

@@ -33,18 +33,13 @@
     <string name="EventsJSONArray">events</string>
     <string name="EventsByCategory">http://www.almerston.com/nitkkr2110/TS/events.php?category=0</string>
 
-    <string-array name="EventStatus">
-        <item>Live</item>
-        <item>Over</item>
-        <item>Upcoming</item>
-        <item>None</item>
-    </string-array>
     <integer-array name="EventStateColors">
-        <item>@color/Live</item>
-        <item>@color/Over</item>
-        <item>@color/Upcoming</item>
         <item>@color/None</item>
+        <item>@color/Upcoming</item>
+        <item>@color/Ongoing</item>
+        <item>@color/Over</item>
     </integer-array>
+
     <string name="title_activity_main">mainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
