@@ -12,6 +12,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,11 +44,21 @@ public class organizerPage extends AppCompatActivity
 		(( ListView)findViewById(R.id.organizerList)).setAdapter(new organizerAdapter(organizerList, this));
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	public void setUpOrganizerData()
 	{
 		organizerList=new ArrayList<>();
-
-		String Data="Failed to Fetch Data";
 
 		try
 		{

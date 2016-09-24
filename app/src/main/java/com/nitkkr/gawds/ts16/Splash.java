@@ -22,8 +22,6 @@ public class Splash extends AppCompatActivity
 		}
 
 		new parallelDataSetup().execute(this.getBaseContext());
-
-		//startAlarm(this);
 	}
 
 	public  void startAlarm(Context c)
@@ -32,7 +30,6 @@ public class Splash extends AppCompatActivity
 		final PendingIntent pendingIntent=PendingIntent.getBroadcast(c,12345,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 		long firstMillis = System.currentTimeMillis();
 		AlarmManager alarm = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-//		alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,firstMillis,100,pendingIntent);
 		alarm.setRepeating(AlarmManager.RTC_WAKEUP,firstMillis,1000,pendingIntent);
 	}
 
@@ -44,10 +41,7 @@ public class Splash extends AppCompatActivity
 		protected Void doInBackground(Context... params)
 		{
 			oldTime = System.currentTimeMillis();
-
-			if(!ServertoSqliteLoader.ServiceRunning)
-				serviceStartBroadcast.startServices(params[0]);
-
+			startAlarm(params[0]);
 			try
 			{
 				new MessageDbHelper(params[0]);
@@ -67,7 +61,7 @@ public class Splash extends AppCompatActivity
 			try
 			{
 				dbHelper helper1 = new dbHelper(params[0]);
-				helper1.onCreate(helper1.getWritableDatabase());;
+				helper1.onCreate(helper1.getWritableDatabase());
 				helper1.close();
 			}
 			catch (Exception e)

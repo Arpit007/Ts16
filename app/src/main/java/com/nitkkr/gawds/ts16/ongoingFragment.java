@@ -1,6 +1,5 @@
 package com.nitkkr.gawds.ts16;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +15,28 @@ import java.util.ArrayList;
 public class ongoingFragment extends Fragment
 {
 	private ArrayList<eventData> eventDataList=null;
+	View view;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+		view = inflater.inflate(R.layout.fragment_ongoing, container, false);
+		Update();
+		return view;
+	}
+
+	@Override
+	public void setMenuVisibility(boolean menuVisible)
+	{
+		super.setMenuVisibility(menuVisible);
+		if(menuVisible)
+			Update();
+	}
+
+	public void Update()
+	{
 
 		if(eventDataList!= null)
 			eventDataList.clear();
@@ -54,6 +69,5 @@ public class ongoingFragment extends Fragment
 				}
 			});
 		}
-		return view;
 	}
 }

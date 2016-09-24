@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -25,6 +26,8 @@ import java.util.Date;
 public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
 {
 	eventData data;
+	int selectedtabID;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -41,14 +44,16 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		data=helper.GetEventById(helper.getReadableDatabase(),getIntent().getIntExtra(getString(R.string.EventID),0));
 		helper.close();
 
+		selectedtabID=getIntent().getIntExtra(getString(R.string.TabID),0);
+		tabLayout.getTabAt(selectedtabID).select();
 		Log.d("MyEventId", String.valueOf(data.eventID));
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.eventPager);
 		final PagerAdapter adapter = new PagerAdapter
-				(getSupportFragmentManager(), tabLayout.getTabCount(), data.eventID, this);
+				(getSupportFragmentManager(), tabLayout.getTabCount(), data, this);
 		viewPager.setAdapter(adapter);
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(0);
+		viewPager.setCurrentItem(selectedtabID);
 
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
@@ -72,6 +77,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		ActionBar bar=getSupportActionBar();
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
+
 		data.addEventDataListener(this);
 		eventUpdated(data);
 
@@ -81,13 +87,6 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		((TextView)findViewById(R.id.eventDetailDate)).setTypeface(font);
 		((TextView)findViewById(R.id.eventDetailTime)).setTypeface(font);
 		((TextView)findViewById(R.id.eventDetailLocation)).setTypeface(font);
-	}
-	@Override
-	protected void onStop()
-	{
-		super.onStop();
-
-		data.removeDataListener(this);
 	}
 
 	@Override
@@ -109,7 +108,6 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		}
 
 		setTitle(event.eventName);
-
 
 		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
 
@@ -143,45 +141,67 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		});
 
 		eventStatusListener listener=new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this);
-		listener.setStatusCode(event.code);
+		listener.setStatusCode(event);
+
+		switch (event.code)
+		{
+			case None:
+			case Upcoming:
+				findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
+				break;
+			case Ongoing:
+			case Over:
+				findViewById(R.id.eventDetailNotify).setVisibility(View.INVISIBLE);
+				break;
+		}
+
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-
-		switch (item.getItemId()) {
+		switch (item.getItemId())
+		{
 			case android.R.id.home:
 				finish();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	protected void finalize() throws Throwable
+	{
+		if(data!=null)
+			data.removeDataListener(this);
+
+		super.finalize();
+	}
+
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
 		Context context;
-		int EventID;
+		eventData event;
 
-		public PagerAdapter(FragmentManager fm, int NumOfTabs, int eventID, Context context) {
+		public PagerAdapter(FragmentManager fm, int NumOfTabs, eventData Event, Context context) {
 			super(fm);
-			EventID=eventID;
+			event=Event;
 			this.context=context;
 			this.mNumOfTabs = NumOfTabs;
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public Fragment getItem(int position)
+		{
 
-			Bundle bundle=new Bundle();
-			bundle.putInt(context.getString(R.string.EventID),EventID);
 			switch (position) {
 				case 0: eventDescTab tab=new eventDescTab();
-					tab.setUpFragment(EventID, context);return tab;
+					tab.setUpFragment(event);return tab;
 				case 1: eventRuleTab tab1=new eventRuleTab();
-					tab1.setUpFragment(EventID, context);return tab1;
+					tab1.setUpFragment(event);return tab1;
 				case 2: eventResultTab tab2=new eventResultTab();
-					tab2.setUpFragment(EventID, context);return tab2;
+					tab2.setUpFragment(event);return tab2;
 				default:
 					return null;
 			}

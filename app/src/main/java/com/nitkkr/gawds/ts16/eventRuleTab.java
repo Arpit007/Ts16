@@ -1,7 +1,5 @@
 package com.nitkkr.gawds.ts16;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -17,11 +15,9 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	eventData data;
 	View view;
 
-	public void setUpFragment(int eventID, Context context)
+	public void setUpFragment(eventData event)
 	{
-		dbHelper helper=new dbHelper(context);
-		data=helper.GetEventById(helper.getReadableDatabase(),eventID);
-		helper.close();
+		data=event;
 
 		data.addEventDataListener(this);
 		eventUpdated(data);
@@ -64,16 +60,11 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 	}
 
 	@Override
-	public void onDestroy()
+	protected void finalize() throws Throwable
 	{
-		super.onDestroy();
-		data.removeDataListener(this);
-	}
+		if(data!=null)
+			data.removeDataListener(this);
 
-	@Override
-	public void onStop()
-	{
-		super.onStop();
-		data.removeDataListener(this);
+		super.finalize();
 	}
 }

@@ -22,12 +22,6 @@ import java.util.Date;
 
 public class eventItemAdapter extends BaseAdapter
 {
-	public interface bookMarkListener
-	{
-		void bookMarkChanged();
-	}
-
-	private bookMarkListener listener;
 	private ArrayList<eventData> dataList=null;
 	Context context;
 	boolean showBookmark;
@@ -37,11 +31,6 @@ public class eventItemAdapter extends BaseAdapter
 		this.showBookmark=showBookmark;
 		this.context=context;
 		this.dataList=dataList;
-	}
-
-	public void setBookmarkListener(bookMarkListener listener)
-	{
-		this.listener=listener;
 	}
 
 	@Override
@@ -88,7 +77,9 @@ public class eventItemAdapter extends BaseAdapter
 			e.printStackTrace();
 		}
 
-		if(showBookmark)// && !data.isResultDeclared())
+		eventStatusListener.setEventStatusCode(data,context);
+
+		if(showBookmark && (data.code== eventStatusListener.StatusCode.None || data.code== eventStatusListener.StatusCode.Upcoming))
 		{
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
 		}
@@ -101,7 +92,6 @@ public class eventItemAdapter extends BaseAdapter
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
 				data.updateBookmark(context,isChecked);
-				//listener.bookMarkChanged();
 			}
 		});
 

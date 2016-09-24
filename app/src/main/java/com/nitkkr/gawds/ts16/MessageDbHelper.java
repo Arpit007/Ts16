@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -82,19 +83,26 @@ class MessageDbHelper extends SQLiteOpenHelper
             {
                 db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
                 NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
-                builder.setContentTitle("Talent Show Notification");
+
+                builder.setContentTitle("TS\' 16: New Notification");
                 builder.setContentText(message);
                 builder.setTicker(message);
+
                 Intent i=new Intent(context,mainActivity.class);
                 i.putExtra(context.getString(R.string.TabID),1);
                 TaskStackBuilder stackBuilder=TaskStackBuilder.create(context);
                 stackBuilder.addParentStack(mainActivity.class);
                 stackBuilder.addNextIntent(i);
+                builder.setAutoCancel(true);
+                builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+                builder.setLights(Color.GREEN, 3000, 3000);
                 PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(pendingIntent);
-                builder.setSmallIcon(R.drawable.events_icon);
+                builder.setSmallIcon(R.drawable.news_icon);
                 NotificationManager notification=(NotificationManager ) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notification.notify("MessageNotification",120,builder.build());
+
+                Updated=true;
             }
 
         }
@@ -103,7 +111,6 @@ class MessageDbHelper extends SQLiteOpenHelper
             Log.d("addMessage ", "Error while trying to add message");
             e.printStackTrace();
         }
-        Updated=true;
     }
 
     private ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)

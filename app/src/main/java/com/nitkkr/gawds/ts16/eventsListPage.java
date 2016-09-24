@@ -2,6 +2,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -12,7 +13,7 @@ public class eventsListPage extends AppCompatActivity
 {
 	ListView eventListView;
 	ArrayList<eventData> list=null;
-	int CategoryID;
+	int CategoryID=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,8 +41,15 @@ public class eventsListPage extends AppCompatActivity
 		if(b!=null)
 			title=b.getString("CategoryName");
 
-		if(!title.equals("All Events"))
-			title+=" Events";
+		try
+		{
+			if (!title.equals("All Events"))
+				title += " Events";
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		setTitle(title);
 
@@ -54,19 +62,5 @@ public class eventsListPage extends AppCompatActivity
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
 			eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
 		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState)
-	{
-		super.onSaveInstanceState(outState);
-		outState.putInt(getString(R.string.CategoryID),CategoryID);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState)
-	{
-		super.onRestoreInstanceState(savedInstanceState);
-		CategoryID=savedInstanceState.getInt(getString(R.string.CategoryID));
 	}
 }

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -17,13 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Created by SAHIL SINGLA on 01-09-2016.
- */
-    public class dbHelper extends SQLiteOpenHelper{
+public class dbHelper extends SQLiteOpenHelper{
 
-    public static dbHelper DbHelper;
     private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_EVENTS="events";
@@ -46,9 +45,9 @@ import java.util.Date;
     private static final String last_updated="last_updated";
 
     Context context;
+
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        DbHelper=this;
         this.context=context;
     }
 
@@ -80,9 +79,11 @@ import java.util.Date;
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_EVENTS);
         onCreate(sqLiteDatabase);
     }
+
     public void addEvent(SQLiteDatabase sqLiteDatabase,eventData Event)
     {
-        try{
+        try
+        {
             addorUpdateEvent(sqLiteDatabase,Event);
         }
         catch (Exception e)
@@ -95,49 +96,40 @@ import java.util.Date;
     private void addorUpdateEvent(SQLiteDatabase db,eventData event) {
         try {
             ContentValues eventValues = new ContentValues();
-            eventValues=setEventContentValues(eventValues, event);
+
             String query="Select * from "+TABLE_EVENTS+" where "+id+"="+event.eventID+";";
             Cursor c=db.rawQuery(query,null);
             int count=c.getCount();
             if(count!=0)
             {
-                Log.d("Updating ",event.eventID+"");
                 c.moveToFirst();
-                if(((c.getString(c.getColumnIndex(venue))).compareToIgnoreCase(event.Venue)!=0 ||
-                        (c.getString(c.getColumnIndex(scheduled_start))).compareToIgnoreCase(event.Time)!=0)
-                        && (c.getInt(c.getColumnIndex(special))==1))
+                event.Status=c.getInt(c.getColumnIndex(status));
+                eventValues=setEventContentValues(eventValues, event);
+                Log.d("Updating ",event.eventID+"");
+                if((c.getString(c.getColumnIndex(result))).compareToIgnoreCase(event.Result)!=0 && event.isBookmarked())
                 {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                    builder.setContentTitle(event.eventName);
-                    builder.setContentText(event.eventName+" has been updated! Check Here.");
+                    builder.setContentTitle(event.eventName + ": Results declared");
+
+                    builder.setSmallIcon(R.drawable.result_icon);
+
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
                     i.putExtra(context.getString(R.string.EventID), event.eventID);
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                    stackBuilder.addParentStack(eventDetail.class);
-                    stackBuilder.addNextIntent(i);
 
-                    builder.setSmallIcon(R.drawable.checked_star);
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+
+                    stackBuilder.addNextIntentWithParentStack(new Intent(context,mainActivity.class));
+                    stackBuilder.addNextIntent(i);
+                    builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+                    builder.setLights(Color.RED, 3000, 3000);
+                    builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                    builder.setAutoCancel(true);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
+
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("ResultNotification", 140, builder.build());
-                }
-                if((c.getString(c.getColumnIndex(result))).compareToIgnoreCase(event.Result)!=0)
-                {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                        builder.setContentTitle("Results for " + event.eventName + " declared");
-                    builder.setSmallIcon(R.drawable.checked_star);
-                        Intent i = new Intent(context, eventDetail.class);
-                        i.putExtra(context.getString(R.string.TabID), 2);
-                        i.putExtra(context.getString(R.string.EventID), event.eventID);
-                        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                        stackBuilder.addParentStack(eventDetail.class);
-                        stackBuilder.addNextIntent(i);
-                        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                        builder.setContentIntent(pendingIntent);
-                        NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                        notification.notify("ResultNotification", 140, builder.build());
                 }
                 db.update(TABLE_EVENTS,eventValues,"id = "+event.eventID,null);
                 Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
@@ -146,6 +138,7 @@ import java.util.Date;
             }
             else
             {
+                eventValues=setEventContentValues(eventValues, event);
                 try {
                     db.insertOrThrow(TABLE_EVENTS, null, eventValues);
                 }
@@ -161,6 +154,7 @@ import java.util.Date;
         } finally {
         }
     }
+
     public ArrayList<eventData> ReadDatabaseEvents( SQLiteDatabase db,int category)
     {
 
@@ -169,17 +163,10 @@ import java.util.Date;
         {
             String query;
             if(category>0)
-            query="Select * from "+TABLE_EVENTS+" where category = "+category+";";
+                query="Select * from "+TABLE_EVENTS+" where category = "+category+";";
             else
-            query="Select * from "+TABLE_EVENTS+";";
+                query="Select * from "+TABLE_EVENTS+";";
             Cursor object=db.rawQuery(query,null);
-
-            Log.d("cnt", String.valueOf(object.getCount()));
-
-            Log.d("cnt", "sas,");
-            Log.d("cnt", String.valueOf(object.getCount()));
-            Log.d("cnt", String.valueOf(object.getCount()));
-
             if(object.getCount()>0)
             {
                 object.moveToFirst();
@@ -199,9 +186,9 @@ import java.util.Date;
                     item.bookmark=object.getInt(object.getColumnIndex(special));
                     item.Result=object.getString(object.getColumnIndex(result));
                     item.Rules=object.getString(object.getColumnIndex(rules));
-                    item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
+                    item.Contact=object.getString(object.getColumnIndex(event_coordinator));
                     list.add(item);
-                    Log.d("categoryf  ", String.valueOf(item.eventID));
+                    Log.d("categoryf  ", String.valueOf(item.Contact));
                 }while(object.moveToNext());
                 object.close();
             }
@@ -213,62 +200,70 @@ import java.util.Date;
 
         return list;
     }
+
     public ArrayList<eventData> GetUpcomingEvents(SQLiteDatabase db)
     {
-        ArrayList<eventData> all=this.ReadDatabaseEvents(db,0);
-        ArrayList<eventData> upcoming=new ArrayList<>();
-        int length=all.size();
-        for(int i=0;i<length;i++)
+        ArrayList<eventData> eventDataArrayList = this.ReadDatabaseEvents(db, 0);
+        ArrayList<eventData> upcoming = new ArrayList<>();
+
+        for (eventData data : eventDataArrayList)
         {
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Calendar calendar=Calendar.getInstance();
-            eventData item=all.get(i);
-            try {
-                Date eventDate=simpleDateFormat.parse(item.Day+" "+item.Time);
-                Long eventTimeStamp=(eventDate.getTime())/1000;
-                Long currentTimeStamp=(calendar.getTimeInMillis())/1000;
-                if(currentTimeStamp<eventTimeStamp)
+            try
+            {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+                long BeginTime = ( format.parse(data.Day + " " + data.Time).getTime() ) / 1000;
+                long currentTimeStamp = Calendar.getInstance().getTimeInMillis() / 1000;
+
+                long lapse = TimeUnit.HOURS.toMillis(context.getResources().getInteger(R.integer.upcomingDuration));
+
+                if (currentTimeStamp < BeginTime && currentTimeStamp + lapse > BeginTime)
                 {
-                    upcoming.add(item);
+                    if (data.code != eventStatusListener.StatusCode.Upcoming)
+                        data.code = eventStatusListener.StatusCode.Upcoming;
+                    upcoming.add(data);
                 }
-            } catch (ParseException e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
-
         }
         return upcoming;
-
     }
-
-
-
 
     public ArrayList<eventData> GetOngoingEvents(SQLiteDatabase db)
     {
-        ArrayList<eventData> all=this.ReadDatabaseEvents(db,0);
+        ArrayList<eventData> eventDataArrayList=this.ReadDatabaseEvents(db,0);
         ArrayList<eventData> ongoing=new ArrayList<>();
-        int length=all.size();
-        for(int i=0;i<length;i++)
+
+        for(eventData data: eventDataArrayList)
         {
-            Log.d("Status ",all.get(i).Status+" "+all.get(i).eventID);
-            try {
+            try
+            {
                 SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                String eventTimeStatus=all.get(i).Day+" "+all.get(i).EndTime;
-                long eventTimeStamp=(format.parse(eventTimeStatus).getTime())/1000;
+
+                long BeginTime=(format.parse(data.Day+" "+ data.Time).getTime())/1000;
+                long EndTime=(format.parse(data.Day+" "+ data.EndTime).getTime())/1000;
                 long currentTimeStamp=Calendar.getInstance().getTimeInMillis()/1000;
-                if(all.get(i).Status==1 && eventTimeStamp>=currentTimeStamp)
+
+                if(currentTimeStamp>=BeginTime && currentTimeStamp<EndTime)
                 {
-                    Log.d("Adding ",all.get(i).eventID+"");
-                    ongoing.add(all.get(i));
+                    if(data.code!= eventStatusListener.StatusCode.Ongoing)
+                        data.code= eventStatusListener.StatusCode.Ongoing;
+                    ongoing.add(data);
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
         }
         return ongoing;
     }
 
-    private ContentValues setEventContentValues(ContentValues eventValues,eventData event) {
+    private ContentValues setEventContentValues(ContentValues eventValues,eventData event)
+    {
         eventValues.put(dbHelper.id,event.eventID);
         eventValues.put(dbHelper.name,event.eventName);
         eventValues.put(dbHelper.category,event.Category);
@@ -277,13 +272,13 @@ import java.util.Date;
         eventValues.put(dbHelper.status,event.Status);
         eventValues.put(dbHelper.scheduled_start,event.Time);
         eventValues.put(dbHelper.scheduled_end,event.EndTime);
+        eventValues.put(dbHelper.event_coordinator,event.Contact);
         eventValues.put(dbHelper.duration,event.Duration);
         eventValues.put(dbHelper.poster_name,event.ImageID);
         eventValues.put(dbHelper.description,event.Description);
         eventValues.put(dbHelper.special,event.bookmark);
         eventValues.put(dbHelper.rules,event.Rules);
         eventValues.put(dbHelper.result,event.Result);
-        eventValues.put(dbHelper.last_updated,event.TimeStamp);
         return eventValues;
     }
 
@@ -302,34 +297,18 @@ import java.util.Date;
         return false;
     }
 
-    public SQLiteDatabase getDefaultDatabase()
-    {
-        return null;
-    }
-
     public eventData GetEventById(SQLiteDatabase db, int eventID) {
 
         eventData item=new eventData();
         try
         {
-            String query;
-//            if(category>0)
-                query="Select * from "+TABLE_EVENTS+" where id= "+eventID+";";
-//            else
-//                query="Select * from "+TABLE_EVENTS+";";
+            String query="Select * from "+TABLE_EVENTS+" where id= "+eventID+";";
             Cursor object=db.rawQuery(query,null);
-
-//            Log.d("cnt", String.valueOf(object.getCount()));
-//
-//            Log.d("cnt", "sas,");
-//            Log.d("cnt", String.valueOf(object.getCount()));
-//            Log.d("cnt", String.valueOf(object.getCount()));
 
             if(object.getCount()>0)
             {
                 object.moveToFirst();
                 do{
-//                    eventData item=new eventData();
                     item.eventID=object.getInt(object.getColumnIndex(id));
                     item.eventName=object.getString(object.getColumnIndex(name));
                     item.Category=object.getInt(object.getColumnIndex("category"));
@@ -342,11 +321,9 @@ import java.util.Date;
                     item.ImageID=object.getString(object.getColumnIndex(poster_name));
                     item.Description=object.getString(object.getColumnIndex(description));
                     item.bookmark=object.getInt(object.getColumnIndex(special));
+                    item.Contact=object.getString(object.getColumnIndex(event_coordinator));
                     item.Result=object.getString(object.getColumnIndex(result));
                     item.Rules=object.getString(object.getColumnIndex(rules));
-                    item.TimeStamp=object.getString(object.getColumnIndex(last_updated));
-//                    list.add(item);
-//                    Log.d("categoryf  ", String.valueOf(item.eventID));
                 }while(object.moveToNext());
                 object.close();
             }

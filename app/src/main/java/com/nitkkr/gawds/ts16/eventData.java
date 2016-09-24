@@ -15,16 +15,15 @@ public class eventData
 	public int bookmark;
 	public String Day;
 	public String Time;
-	public String EndTime;//Is Needed??????????????????????
+	public String EndTime;
 	public int Status;
-	public eventStatusListener.StatusCode code= eventStatusListener.StatusCode.None;//Implement!!!!!!!!!!!!!!!!!!!!!!
+	public eventStatusListener.StatusCode code= eventStatusListener.StatusCode.None;
 	public String Venue;
 	public String Description;
 	public String Rules;
 	public String Result;
 	public String Contact;
 	public String ImageID;
-	public String TimeStamp;//Is Needed??????????????????????
 	public Boolean notificationGenerated;
 
 	boolean isResultDeclared()
@@ -39,7 +38,11 @@ public class eventData
 
 	void updateBookmark(Context c,boolean bookmarked)
 	{
-		bookmark=(bookmarked)?1:0;
+		int bookmarkX=(bookmarked)?1:0;
+
+		if(bookmark==bookmarkX)
+			return;
+
 		Log.d("bookmarks", bookmarked+" and "+bookmark);
 
 		dbHelper helper=new dbHelper(c);
@@ -75,16 +78,16 @@ public class eventData
 
 	public void UpdateEvent()
 	{
-		try
-		{
-			for (eventDataListener listener : eventListenerList)
-				if(listener!=null)
-					listener.eventUpdated(this);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		for (eventDataListener listener : eventListenerList)
+			try
+			{
+					if(listener!=null)
+						listener.eventUpdated(this);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 	}
 
 	public int getImageResourceID()

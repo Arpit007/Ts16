@@ -42,6 +42,7 @@ public class eventResult extends AppCompatActivity
 		for(eventData data:helper.ReadDatabaseEvents(helper.getReadableDatabase(),0))
 			if(data.isResultDeclared())
 				resultList.add(data);
+
 		helper.close();
 
 		if(resultList.size()==0)
