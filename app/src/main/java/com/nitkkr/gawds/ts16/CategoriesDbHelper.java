@@ -9,26 +9,17 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class CategoriesDbHelper  extends SQLiteOpenHelper
-{
+public class CategoriesDbHelper  extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION=2;
     private static final String DATABASE_NAME="ts16.db";
     private static final String TABLE_CATEGORIES="categories";
     private static final String id="id";
     private static final String name="name";
 
-    static private ArrayList<eventCategory> eventCategoryArrayList=null;
-    static private CategoriesDbHelper categoriesDbHelper=null;
-
-    public CategoriesDbHelper(Context context)
-    {
+    public CategoriesDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        if(eventCategoryArrayList==null)
-        {
-            eventCategoryArrayList=ReadDatabaseCategory(getWritableDatabase());
-            close();
-        }
-        categoriesDbHelper=this;
+        onCreate(this.getWritableDatabase());
+        this.close();
     }
 
     @Override
@@ -46,8 +37,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper
 
     public void addCategory(SQLiteDatabase db,eventCategory Category)
     {
-        try
-        {
+        try{
             addorUpdateCategory(db,Category);
         }
         catch (Exception e)
@@ -60,15 +50,12 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper
 
     private void addorUpdateCategory(SQLiteDatabase db,eventCategory category) {
 
-        try
-        {
+        try{
             ContentValues categoryValues=new ContentValues();
             categoryValues.put(id,category.id);
             categoryValues.put(name,category.category);
-
             int affectedRows=db.update(TABLE_CATEGORIES,categoryValues,id+" = "+ category.id,null);
-
-            if(affectedRows!=1)
+            if(affectedRows<1)
             {
                 db.insertOrThrow(TABLE_CATEGORIES,null,categoryValues);
             }
@@ -78,15 +65,8 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper
             Log.d("addorUpdateCategory", "Error while trying to add or update category");
             e.printStackTrace();
         }
-        finally
-        {
-            eventCategoryArrayList.clear();
-            eventCategoryArrayList=ReadDatabaseCategory(getWritableDatabase());
-            close();
-        }
     }
-
-    private ArrayList<eventCategory> ReadDatabaseCategory(SQLiteDatabase db)
+    public ArrayList<eventCategory> ReadDatabaseCategory(SQLiteDatabase db)
     {
 
         ArrayList<eventCategory> list=new ArrayList<>();
@@ -94,17 +74,16 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper
         {
             String query;
 
-                query="Select * from "+TABLE_CATEGORIES+";";
+            query="Select * from "+TABLE_CATEGORIES+";";
 
             Cursor categoryCursor=db.rawQuery(query,null);
-            if(categoryCursor.getCount()>0)
-            {
+            if(categoryCursor.getCount()>0) {
                 categoryCursor.moveToFirst();
                 do {
                     eventCategory item = new eventCategory();
                     item.id = (categoryCursor.getInt(categoryCursor.getColumnIndex(id)));
                     item.category = (categoryCursor.getString(categoryCursor.getColumnIndex(name)));
-                    Log.d("categoryfdb", item.category);
+                    Log.d("category", item.category);
                     list.add(item);
                 } while (categoryCursor.moveToNext());
             }
@@ -114,15 +93,8 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper
         {
             e.printStackTrace();
         }
-
         return list;
     }
 
-    static public ArrayList<eventCategory> getEventCategoryArrayList(Context context)
-    {
-        if(eventCategoryArrayList==null)
-            new CategoriesDbHelper(context);
 
-        return (ArrayList<eventCategory>)categoriesDbHelper.eventCategoryArrayList.clone();
-    }
 }

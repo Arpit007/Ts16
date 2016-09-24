@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.organizerPage">
-    <ListView android:scrollbars="none"
+    <ListView android:scrollbars="none" android:clickable="false"
              android:id="@+id/organizerList" android:paddingTop="30dp"
               android:divider="#00ffffff" android:dividerHeight="10dp"
               android:paddingLeft="10dp" android:paddingRight="10dp"
+              android:listSelector="@android:color/transparent"
               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </RelativeLayout>

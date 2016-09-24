@@ -17,7 +17,7 @@
             android:layout_alignBottom="@+id/eventDetailImage" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
-            <TextView android:drawablePadding="10dp" android:paddingLeft="5dp"
+            <TextView
                 android:paddingRight="10dp" android:layout_centerVertical="true"
                 android:id="@+id/eventDetailStatus" android:layout_alignParentRight="true"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -104,12 +104,11 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			Log.d("EventDetail","Image Error");
 		}
 
 		setTitle(event.eventName);
 
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
 
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
 
@@ -139,6 +138,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 				event.updateBookmark(getBaseContext(),isChecked);
 			}
 		});
+		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
 
 		eventStatusListener listener=new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this);
 		listener.setStatusCode(event);
@@ -154,6 +154,8 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 				findViewById(R.id.eventDetailNotify).setVisibility(View.INVISIBLE);
 				break;
 		}
+		if(event.isBookmarked())
+			findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
 
 	}
 

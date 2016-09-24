@@ -48,6 +48,10 @@ public class eventRuleTab extends Fragment implements eventData.eventDataListene
 		(( TextView)view.findViewById(R.id.eventRuleText)).setTypeface(font);
 		((TextView)(view.findViewById(R.id.eventRuleText))).setText(data.Rules);
 
+		font = Typeface.createFromAsset(getContext().getAssets(),
+				"fonts/Font2.ttf");
+		(( TextView)view.findViewById(R.id.eventCall)).setTypeface(font);
+
 		view.findViewById(R.id.eventCall).setOnClickListener(new View.OnClickListener()
 		{
 			@Override

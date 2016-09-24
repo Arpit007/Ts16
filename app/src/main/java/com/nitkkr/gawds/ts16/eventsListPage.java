@@ -9,7 +9,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 
-public class eventsListPage extends AppCompatActivity
+public class eventsListPage extends AppCompatActivity implements eventItemAdapter.BookmarkListener
 {
 	ListView eventListView;
 	ArrayList<eventData> list=null;
@@ -28,15 +28,6 @@ public class eventsListPage extends AppCompatActivity
 		if(b!=null)
 			CategoryID=b.getInt(string);
 
-		eventListView =(ListView) findViewById(R.id.eventList);
-
-		if(list!= null)
-			list.clear();
-
-		dbHelper helper=new dbHelper(this);
-		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryID);
-		helper.close();
-
 		String title=null;
 		if(b!=null)
 			title=b.getString("CategoryName");
@@ -52,6 +43,22 @@ public class eventsListPage extends AppCompatActivity
 		}
 
 		setTitle(title);
+		BookmarkChanged();
+
+	}
+
+	@Override
+	public void BookmarkChanged()
+	{
+		eventListView =(ListView) findViewById(R.id.eventList);
+
+		if(list!= null)
+			list.clear();
+
+		dbHelper helper=new dbHelper(this);
+		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryID);
+		helper.close();
+
 
 		if(list.size()==0)
 		{
@@ -60,7 +67,9 @@ public class eventsListPage extends AppCompatActivity
 		else
 		{
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
-			eventListView.setAdapter(new eventItemAdapter(list, getApplicationContext(), true));
+			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
+			adapter.listener=this;
+			eventListView.setAdapter(adapter);
 		}
 	}
 }

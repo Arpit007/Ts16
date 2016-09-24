@@ -7,7 +7,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class starredEvents extends AppCompatActivity
+public class starredEvents extends AppCompatActivity implements eventItemAdapter.BookmarkListener
 {
 
 	ArrayList<eventData> eventDataList=null;
@@ -18,17 +18,18 @@ public class starredEvents extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_starred_events);
 		setTitle("Starred Events");
-		bookMarkChanged();
+		BookmarkChanged();
 
 	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		bookMarkChanged();
+		BookmarkChanged();
 	}
 
-	public void bookMarkChanged()
+	@Override
+	public void BookmarkChanged()
 	{
 		if(eventDataList!=null)
 			eventDataList.clear();
@@ -39,7 +40,9 @@ public class starredEvents extends AppCompatActivity
 		for(eventData data:helper.ReadDatabaseEvents(helper.getReadableDatabase(),0))
 		{
 			if(data.isBookmarked())
+			{
 				eventDataList.add(data);
+			}
 		}
 
 		helper.close();
@@ -53,6 +56,8 @@ public class starredEvents extends AppCompatActivity
 			findViewById(R.id.NoStar).setVisibility(View.INVISIBLE);
 			ListView listView=(ListView)findViewById(R.id.starList);
 			eventItemAdapter adapter=new eventItemAdapter(eventDataList, this, true);
+			adapter.listener=this;
+			adapter.setForcedBookmark();
 			listView.setAdapter(adapter);
 		}
 	}

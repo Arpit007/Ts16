@@ -118,8 +118,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         ArrayList<MessageData> list=new ArrayList<>();
         try
         {
-            String query;
-            query="Select * from "+TABLE_MESSAGES+";";
+            String query="Select * from "+TABLE_MESSAGES+";";
             Cursor categoryCursor=db.rawQuery(query,null);
             if(categoryCursor.getCount()>0)
             {

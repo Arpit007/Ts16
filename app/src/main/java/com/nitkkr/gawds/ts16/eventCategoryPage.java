@@ -34,10 +34,9 @@ public class eventCategoryPage extends AppCompatActivity {
 
 		categoryList = (ListView) findViewById(R.id.eventCategoryList);
 
-		if(list!=null)
-			list.clear();
-
-		list = CategoriesDbHelper.getEventCategoryArrayList(this);
+		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
+		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
+		helper.close();
 
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
 
@@ -94,7 +93,6 @@ public class eventCategoryPage extends AppCompatActivity {
 			}
 
 			final eventCategory thisCategory=list.get(position);
-			Log.d("Category",thisCategory.category );
 
 			((TextView)convertView.findViewById(R.id.category_name)).setText(thisCategory.category);
 

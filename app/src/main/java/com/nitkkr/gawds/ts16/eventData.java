@@ -2,7 +2,6 @@ package com.nitkkr.gawds.ts16;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ public class eventData
 	public int Category;
 	public String Duration;
 	public String eventName;
-	public int bookmark;
+	private boolean bookmark;
 	public String Day;
 	public String Time;
 	public String EndTime;
@@ -33,23 +32,37 @@ public class eventData
 
 	boolean isBookmarked()
 	{
-		return (bookmark==1)? true:false;
+		return bookmark;
 	}
 
-	void updateBookmark(Context c,boolean bookmarked)
+	int getBookmark()
 	{
-		int bookmarkX=(bookmarked)?1:0;
+		return (bookmark)?1:0;
+	}
 
-		if(bookmark==bookmarkX)
-			return;
+	void setBookmark(int bookmark)
+	{
+		this.bookmark=(bookmark==1)?true:false;
+	}
 
-		Log.d("bookmarks", bookmarked+" and "+bookmark);
+	boolean updateBookmark(Context c,boolean bookmarked)
+	{
+
+		if(bookmark==bookmarked)
+			return false;
+
+		Log.d("bookmarks", bookmark+" and "+bookmarked);
+
+		bookmark=bookmarked;
+
 
 		dbHelper helper=new dbHelper(c);
-		helper.updateBookmarkStatus(helper.getReadableDatabase(),bookmark,this.eventID);
+		helper.updateBookmarkStatus(helper.getReadableDatabase(),getBookmark(),this.eventID);
 		helper.close();
 
 		UpdateEvent();
+
+		return true;
 	}
 
 	public interface eventDataListener
@@ -99,7 +112,7 @@ public class eventData
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+
 		}
 		return -2;//resID;
 	}

@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.nitkkr.gawds.ts16.newsListFragment">
-z
+
     <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"
         android:layout_centerInParent="true" android:id="@+id/NoNews"

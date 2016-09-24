@@ -24,8 +24,8 @@
     <string name="EventID">EventID</string>
     <string name="TabID">TabID</string>
     <string name="NoResult">No Results Yet!</string>
-    <string name="NoUpcoming">No upcoming events yet!</string>
-    <string name="NoOngoing">No active events</string>
+    <string name="NoUpcoming">No Forthcoming Events Yet!</string>
+    <string name="NoOngoing">No Active Events!</string>
     <string name="NoStar">No Events Starred!</string>
     <string name="NoNews">No new Notifications</string>
     <string name="hello_blank_fragment">Temporary String</string>

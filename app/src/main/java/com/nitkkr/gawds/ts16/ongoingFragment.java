@@ -37,6 +37,8 @@ public class ongoingFragment extends Fragment
 
 	public void Update()
 	{
+		if (view==null)
+			return;
 
 		if(eventDataList!= null)
 			eventDataList.clear();

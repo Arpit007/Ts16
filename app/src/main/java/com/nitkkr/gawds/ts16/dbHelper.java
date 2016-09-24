@@ -183,12 +183,11 @@ public class dbHelper extends SQLiteOpenHelper{
                     item.Duration=object.getString(object.getColumnIndex(duration));
                     item.ImageID=object.getString(object.getColumnIndex(poster_name));
                     item.Description=object.getString(object.getColumnIndex(description));
-                    item.bookmark=object.getInt(object.getColumnIndex(special));
+                    item.setBookmark(object.getInt(object.getColumnIndex(special)));
                     item.Result=object.getString(object.getColumnIndex(result));
                     item.Rules=object.getString(object.getColumnIndex(rules));
                     item.Contact=object.getString(object.getColumnIndex(event_coordinator));
                     list.add(item);
-                    Log.d("categoryf  ", String.valueOf(item.Contact));
                 }while(object.moveToNext());
                 object.close();
             }
@@ -276,7 +275,7 @@ public class dbHelper extends SQLiteOpenHelper{
         eventValues.put(dbHelper.duration,event.Duration);
         eventValues.put(dbHelper.poster_name,event.ImageID);
         eventValues.put(dbHelper.description,event.Description);
-        eventValues.put(dbHelper.special,event.bookmark);
+        eventValues.put(dbHelper.special,event.getBookmark());
         eventValues.put(dbHelper.rules,event.Rules);
         eventValues.put(dbHelper.result,event.Result);
         return eventValues;
@@ -320,7 +319,7 @@ public class dbHelper extends SQLiteOpenHelper{
                     item.Duration=object.getString(object.getColumnIndex(duration));
                     item.ImageID=object.getString(object.getColumnIndex(poster_name));
                     item.Description=object.getString(object.getColumnIndex(description));
-                    item.bookmark=object.getInt(object.getColumnIndex(special));
+                    item.setBookmark(object.getInt(object.getColumnIndex(special)));
                     item.Contact=object.getString(object.getColumnIndex(event_coordinator));
                     item.Result=object.getString(object.getColumnIndex(result));
                     item.Rules=object.getString(object.getColumnIndex(rules));

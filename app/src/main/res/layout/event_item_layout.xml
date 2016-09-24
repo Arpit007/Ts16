@@ -4,37 +4,44 @@
               android:padding="5dp"
               android:id="@+id/event_recycler_item" android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <LinearLayout android:weightSum="100"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <LinearLayout android:orientation="horizontal" android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
+                      android:layout_weight="80" android:paddingRight="10dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
 
             <ImageView android:paddingRight="5dp"
                    android:id="@+id/eventBullet" android:src="@drawable/bullet_icon" android:layout_gravity="center_vertical"
                    android:layout_width="15dp" android:layout_height="15dp"/>
             <TextView
-                android:paddingLeft="5dp"
+                android:paddingLeft="5dp" android:singleLine="false"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="25sp" android:id="@+id/event_name"/>
 
-    </LinearLayout>
+         </LinearLayout>
 
         <CheckBox android:layout_alignParentRight="true" android:button="@drawable/bookmark_style"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-             android:id="@+id/starrred"/>
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:paddingLeft="10dp"
+                  android:id="@+id/starrred" android:layout_weight="20"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout android:paddingLeft="15dp" android:gravity="right" android:paddingTop="5dp"
+                  android:weightSum="100" android:orientation="horizontal"
                   android:layout_width="match_parent" android:layout_height="wrap_content">
-
-        <ImageView android:paddingRight="5dp"
-                   android:src="@drawable/time_icon" android:layout_gravity="center_vertical"
-                   android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
-            android:paddingLeft="5dp"
+            android:paddingLeft="5dp" android:drawableLeft="@drawable/date_icon"
+            android:layout_weight="50" android:gravity="center_vertical"
+            android:drawablePadding="10dp"
             android:id="@+id/recycler_event_date" android:text="456" android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:paddingLeft="5dp" android:drawableLeft="@drawable/time_icon"
+            android:layout_weight="50" android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:id="@+id/recycler_event_time" android:text="456" android:layout_gravity="center_vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
     </LinearLayout>
 

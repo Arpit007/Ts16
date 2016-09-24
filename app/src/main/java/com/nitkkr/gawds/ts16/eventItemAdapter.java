@@ -20,17 +20,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class eventItemAdapter extends BaseAdapter
+public class eventItemAdapter extends BaseAdapter implements eventData.eventDataListener
 {
+	public interface BookmarkListener
+	{
+		void BookmarkChanged();
+	}
+
 	private ArrayList<eventData> dataList=null;
 	Context context;
-	boolean showBookmark;
+	boolean showBookmark, forced=false;
+	BookmarkListener listener;
 
 	public eventItemAdapter(ArrayList<eventData> dataList, Context context, boolean showBookmark)
 	{
 		this.showBookmark=showBookmark;
 		this.context=context;
 		this.dataList=dataList;
+	}
+
+
+	public void setForcedBookmark()
+	{
+		forced=true;
 	}
 
 	@Override
@@ -63,13 +75,14 @@ public class eventItemAdapter extends BaseAdapter
 		final eventData data=dataList.get(position);
 
 		((TextView)convertView.findViewById(R.id.event_name)).setText(data.eventName);
-		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(data.isBookmarked());
 
 		try
 		{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date=simpleDateFormat.parse(data.Day+" "+data.Time);
-			simpleDateFormat.applyPattern("hh:mm a, dd MMM yyyy");
+			simpleDateFormat.applyPattern("hh:mm a");
+			(( TextView)convertView.findViewById(R.id.recycler_event_time)).setText(simpleDateFormat.format(date));
+			simpleDateFormat.applyPattern("dd MMM yyyy");
 			(( TextView)convertView.findViewById(R.id.recycler_event_date)).setText(simpleDateFormat.format(date));
 		}
 		catch (Exception e)
@@ -79,7 +92,7 @@ public class eventItemAdapter extends BaseAdapter
 
 		eventStatusListener.setEventStatusCode(data,context);
 
-		if(showBookmark && (data.code== eventStatusListener.StatusCode.None || data.code== eventStatusListener.StatusCode.Upcoming))
+		if(forced || data.isBookmarked() || (showBookmark && (data.code== eventStatusListener.StatusCode.None || data.code== eventStatusListener.StatusCode.Upcoming)))
 		{
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
 		}
@@ -91,9 +104,13 @@ public class eventItemAdapter extends BaseAdapter
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				data.updateBookmark(context,isChecked);
+
+				boolean check=data.updateBookmark(context,isChecked);
+				if(check && listener!=null)
+					listener.BookmarkChanged();
 			}
 		});
+		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(data.isBookmarked());
 
 		Typeface font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font1.ttf");
@@ -102,6 +119,7 @@ public class eventItemAdapter extends BaseAdapter
 		font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font2.ttf");
 		(( TextView)convertView.findViewById(R.id.recycler_event_date)).setTypeface(font);
+		(( TextView)convertView.findViewById(R.id.recycler_event_time)).setTypeface(font);
 
 		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
 
@@ -125,5 +143,19 @@ public class eventItemAdapter extends BaseAdapter
 			});
 
 		return convertView;
+	}
+
+	@Override
+	public void eventUpdated(eventData event)
+	{
+		try
+		{
+			if(listener!=null)
+				listener.BookmarkChanged();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

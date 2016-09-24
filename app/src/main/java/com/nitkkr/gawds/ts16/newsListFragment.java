@@ -41,6 +41,9 @@ public class newsListFragment extends Fragment
 
 	private void UpdateNews()
 	{
+		if (view==null)
+			return;
+
 		if(MessageDbHelper.isUpdated() || MessageDataList==null)
 		{
 			if(MessageDataList!=null)
