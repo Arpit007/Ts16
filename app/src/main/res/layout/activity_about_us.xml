@@ -5,6 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.aboutUs">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="@drawable/about_page_background"
+        android:tint="#5c101010"
+        />
+
     <LinearLayout android:id="@+id/aboutUsImages"
                   android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:weightSum="100" android:orientation="horizontal"

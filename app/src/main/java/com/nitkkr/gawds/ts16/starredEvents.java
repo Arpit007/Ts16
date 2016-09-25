@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class starredEvents extends AppCompatActivity implements eventItemAdapter.BookmarkListener
 {
-
 	ArrayList<eventData> eventDataList=null;
 
 	@Override
@@ -19,7 +18,6 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 		setContentView(R.layout.activity_starred_events);
 		setTitle("Starred Events");
 		BookmarkChanged();
-
 	}
 
 	@Override

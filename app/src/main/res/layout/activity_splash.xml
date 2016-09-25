@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.Splash">
     <ImageView
-        android:src="@drawable/ab"
+        android:src="@drawable/splash" android:id="@+id/bg"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:scaleType="center"/>
+        android:scaleType="centerCrop"/>
+
     <RelativeLayout
         android:layout_centerInParent="true" android:orientation="vertical"
         android:layout_width="wrap_content" android:layout_height="wrap_content">

@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventResult">
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/bg" android:scaleType="centerCrop"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="@drawable/result_page_background"
+        android:tint="#64101010"/>
 
          <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"

@@ -151,8 +151,11 @@ class MessageDbHelper extends SQLiteOpenHelper
         return (ArrayList<MessageData>)messageDbHelper.messageDataArrayList.clone();
     }
 
-    public static boolean isUpdated()
+    public static boolean isUpdated(Context context)
     {
+        if(messageDbHelper==null)
+            new MessageDbHelper(context);
+
         return messageDbHelper.Updated;
     }
 

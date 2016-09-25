@@ -44,7 +44,7 @@ public class newsListFragment extends Fragment
 		if (view==null)
 			return;
 
-		if(MessageDbHelper.isUpdated() || MessageDataList==null)
+		if(MessageDbHelper.isUpdated(getContext()) || MessageDataList==null)
 		{
 			if(MessageDataList!=null)
 				MessageDataList.clear();

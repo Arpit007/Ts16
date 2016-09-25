@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 public class aboutUs extends AppCompatActivity
 {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -49,6 +48,7 @@ public class aboutUs extends AppCompatActivity
 				"fonts/Free.ttf");
 		((TextView)findViewById(R.id.dev1)).setTypeface(font);
 		((TextView)findViewById(R.id.dev2)).setTypeface(font);
+
 	}
 
 	@Override

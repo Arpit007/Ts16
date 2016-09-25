@@ -8,6 +8,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.nitkkr.gawds.ts16.mainActivity"
     tools:showIn="@layout/app_bar_main">
+    <android.support.v7.widget.AppCompatImageView
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="@drawable/main_page_background"
+        android:tint="#73101010"
+        />
     <android.support.design.widget.TabLayout
         android:id="@+id/homeTabLayout"
         android:layout_width="match_parent"
