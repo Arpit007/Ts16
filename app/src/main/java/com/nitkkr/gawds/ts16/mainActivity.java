@@ -22,7 +22,7 @@ public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
 {
 	NavigationView navigationView;
-
+    int TabID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -46,13 +46,11 @@ public class mainActivity extends AppCompatActivity
 		{
 			e.printStackTrace();
 		}
-
-
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
 		navigationView.setItemIconTintList(null);
-
+        TabID=getIntent().getIntExtra(String.valueOf(R.string.TabID),0);
 		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
 		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
 
@@ -66,8 +64,7 @@ public class mainActivity extends AppCompatActivity
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(0);
-
+        navigateToTab(TabID);
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {

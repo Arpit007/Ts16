@@ -39,6 +39,13 @@ public class newsListFragment extends Fragment
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+
+
 	private void UpdateNews()
 	{
 		if (view==null)
