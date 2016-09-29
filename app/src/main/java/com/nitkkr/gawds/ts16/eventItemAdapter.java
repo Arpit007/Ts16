@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class eventItemAdapter extends BaseAdapter implements eventData.eventDataListener
+public class eventItemAdapter extends BaseAdapter
 {
 	public interface BookmarkListener
 	{
@@ -143,19 +143,5 @@ public class eventItemAdapter extends BaseAdapter implements eventData.eventData
 			});
 
 		return convertView;
-	}
-
-	@Override
-	public void eventUpdated(eventData event)
-	{
-		try
-		{
-			if(listener!=null)
-				listener.BookmarkChanged();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 }

@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class eventDescTab extends Fragment implements eventData.eventDataListener
+public class eventDescTab extends Fragment
 {
     eventData data;
     View view;
@@ -21,8 +21,9 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
     public void setUpFragment(eventData event)
     {
         data=event;
-        data.addEventDataListener(this);
-        eventUpdated(data);
+        if(data==null)
+            data=new eventData();
+        eventUpdated();
     }
 
     @Override
@@ -35,12 +36,11 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
                              Bundle savedInstanceState) {
 
         view= inflater.inflate(R.layout.fragment_event_desc_tab, container, false);
-        eventUpdated(data);
+        eventUpdated();
         return view;
     }
 
-    @Override
-    public void eventUpdated(eventData event)
+    public void eventUpdated()
     {
         if(view== null)
             return;
@@ -48,7 +48,7 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
         try
         {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
-            Date date=simpleDateFormat.parse(event.Duration);
+            Date date=simpleDateFormat.parse(data.Duration);
 
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -70,7 +70,7 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
             e.printStackTrace();
         }
 
-        ((TextView)(view.findViewById(R.id.eventDescriptionText))).setText(event.Description);
+        ((TextView)(view.findViewById(R.id.eventDescriptionText))).setText(data.Description);
 
         Typeface font = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/Font2.ttf");
@@ -80,14 +80,5 @@ public class eventDescTab extends Fragment implements eventData.eventDataListene
                 "fonts/Font1.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionText)).setTypeface(font);
 
-    }
-
-    @Override
-    protected void finalize() throws Throwable
-    {
-        if(data!=null)
-            data.removeDataListener(this);
-
-        super.finalize();
     }
 }

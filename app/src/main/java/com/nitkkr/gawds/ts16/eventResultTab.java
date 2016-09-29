@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class eventResultTab extends Fragment implements eventData.eventDataListener
+public class eventResultTab extends Fragment
 {
 	eventData data;
 	View view;
@@ -17,9 +17,9 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	public void setUpFragment(eventData event)
 	{
 		data=event;
-
-		data.addEventDataListener(this);
-		eventUpdated(data);
+		if(data==null)
+			data=new eventData();
+		eventUpdated();
 	}
 
 	@Override
@@ -32,12 +32,11 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		view= inflater.inflate(R.layout.fragment_event_result_tab, container, false);
-		eventUpdated(data);
+		eventUpdated();
 		return view;
 	}
 
-	@Override
-	public void eventUpdated(eventData event)
+	public void eventUpdated()
 	{
 		if(view== null)
 			return;
@@ -56,14 +55,5 @@ public class eventResultTab extends Fragment implements eventData.eventDataListe
 					"fonts/Font1.ttf");
 			(( TextView)view.findViewById(R.id.resultView)).setTypeface(font);
 		}
-	}
-
-	@Override
-	protected void finalize() throws Throwable
-	{
-		if(data!=null)
-			data.removeDataListener(this);
-
-		super.finalize();
 	}
 }
