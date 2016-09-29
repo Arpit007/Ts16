@@ -55,65 +55,29 @@ public class eventData
 
 		bookmark=bookmarked;
 
-
 		dbHelper helper=new dbHelper(c);
 		helper.updateBookmarkStatus(helper.getReadableDatabase(),getBookmark(),this.eventID);
 		helper.close();
 
-		UpdateEvent();
-
 		return true;
 	}
 
-	public interface eventDataListener
-	{
-		void eventUpdated(eventData event);
-	}
-
-	private ArrayList<eventDataListener> eventListenerList;
-
 	public eventData()
 	{
-		eventListenerList=new ArrayList<>();
 		this.notificationGenerated = false;
-	}
-
-	public void addEventDataListener(eventDataListener dataListener)
-	{
-		if(!eventListenerList.contains(dataListener))
-			eventListenerList.add(dataListener);
-	}
-
-	public void removeDataListener(eventDataListener dataListener)
-	{
-		eventListenerList.remove(dataListener);
-	}
-
-	public void UpdateEvent()
-	{
-		for (eventDataListener listener : eventListenerList)
-			try
-			{
-					if(listener!=null)
-						listener.eventUpdated(this);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
 	}
 
 	public int getImageResourceID()
 	{
-		int resID=-1;
+		int resID;
 		try
 		{
 			resID=Integer.parseInt(ImageID);
 		}
 		catch (Exception e)
 		{
-
+			return -1;
 		}
-		return -2;//resID;
+		return resID;
 	}
 }

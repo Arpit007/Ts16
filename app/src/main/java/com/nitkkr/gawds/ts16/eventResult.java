@@ -74,7 +74,6 @@ public class eventResult extends AppCompatActivity
 
 	class eventResultAdapter extends BaseAdapter
 	{
-
 		ArrayList<eventData> list;
 		Context context;
 
@@ -128,5 +127,21 @@ public class eventResult extends AppCompatActivity
 
 			return convertView;
 		}
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		super.onRestoreInstanceState(savedInstanceState);
+		int scrollPosition=savedInstanceState.getInt("Scroll",0);
+		findViewById(R.id.resultList).setVerticalScrollbarPosition(scrollPosition);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		int scrollPosition=findViewById(R.id.resultList).getVerticalScrollbarPosition();
+		outState.putInt("Scroll",scrollPosition);
 	}
 }

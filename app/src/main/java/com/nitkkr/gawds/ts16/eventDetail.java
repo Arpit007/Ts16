@@ -23,7 +23,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class eventDetail extends AppCompatActivity implements eventData.eventDataListener
+public class eventDetail extends AppCompatActivity
 {
 	eventData data;
 	int selectedtabID;
@@ -43,6 +43,9 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		dbHelper helper=new dbHelper(this);
 		data=helper.GetEventById(helper.getReadableDatabase(),getIntent().getIntExtra(getString(R.string.EventID),0));
 		helper.close();
+
+		if(data==null)
+			data=new eventData();
 
 		selectedtabID=getIntent().getIntExtra(getString(R.string.TabID),0);
 		tabLayout.getTabAt(selectedtabID).select();
@@ -78,8 +81,7 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		if(bar!=null)
 			bar.setDisplayHomeAsUpEnabled(true);
 
-		data.addEventDataListener(this);
-		eventUpdated(data);
+		eventUpdated();
 
 
 		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),"fonts/Font2.ttf");
@@ -89,38 +91,37 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 		((TextView)findViewById(R.id.eventDetailLocation)).setTypeface(font);
 	}
 
-	@Override
-	public void eventUpdated(final eventData event)
+	public void eventUpdated()
 	{
 		try
 		{
-			int ImageId=event.getImageResourceID();
+			int ImageId=data.getImageResourceID();
 			if(ImageId==-2);
 			else
 			if(ImageId!=-1)
 				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
 			else
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(event.ImageID));
+				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(data.ImageID));
 		}
 		catch (Exception e)
 		{
 			Log.d("EventDetail","Image Error");
 		}
 
-		setTitle(event.eventName);
+		setTitle(data.eventName);
 
 
-		((TextView)findViewById(R.id.eventDetailLocation)).setText(event.Venue);
+		((TextView)findViewById(R.id.eventDetailLocation)).setText(data.Venue);
 
 		try
 		{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Date date=simpleDateFormat.parse(event.Day);
+			Date date=simpleDateFormat.parse(data.Day);
 			simpleDateFormat.applyPattern("dd MMM yyyy");
 			((TextView)findViewById(R.id.eventDetailDate)).setText(simpleDateFormat.format(date));
 
 			simpleDateFormat=new SimpleDateFormat("hh:mm:ss");
-			date=simpleDateFormat.parse(event.Time);
+			date=simpleDateFormat.parse(data.Time);
 			simpleDateFormat.applyPattern("hh:mm a");
 			((TextView)findViewById(R.id.eventDetailTime)).setText(simpleDateFormat.format(date));
 		}
@@ -135,27 +136,15 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
-				event.updateBookmark(getBaseContext(),isChecked);
+				data.updateBookmark(getBaseContext(),isChecked);
 			}
 		});
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(event.isBookmarked());
+		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(data.isBookmarked());
 
 		eventStatusListener listener=new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this);
-		listener.setStatusCode(event);
+		listener.setStatusCode(data);
 
-		switch (event.code)
-		{
-			case None:
-			case Upcoming:
-				findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
-				break;
-			case Ongoing:
-			case Over:
-				findViewById(R.id.eventDetailNotify).setVisibility(View.INVISIBLE);
-				break;
-		}
-		if(event.isBookmarked())
-			findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
+		findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
 
 	}
 
@@ -169,15 +158,6 @@ public class eventDetail extends AppCompatActivity implements eventData.eventDat
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void finalize() throws Throwable
-	{
-		if(data!=null)
-			data.removeDataListener(this);
-
-		super.finalize();
 	}
 
 	public static class PagerAdapter extends FragmentStatePagerAdapter
