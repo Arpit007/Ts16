@@ -43,13 +43,15 @@ public class newsListFragment extends Fragment
 	{
 		if (view==null)
 			return;
+		MessageDbHelper helper = new MessageDbHelper(getContext());
 
-		if(MessageDbHelper.isUpdated(getContext()) || MessageDataList==null)
+		if(helper.isUpdated() || MessageDataList==null)
 		{
 			if(MessageDataList!=null)
 				MessageDataList.clear();
 
-			MessageDataList = MessageDbHelper.getMessageList(getContext());
+			MessageDataList = helper.getUpdatedMessages(helper.getWritableDatabase());
+			helper.close();
 		}
 		if (MessageDataList.size() == 0)
 		{

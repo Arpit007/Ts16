@@ -66,7 +66,7 @@ public class mainActivity extends AppCompatActivity
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(0);
+		navigateToTab(getIntent().getIntExtra(getString(R.string.TabID),0));
 
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override

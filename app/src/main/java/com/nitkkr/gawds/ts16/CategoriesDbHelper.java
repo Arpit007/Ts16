@@ -66,6 +66,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
             e.printStackTrace();
         }
     }
+
     public ArrayList<eventCategory> ReadDatabaseCategory(SQLiteDatabase db)
     {
 

@@ -115,6 +115,7 @@ public class dbHelper extends SQLiteOpenHelper{
 
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
+
                     i.putExtra(context.getString(R.string.EventID), event.eventID);
 
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

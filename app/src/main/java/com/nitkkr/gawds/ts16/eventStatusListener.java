@@ -19,14 +19,9 @@ public class eventStatusListener
 	private ImageView bullet;
 	private Context context;
 
-	public enum StatusCode {
-		None(0), Upcoming(1), Ongoing(2), Over(3);
-		private int value;
-
-		StatusCode(int value) {
-			this.value = value;
-		}
-
+	public enum StatusCode
+	{
+		None, Upcoming, Ongoing, Over;
 	}
 
 	public static StatusCode getStatusCode(eventData data, Context context)
