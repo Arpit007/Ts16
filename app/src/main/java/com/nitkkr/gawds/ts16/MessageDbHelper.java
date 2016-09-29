@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
@@ -96,6 +97,7 @@ class MessageDbHelper extends SQLiteOpenHelper
                 builder.setAutoCancel(true);
                 builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
                 builder.setLights(Color.GREEN, 3000, 3000);
+                builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                 PendingIntent pendingIntent=stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.setContentIntent(pendingIntent);
                 builder.setSmallIcon(R.drawable.news_icon);
