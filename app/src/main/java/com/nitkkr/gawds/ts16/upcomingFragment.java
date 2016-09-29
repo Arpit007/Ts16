@@ -56,7 +56,7 @@ public class upcomingFragment extends Fragment
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.INVISIBLE);
 
 			ListView listView = (ListView) view.findViewById(R.id.upcomingList);
-			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), true));
+			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));
 
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 			{
