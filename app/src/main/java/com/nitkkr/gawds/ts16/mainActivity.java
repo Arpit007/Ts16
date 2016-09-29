@@ -144,42 +144,50 @@ public class mainActivity extends AppCompatActivity
 		{
 			Intent intent=new Intent(this,eventCategoryPage.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_schedule)
 		{
 			Intent intent=new Intent(this,schedule.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_starred)
 		{
 			Intent intent=new Intent(this,starredEvents.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_results)
 		{
 			Intent intent=new Intent(this,eventResult.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_organizers)
 		{
 			Intent intent=new Intent(this,organizerPage.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_sponsor)
 		{
 			Intent intent=new Intent(this,sponsors.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_dev)
 		{
 			Intent intent=new Intent(this,aboutUs.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if(id==R.id.nav_rate)
 		{
 			Intent intent=new Intent(Intent.ACTION_VIEW);
 			intent.setData(Uri.parse("market://details?id="+getBaseContext().getPackageName()));
 			startActivity(intent);
+			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
