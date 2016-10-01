@@ -4,6 +4,7 @@ import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events_list_page);
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 
 		Bundle b=getIntent().getExtras();
 
@@ -43,10 +45,9 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		{
 			e.printStackTrace();
 		}
-
 		setTitle(title);
 		BookmarkChanged();
-
+//		overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
 	}
 
 	@Override
@@ -85,4 +86,23 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.anim_left_in,R.anim.anim_right_out);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 }

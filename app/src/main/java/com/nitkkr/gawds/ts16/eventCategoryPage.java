@@ -50,8 +50,10 @@ public class eventCategoryPage extends AppCompatActivity
 				i.putExtra("CategoryId",list.get(position).id);
 				i.putExtra("CategoryName",list.get(position).category);
 				eventCategoryPage.this.startActivity(i);
+//				overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
 			}
 		});
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 	}
 
 	class eventCategoryAdapter extends BaseAdapter

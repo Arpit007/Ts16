@@ -30,7 +30,7 @@ public class eventResult extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_result);
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		if(resultList!= null)
 			resultList.clear();
 

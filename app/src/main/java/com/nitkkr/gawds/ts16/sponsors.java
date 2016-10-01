@@ -28,6 +28,7 @@ public class sponsors extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sponsors);
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 
 		setTitle("Sponsors");
 

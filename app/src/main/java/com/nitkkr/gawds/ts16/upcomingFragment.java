@@ -68,7 +68,7 @@ public class upcomingFragment extends Fragment
 					intent.putExtra(getString(R.string.EventID), EventID);
 					intent.putExtra(getString(R.string.TabID), 0);
 					startActivity(intent);
-					getActivity().overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
+//					getActivity().overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
 				}
 			});
 		}

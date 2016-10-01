@@ -177,7 +177,10 @@ public class ServertoSqliteLoader extends IntentService
             for(int i=0;i<length4;i++)
             {
                 JSONObject object=messages.getJSONObject(i);
-                MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getString("date"),object.getString("title"));
+                int x=0;
+                if(i==length4-1)
+                    x=1;
+                MessageHelper.addMessage(MessageHelper.getWritableDatabase(), object.getString("message"),object.getInt("id"),object.getString("date"),object.getString("title"),x);
             }
             MessageHelper.close();
         }

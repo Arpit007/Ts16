@@ -17,6 +17,7 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_starred_events);
 		setTitle("Starred Events");
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		BookmarkChanged();
 	}
 

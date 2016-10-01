@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -53,17 +54,17 @@ public class mainActivity extends AppCompatActivity
         TabID=getIntent().getIntExtra(String.valueOf(R.string.TabID),0);
 		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
 		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
-
+		Log.d("Tabid", String.valueOf(TabID));
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+		viewPager.setCurrentItem(TabID);
         navigateToTab(TabID);
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
@@ -81,7 +82,7 @@ public class mainActivity extends AppCompatActivity
 
 			}
 		});
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		if(savedInstanceState!=null)
 			onRestoreInstanceState(savedInstanceState);
 	}
@@ -144,50 +145,42 @@ public class mainActivity extends AppCompatActivity
 		{
 			Intent intent=new Intent(this,eventCategoryPage.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
-		}
+			}
 		else if (id == R.id.nav_schedule)
 		{
 			Intent intent=new Intent(this,schedule.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_starred)
 		{
 			Intent intent=new Intent(this,starredEvents.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_results)
 		{
 			Intent intent=new Intent(this,eventResult.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_organizers)
 		{
 			Intent intent=new Intent(this,organizerPage.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_sponsor)
 		{
 			Intent intent=new Intent(this,sponsors.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if (id == R.id.nav_dev)
 		{
 			Intent intent=new Intent(this,aboutUs.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 		else if(id==R.id.nav_rate)
 		{
 			Intent intent=new Intent(Intent.ACTION_VIEW);
 			intent.setData(Uri.parse("market://details?id="+getBaseContext().getPackageName()));
 			startActivity(intent);
-			overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

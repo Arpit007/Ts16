@@ -136,7 +136,6 @@ public class eventItemAdapter extends BaseAdapter
 					Intent i=new Intent(context,eventDetail.class);
 					i.putExtra(context.getString(R.string.EventID),data.eventID);
 					i.putExtra(context.getString(R.string.TabID),0);
-
 					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					context.startActivity(i);
 				}
