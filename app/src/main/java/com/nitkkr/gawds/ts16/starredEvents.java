@@ -48,10 +48,12 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 		if(eventDataList.size()==0)
 		{
 			findViewById(R.id.NoStar).setVisibility(View.VISIBLE);
+			findViewById(R.id.starList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			findViewById(R.id.NoStar).setVisibility(View.INVISIBLE);
+			findViewById(R.id.starList).setVisibility(View.VISIBLE);
 			ListView listView=(ListView)findViewById(R.id.starList);
 			eventItemAdapter adapter=new eventItemAdapter(eventDataList, this, true);
 			adapter.listener=this;

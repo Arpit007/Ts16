@@ -3,7 +3,6 @@ package com.nitkkr.gawds.ts16;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +49,12 @@ public class ongoingFragment extends Fragment
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.OngoingList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.OngoingList).setVisibility(View.VISIBLE);
 
 			ListView listView = (ListView) view.findViewById(R.id.OngoingList);
 			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));

@@ -3,7 +3,6 @@ package com.nitkkr.gawds.ts16;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,14 +24,15 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 
 		Bundle b=getIntent().getExtras();
 
-		String string = getString(R.string.CategoryID);
+		CategoryID=0;
 
 		if(b!=null)
-			CategoryID=b.getInt(string);
+			CategoryID=b.getInt(getString(R.string.CategoryID),0);
 
-		String title=null;
+		String title="All Events";
+
 		if(b!=null)
-			title=b.getString("CategoryName");
+			title=b.getString("CategoryName","All Events");
 
 		try
 		{
@@ -46,7 +46,6 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 
 		setTitle(title);
 		BookmarkChanged();
-
 	}
 
 	@Override
@@ -65,10 +64,12 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		if(list.size()==0)
 		{
 			findViewById(R.id.noEvent).setVisibility(View.VISIBLE);
+			eventListView.setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
+			eventListView.setVisibility(View.VISIBLE);
 			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
 			adapter.listener=this;
 			eventListView.setAdapter(adapter);

@@ -48,10 +48,12 @@ public class eventResult extends AppCompatActivity
 		if(resultList.size()==0)
 		{
 			findViewById(R.id.NoResult).setVisibility(View.VISIBLE);
+			findViewById(R.id.resultList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
+			findViewById(R.id.resultList).setVisibility(View.VISIBLE);
 
 			ListView listView=(ListView)findViewById(R.id.resultList);
 

@@ -140,9 +140,6 @@ class MessageDbHelper extends SQLiteOpenHelper
         {
             e.printStackTrace();
         }
-        finally {
-
-        }
         return list;
     }
 

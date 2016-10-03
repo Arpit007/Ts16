@@ -21,7 +21,7 @@ public class eventStatusListener
 
 	public enum StatusCode
 	{
-		None, Upcoming, Ongoing, Over;
+		None, Upcoming, Ongoing, Over
 	}
 
 	public static StatusCode getStatusCode(eventData data, Context context)
