@@ -1,26 +1,15 @@
 <resources>
     <string name="app_name">Ts16</string>
-    <string name="TitleShort">Ts\' 16</string>
-    <string name="TitleLong">Talent Show 2K16</string>
     <string name="TitleName">Talent Show</string>
-    <string name="TitleNameNormal">Talent Show 2016</string>
     <string name="TitleYear">2K16</string>
-    <string name="AboutTs">About TS</string>
-    <string name="AboutTsDesc">Talent Show is ...</string>
     <string name="AboutUs">Developers</string>
     <string name="DevName1">Arpit Bhatnagar</string>
     <string name="DevName2">Sahil Singla</string>
-    <string name="AboutUsDesc">We...</string>
     <string name="Dev1Profile">http://www.facebook.com/profile.php?id=100001485651736</string>
     <string name="Dev2Profile">http://www.facebook.com/profile.php?id=100003193427783</string>
     <string name="eventTab1">Description</string>
     <string name="eventTab2">Rules</string>
     <string name="eventTab3">Result</string>
-    <string name="homeTab1">Home</string>
-    <string name="homeTab2">News</string>
-    <string name="homeTab3">Active</string>
-    <string name="homeTab4">Upcoming</string>
-    <string name="homeTab5">Schedule</string>
     <string name="EventID">EventID</string>
     <string name="TabID">TabID</string>
     <string name="NoResult">No Results Yet!</string>
@@ -28,10 +17,8 @@
     <string name="NoOngoing">No Active Events!</string>
     <string name="NoStar">No Events Starred!</string>
     <string name="NoNews">No new Notifications</string>
-    <string name="hello_blank_fragment">Temporary String</string>
     <string name="Categories">http://www.almerston.com/nitkkr2110/TS/categories.php</string>
     <string name="EventsJSONArray">events</string>
-    <string name="EventsByCategory">http://www.almerston.com/nitkkr2110/TS/events.php?category=0</string>
 
     <integer-array name="EventStateColors">
         <item>@color/None</item>
@@ -45,7 +32,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="CategoryID">CategoryId</string>
     <string name="organizerFileName">organizer_data.json</string>
     <string name="talent_show_16">Talent Show\' 16</string>

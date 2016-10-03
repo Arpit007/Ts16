@@ -162,6 +162,7 @@ public class organizerPage extends AppCompatActivity
 			Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
+			array.recycle();
 			return convertView;
 		}
 	}

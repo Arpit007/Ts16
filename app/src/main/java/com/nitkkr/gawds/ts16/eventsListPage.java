@@ -85,5 +85,6 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		{
 			e.printStackTrace();
 		}
+		array.recycle();
 	}
 }

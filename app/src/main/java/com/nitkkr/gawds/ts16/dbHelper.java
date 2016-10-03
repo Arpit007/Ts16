@@ -134,6 +134,7 @@ public class dbHelper extends SQLiteOpenHelper{
                 Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
                 cu.moveToFirst();
                 Log.d("Updating ",event.eventID+" "+eventValues.get("status")+" "+cu.getString(cu.getColumnIndex(status)));
+                cu.close();
             }
             else
             {

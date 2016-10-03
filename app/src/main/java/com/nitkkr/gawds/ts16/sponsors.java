@@ -141,6 +141,7 @@ public class sponsors extends AppCompatActivity
 			{
 				sponsorList.add(new sponsorData(sponsorImageList.getResourceId(a,-1),sponsorLabelList[a],sponsorUrlList[a]));
 			}
+			sponsorImageList.recycle();
 		}
 	}
 }

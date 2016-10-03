@@ -152,7 +152,7 @@ public class ServertoSqliteLoader extends IntentService
                     builder.setSmallIcon(R.drawable.events_icon);
                     builder.setAutoCancel(true);
                     upcomingEditor.putInt("" + item.eventID, item.eventID);
-                    upcomingEditor.commit();
+                    upcomingEditor.apply();
                     NotificationManager notification = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("UpcomingEventNotification", 100 + item.eventID, builder.build());
                 }

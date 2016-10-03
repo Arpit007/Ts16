@@ -6,16 +6,14 @@
 
     <ScrollView
         android:layout_width="match_parent" android:layout_height="match_parent">
-        <TextView android:id="@+id/resultView"
+        <TextView android:id="@+id/resultView" android:gravity="left"
                   android:textAlignment="gravity" android:paddingTop="10dp"
-                  android:gravity="left" android:textSize="17sp"
+                  android:textSize="17sp"
                   android:lineSpacingExtra="5dp" android:singleLine="false"
                   android:layout_width="match_parent" android:layout_height="wrap_content"/>
     </ScrollView>
 
-    <TextView
-        android:layout_centerVertical="true" android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true" android:id="@+id/NoResult"
+    <TextView android:id="@+id/NoResult"
         android:text="@string/NoResult" android:visibility="invisible"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center"/>
