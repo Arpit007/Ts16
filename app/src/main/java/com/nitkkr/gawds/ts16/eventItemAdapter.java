@@ -126,8 +126,7 @@ public class eventItemAdapter extends BaseAdapter
 		Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 		DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 		((ImageView)convertView.findViewById(R.id.eventBullet)).setImageDrawable(drawable);
-
-		if(showBookmark)
+		array.recycle();
 			convertView.setOnClickListener(new View.OnClickListener()
 			{
 				@Override

@@ -50,13 +50,15 @@ public class newsListFragment extends Fragment
 	{
 		if (view==null)
 			return;
+		MessageDbHelper helper = new MessageDbHelper(getContext());
 
-		if(MessageDbHelper.isUpdated(getContext()) || MessageDataList==null)
+		if(helper.isUpdated() || MessageDataList==null)
 		{
 			if(MessageDataList!=null)
 				MessageDataList.clear();
 
-			MessageDataList = MessageDbHelper.getMessageList(getContext());
+			MessageDataList = helper.getUpdatedMessages(helper.getWritableDatabase());
+			helper.close();
 		}
 		if (MessageDataList.size() == 0)
 		{
@@ -143,6 +145,7 @@ public class newsListFragment extends Fragment
 			Drawable drawable= ResourcesCompat.getDrawable(getResources(), R.drawable.bullet_icon, null);
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
+			array.recycle();
 
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(),"fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.news_Title)).setTypeface(font);

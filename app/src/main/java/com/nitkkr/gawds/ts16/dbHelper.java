@@ -14,11 +14,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class dbHelper extends SQLiteOpenHelper{
@@ -115,6 +113,7 @@ public class dbHelper extends SQLiteOpenHelper{
 
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
+
                     i.putExtra(context.getString(R.string.EventID), event.eventID);
 
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -135,6 +134,7 @@ public class dbHelper extends SQLiteOpenHelper{
                 Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
                 cu.moveToFirst();
                 Log.d("Updating ",event.eventID+" "+eventValues.get("status")+" "+cu.getString(cu.getColumnIndex(status)));
+                cu.close();
             }
             else
             {
@@ -151,7 +151,6 @@ public class dbHelper extends SQLiteOpenHelper{
         } catch (Exception e) {
             Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
             e.printStackTrace();
-        } finally {
         }
     }
 

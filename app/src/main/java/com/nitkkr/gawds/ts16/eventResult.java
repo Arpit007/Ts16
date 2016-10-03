@@ -48,10 +48,12 @@ public class eventResult extends AppCompatActivity
 		if(resultList.size()==0)
 		{
 			findViewById(R.id.NoResult).setVisibility(View.VISIBLE);
+			findViewById(R.id.resultList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
+			findViewById(R.id.resultList).setVisibility(View.VISIBLE);
 
 			ListView listView=(ListView)findViewById(R.id.resultList);
 
@@ -121,6 +123,7 @@ public class eventResult extends AppCompatActivity
 			Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
+			array.recycle();
 
 			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.resultName)).setTypeface(font);

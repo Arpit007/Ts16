@@ -50,10 +50,12 @@ public class upcomingFragment extends Fragment
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.upcomingList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.INVISIBLE);
+			view.findViewById(R.id.upcomingList).setVisibility(View.VISIBLE);
 
 			ListView listView = (ListView) view.findViewById(R.id.upcomingList);
 			listView.setAdapter(new eventItemAdapter(eventDataList, getContext(), false));

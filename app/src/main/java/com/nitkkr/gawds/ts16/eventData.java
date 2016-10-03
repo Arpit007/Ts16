@@ -3,8 +3,6 @@ package com.nitkkr.gawds.ts16;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class eventData
 {
 	public int eventID;
@@ -23,11 +21,10 @@ public class eventData
 	public String Result;
 	public String Contact;
 	public String ImageID;
-	public Boolean notificationGenerated;
 
 	boolean isResultDeclared()
 	{
-		return (Result.equals("") || Result==null)? false:true;
+		return (!Result.equals("") || Result==null);
 	}
 
 	boolean isBookmarked()
@@ -42,7 +39,7 @@ public class eventData
 
 	void setBookmark(int bookmark)
 	{
-		this.bookmark=(bookmark==1)?true:false;
+		this.bookmark=(bookmark==1);
 	}
 
 	boolean updateBookmark(Context c,boolean bookmarked)
@@ -60,11 +57,6 @@ public class eventData
 		helper.close();
 
 		return true;
-	}
-
-	public eventData()
-	{
-		this.notificationGenerated = false;
 	}
 
 	public int getImageResourceID()

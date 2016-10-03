@@ -1,6 +1,5 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -27,23 +26,13 @@ class MessageDbHelper extends SQLiteOpenHelper
     private static final String Date="date";
     private static final String Title="title";
     private static final String News="message";
-
-    private static ArrayList<MessageData> messageDataArrayList;
-    private static MessageDbHelper messageDbHelper;
-    Context context;
     private boolean Updated=true;
+    Context context;
 
     public MessageDbHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
-
-        if(messageDataArrayList==null)
-        {
-            messageDataArrayList=ReadDatabaseMessage(getWritableDatabase());
-            close();
-        }
-        messageDbHelper=this;
     }
 
     @Override
@@ -54,8 +43,7 @@ class MessageDbHelper extends SQLiteOpenHelper
                 +" TEXT," +Title+
                 " TEXT," +Date+
                 " TEXT);";
-        try
-        {
+        try {
             sqLiteDatabase.execSQL(query);
         }
         catch (Exception e)
@@ -70,7 +58,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
 
-    public void addMessage(SQLiteDatabase db,String message,int MessageId,String MDateTime,String MTitle,int generate_notif)
+    public void addMessage(SQLiteDatabase db,String message,int MessageId,String MDateTime,String MTitle)
     {
         ContentValues messageValues=new ContentValues();
         messageValues.put(id,MessageId);
@@ -84,28 +72,36 @@ class MessageDbHelper extends SQLiteOpenHelper
             if(rows<1)
             {
                 db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
-                if(generate_notif==1) {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
 
-                    builder.setContentTitle("TS\' 16: New Notification");
-                    builder.setContentText(message);
-                    builder.setTicker(message);
+                builder.setContentTitle("TS\' 16 Notification");
+                builder.setContentText(message);
+                builder.setTicker(message);
 
-                    Intent i = new Intent(context, mainActivity.class);
-                    i.putExtra(context.getString(R.string.TabID), 1);
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                    stackBuilder.addParentStack(mainActivity.class);
-                    stackBuilder.addNextIntent(i);
-                    builder.setAutoCancel(true);
-                    builder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
-                    builder.setLights(Color.GREEN, 3000, 3000);
-                    builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-                    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(pendingIntent);
-                    builder.setSmallIcon(R.drawable.news_icon);
-                    NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notification.notify("MessageNotification", 120, builder.build());
-                }
+                Intent i=new Intent(context,mainActivity.class);
+                i.putExtra(context.getString(R.string.TabID),1);
+
+                NotificationCompat.Builder Builder = new NotificationCompat.Builder(context);
+                Builder.setContentTitle("TS\' 16 Notification");
+                Builder.setContentText(MTitle);
+                Builder.setTicker(message);
+                Intent resultIntent = new Intent(context, mainActivity.class);
+                resultIntent.putExtra(context.getString(R.string.TabID), 1);
+                TaskStackBuilder StackBuilder = TaskStackBuilder.create(context);
+                StackBuilder.addParentStack(mainActivity.class);
+                //StackBuilder.addNextIntentWithParentStack(new Intent(context, mainActivity.class));
+                StackBuilder.addNextIntent(resultIntent);
+                PendingIntent pendingIntent1 = StackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                Builder.setContentIntent(pendingIntent1);
+                Builder.setOnlyAlertOnce(true);
+                Builder.setVibrate(new long[]{ 1000, 1000, 1000, 1000, 1000 });
+                Builder.setLights(Color.RED, 3000, 3000);
+                Builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                Builder.setSmallIcon(R.drawable.news_icon);
+                Builder.setAutoCancel(true);
+                NotificationManager Notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification.notify("UpcomingEventNotification",120,Builder.build());
+
                 Updated=true;
             }
 
@@ -115,6 +111,7 @@ class MessageDbHelper extends SQLiteOpenHelper
             Log.d("addMessage ", "Error while trying to add message");
             e.printStackTrace();
         }
+
     }
 
     private ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
@@ -122,7 +119,8 @@ class MessageDbHelper extends SQLiteOpenHelper
         ArrayList<MessageData> list=new ArrayList<>();
         try
         {
-            String query="Select * from "+TABLE_MESSAGES+";";
+            String query;
+            query="Select * from "+TABLE_MESSAGES+";";
             Cursor categoryCursor=db.rawQuery(query,null);
             if(categoryCursor.getCount()>0)
             {
@@ -145,24 +143,16 @@ class MessageDbHelper extends SQLiteOpenHelper
         return list;
     }
 
-    static public ArrayList<MessageData> getMessageList(Context context)
+    public ArrayList<MessageData> getUpdatedMessages(SQLiteDatabase db)
     {
-        if(messageDataArrayList==null)
-            new MessageDbHelper(context);
-
-        messageDbHelper.Updated=false;
-
-        return (ArrayList<MessageData>)messageDbHelper.messageDataArrayList.clone();
+        Updated=false;
+        return ReadDatabaseMessage(db);
     }
 
-    public static boolean isUpdated(Context context)
+    public boolean isUpdated()
     {
-        if(messageDbHelper==null)
-            new MessageDbHelper(context);
-
-        return messageDbHelper.Updated;
+        return Updated;
     }
-
     class MessageData
     {
         public String Date;

@@ -19,9 +19,9 @@
                   android:layout_centerVertical="true" android:layout_alignParentLeft="true"
                   android:layout_alignParentStart="true" android:padding="5dp">
 
-        <LinearLayout
+        <LinearLayout android:baselineAligned="false"
             android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <LinearLayout android:layout_weight="50" android:orientation="vertical"
+            <LinearLayout android:layout_weight="50" android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:paddingRight="20dp" android:id="@+id/aboutDev1">
             <ImageView
@@ -36,7 +36,7 @@
                        android:layout_width="40dp" android:layout_height="40dp"/>
         </LinearLayout>
 
-        <LinearLayout android:layout_weight="50" android:orientation="vertical"
+            <LinearLayout android:layout_weight="50" android:orientation="vertical"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:paddingLeft="10dp" android:id="@+id/aboutDev2">
             <ImageView android:src="@drawable/dev2"

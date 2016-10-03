@@ -9,7 +9,6 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +105,7 @@ public class eventCategoryPage extends AppCompatActivity
 			Drawable drawable= ResourcesCompat.getDrawable(context.getResources(), R.drawable.bullet_icon, null);
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
+			array.recycle();
 
 			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);

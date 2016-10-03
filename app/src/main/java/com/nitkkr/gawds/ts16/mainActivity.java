@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
 {
 	NavigationView navigationView;
-    int TabID;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -40,32 +39,35 @@ public class mainActivity extends AppCompatActivity
 			DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 			ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 					this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-			drawer.setDrawerListener(toggle);
+			drawer.addDrawerListener(toggle);
 			toggle.syncState();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+
+
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
 		navigationView.setItemIconTintList(null);
-        TabID=getIntent().getIntExtra(String.valueOf(R.string.TabID),0);
+
 		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
 		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
-		Log.d("Tabid", String.valueOf(TabID));
+
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		viewPager.setCurrentItem(TabID);
-        navigateToTab(TabID);
+		navigateToTab(getIntent().getIntExtra(getString(R.string.TabID),0));
+
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
@@ -82,7 +84,7 @@ public class mainActivity extends AppCompatActivity
 
 			}
 		});
-		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+
 		if(savedInstanceState!=null)
 			onRestoreInstanceState(savedInstanceState);
 	}
@@ -145,7 +147,7 @@ public class mainActivity extends AppCompatActivity
 		{
 			Intent intent=new Intent(this,eventCategoryPage.class);
 			startActivity(intent);
-			}
+		}
 		else if (id == R.id.nav_schedule)
 		{
 			Intent intent=new Intent(this,schedule.class);

@@ -96,7 +96,10 @@ public class eventDetail extends AppCompatActivity
 		try
 		{
 			int ImageId=data.getImageResourceID();
-			if(ImageId==-2);
+			if(ImageId==-2)
+			{
+				//Do nothing
+			}
 			else
 			if(ImageId!=-1)
 				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
@@ -164,13 +167,11 @@ public class eventDetail extends AppCompatActivity
 	public static class PagerAdapter extends FragmentStatePagerAdapter
 	{
 		int mNumOfTabs;
-		Context context;
 		eventData event;
 
 		public PagerAdapter(FragmentManager fm, int NumOfTabs, eventData Event, Context context) {
 			super(fm);
 			event=Event;
-			this.context=context;
 			this.mNumOfTabs = NumOfTabs;
 		}
 

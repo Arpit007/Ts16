@@ -52,7 +52,6 @@ public class ServertoSqliteLoader extends IntentService
         Log.d("EventJSon ", EventJsonString );
         try
         {
-
             JSONObject EventsObject = new JSONObject(EventJsonString);
             JSONArray EventsArray = EventsObject.getJSONArray(getString(R.string.EventsJSONArray));
             int length = EventsArray.length();
@@ -134,7 +133,6 @@ public class ServertoSqliteLoader extends IntentService
                 if (item.isBookmarked() && currentTimeStamp + 1800 >= eventTimeStamp && !notificationGenerated)
                 {
                     Log.d("Notification Released", "notified" + item.eventID);
-                    item.notificationGenerated = true;
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext());
                     builder.setContentTitle(item.eventName + " Beginning Soon");
                     builder.setContentText(item.eventName + " is beginning in about 30 minutes from now.\n" + item.Venue);
@@ -154,7 +152,7 @@ public class ServertoSqliteLoader extends IntentService
                     builder.setSmallIcon(R.drawable.events_icon);
                     builder.setAutoCancel(true);
                     upcomingEditor.putInt("" + item.eventID, item.eventID);
-                    upcomingEditor.commit();
+                    upcomingEditor.apply();
                     NotificationManager notification = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("UpcomingEventNotification", 100 + item.eventID, builder.build());
                 }
