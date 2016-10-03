@@ -1,19 +1,172 @@
 {
   "Organizers": [
     {
-      "Name": "Person 1",
-      "Detail": "Co-ordinator",
-      "Phone": "9811745628"
+      "Name": "Aayush Yadav",
+      "Detail": "SAC",
+      "Phone": "9466140651"
     },
     {
-      "Name": "Person 2",
-      "Detail": "Co-ordinatorX",
-      "Phone": "98117456514"
+      "Name": "Komal",
+      "Detail": "SAC",
+      "Phone": "9896017882"
     },
     {
-      "Name": "Person 3",
-      "Detail": "Co-ordinatorY",
-      "Phone": "9811749200"
+      "Name": "Priyanka Tomar",
+      "Detail": "SAC",
+      "Phone": "9416876859"
+    },
+    {
+      "Name": "Pratik Prashant",
+      "Detail": "SAC",
+      "Phone": "8683948187"
+    },
+    {
+      "Name": "Pranith Reddy",
+      "Detail": "Photography Club",
+      "Phone": "9896005425"
+    },
+
+    {
+      "Name": "Abhishek Arora",
+      "Detail": "Photography Club",
+      "Phone": "7027500018"
+    },
+    {
+      "Name": "Anirudh Punetha",
+      "Detail": "Photography Club",
+      "Phone": "9910969901"
+    },
+    {
+      "Name": "Shreya Aggarwal",
+      "Detail": "Photography Club",
+      "Phone": "8901488123"
+    },
+    {
+      "Name": "Ankush",
+      "Detail": "AVA",
+      "Phone": "7206617168"
+    },
+    {
+      "Name": "Saching Garg",
+      "Detail": "AVA",
+      "Phone": "9896018348"
+    },
+    {
+      "Name": "Chetna Utreja",
+      "Detail": "Spicmacay Club",
+      "Phone": "7206480438"
+    },
+    {
+      "Name": "Sourabh Bhaskar",
+      "Detail": "Spicmacay Club",
+      "Phone": "9467760055"
+    },
+    {
+      "Name": "Gourang Soni",
+      "Detail": "Spicmacay Club",
+      "Phone": "8950042877"
+    },
+    {
+      "Name": "Saksham Arora",
+      "Detail": "MAD Club",
+      "Phone": "8950045962"
+    },
+    {
+      "Name": "Abhishek Singhal",
+      "Detail": "MAD Club",
+      "Phone": "9896009941"
+    },
+    {
+      "Name": "Shivam Kaushal",
+      "Detail": "MAD Club",
+      "Phone": "9896440123"
+    },
+    {
+      "Name": "Megha Gupta",
+      "Detail": "MAD Club",
+      "Phone": "8950213619"
+    },
+    {
+      "Name": "Renu Rozera",
+      "Detail": "MAD Club",
+      "Phone": "8930967640"
+    },
+    {
+      "Name": "Vivek Kumar",
+      "Detail": "Fine Arts and Modelling Club",
+      "Phone": "8950093225"
+    },
+
+    {
+      "Name": "Tajaswini",
+      "Detail": "Fine Arts and Modelling Club",
+      "Phone": "7206749760"
+    },
+
+    {
+      "Name": "Aditya Kompella",
+      "Detail": "ELAD",
+      "Phone": "9896006158"
+    },
+    {
+      "Name": "Aditya Rajagopalan",
+      "Detail": "ELAD",
+      "Phone": "9034438962"
+    },
+    {
+      "Name": "Divyanka",
+      "Detail": "HLAD",
+      "Phone": "9729375345"
+    },
+
+    {
+      "Name": "Shashwat Gaur",
+      "Detail": "HLAD",
+      "Phone": "9896007136"
+    },
+
+    {
+      "Name": "Vivek Kumar",
+      "Detail": "Fine Arts and Modelling Club",
+      "Phone": "8950093225"
+    },
+
+    {
+      "Name": "Vivek Kumar",
+      "Detail": "Fine Arts and Modelling Club",
+      "Phone": "8950093225"
+    },
+    {
+      "Name": "Vivek Kumar",
+      "Detail": "Fine Arts and Modelling Club",
+      "Phone": "8950093225"
+    },
+
+    {
+      "Name": "Parth",
+      "Detail": "HTC",
+      "Phone": "9896020101"
+    },
+
+    {
+      "Name": "Shantanu Seth",
+      "Detail": "HTC",
+      "Phone": "8950308803"
+    },
+    {
+      "Name": "Vaishali",
+      "Detail": "HTC",
+      "Phone": "72039939214"
+    },
+    {
+      "Name": "Sandeep",
+      "Detail": "PG Club",
+      "Phone": "8059797953"
+    },
+    {
+      "Name": "Tanu",
+      "Detail": "PG Club",
+      "Phone": "9917905814"
     }
   ]
 }
