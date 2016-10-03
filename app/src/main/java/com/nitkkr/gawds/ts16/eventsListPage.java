@@ -21,7 +21,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events_list_page);
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		Bundle b=getIntent().getExtras();
 
 		CategoryID=0;

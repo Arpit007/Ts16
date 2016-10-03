@@ -52,7 +52,6 @@ public class mainActivity extends AppCompatActivity
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
 		navigationView.setItemIconTintList(null);
-
 		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
 		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
 
@@ -84,7 +83,7 @@ public class mainActivity extends AppCompatActivity
 
 			}
 		});
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		if(savedInstanceState!=null)
 			onRestoreInstanceState(savedInstanceState);
 	}

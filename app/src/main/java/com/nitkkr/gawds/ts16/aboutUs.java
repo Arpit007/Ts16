@@ -20,7 +20,6 @@ public class aboutUs extends AppCompatActivity
 
 		setTitle(getString(R.string.AboutUs));
 		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
-
 		LinearLayout layout=(LinearLayout)findViewById(R.id.aboutDev1);
 		layout.setOnClickListener(new View.OnClickListener()
 		{

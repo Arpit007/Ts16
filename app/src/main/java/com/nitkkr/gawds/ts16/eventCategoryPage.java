@@ -33,7 +33,7 @@ public class eventCategoryPage extends AppCompatActivity
 		setTitle("Events");
 
 		categoryList = (ListView) findViewById(R.id.eventCategoryList);
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
 		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
 		helper.close();

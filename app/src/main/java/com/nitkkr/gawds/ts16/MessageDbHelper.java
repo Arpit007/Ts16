@@ -58,7 +58,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS "+TABLE_MESSAGES);
     }
 
-    public void addMessage(SQLiteDatabase db,String message,int MessageId,String MDateTime,String MTitle)
+    public void addMessage(SQLiteDatabase db,String message,int MessageId,String MDateTime,String MTitle,int generate_notif)
     {
         ContentValues messageValues=new ContentValues();
         messageValues.put(id,MessageId);
@@ -72,37 +72,39 @@ class MessageDbHelper extends SQLiteOpenHelper
             if(rows<1)
             {
                 db.insertOrThrow(TABLE_MESSAGES, null, messageValues);
-                NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
 
-                builder.setContentTitle("TS\' 16 Notification");
-                builder.setContentText(message);
-                builder.setTicker(message);
+                if(generate_notif==1) {
 
-                Intent i=new Intent(context,mainActivity.class);
-                i.putExtra(context.getString(R.string.TabID),1);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                    builder.setContentTitle("TS\' 16 Notification");
+                    builder.setContentText(message);
+                    builder.setTicker(message);
 
-                NotificationCompat.Builder Builder = new NotificationCompat.Builder(context);
-                Builder.setContentTitle("TS\' 16 Notification");
-                Builder.setContentText(MTitle);
-                Builder.setTicker(message);
-                Intent resultIntent = new Intent(context, mainActivity.class);
-                resultIntent.putExtra(context.getString(R.string.TabID), 1);
-                TaskStackBuilder StackBuilder = TaskStackBuilder.create(context);
-                StackBuilder.addParentStack(mainActivity.class);
-                //StackBuilder.addNextIntentWithParentStack(new Intent(context, mainActivity.class));
-                StackBuilder.addNextIntent(resultIntent);
-                PendingIntent pendingIntent1 = StackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                Builder.setContentIntent(pendingIntent1);
-                Builder.setOnlyAlertOnce(true);
-                Builder.setVibrate(new long[]{ 1000, 1000, 1000, 1000, 1000 });
-                Builder.setLights(Color.RED, 3000, 3000);
-                Builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-                Builder.setSmallIcon(R.drawable.news_icon);
-                Builder.setAutoCancel(true);
-                NotificationManager Notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                Notification.notify("UpcomingEventNotification",120,Builder.build());
+                    Intent i = new Intent(context, mainActivity.class);
+                    i.putExtra(context.getString(R.string.TabID), 1);
 
-                Updated=true;
+                    NotificationCompat.Builder Builder = new NotificationCompat.Builder(context);
+                    Builder.setContentTitle("TS\' 16 Notification");
+                    Builder.setContentText(MTitle);
+                    Builder.setTicker(message);
+                    Intent resultIntent = new Intent(context, mainActivity.class);
+                    resultIntent.putExtra(context.getString(R.string.TabID), 1);
+                    TaskStackBuilder StackBuilder = TaskStackBuilder.create(context);
+                    StackBuilder.addParentStack(mainActivity.class);
+                    //StackBuilder.addNextIntentWithParentStack(new Intent(context, mainActivity.class));
+                    StackBuilder.addNextIntent(resultIntent);
+                    PendingIntent pendingIntent1 = StackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                    Builder.setContentIntent(pendingIntent1);
+                    Builder.setOnlyAlertOnce(true);
+                    Builder.setVibrate(new long[]{1000, 1000});
+                    Builder.setLights(Color.WHITE, 3000, 3000);
+                    Builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+                    Builder.setSmallIcon(R.drawable.news_icon);
+                    Builder.setAutoCancel(true);
+                    NotificationManager Notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                    Notification.notify("UpcomingEventNotification", 120, Builder.build());
+                    Updated = true;
+                }
             }
 
         }
