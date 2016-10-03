@@ -18,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -196,7 +198,12 @@ public class dbHelper extends SQLiteOpenHelper{
         {
             e.printStackTrace();
         }
-
+        Collections.sort(list, new Comparator<eventData>() {
+            @Override
+            public int compare(eventData ob1, eventData ob2) {
+                return 0;
+            }
+        });
         return list;
     }
 
