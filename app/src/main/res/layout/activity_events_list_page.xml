@@ -5,12 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventsListPage"
+    android:background="@drawable/event_bg"
     >
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/bg" android:scaleType="centerCrop"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:tint="#64101010"/>
 
     <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"
@@ -23,5 +19,6 @@
               android:divider="#00ffffff" android:dividerHeight="20dp"
               android:paddingLeft="10dp" android:paddingRight="10dp"
               android:paddingTop="30dp" android:scrollbars="none"
+
               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </RelativeLayout>

@@ -50,4 +50,5 @@
     <string name="organizerFileName">organizer_data.json</string>
     <string name="talent_show_16">Talent Show\' 16</string>
     <string name="noEvent">No Events!</string>
+    <string name="credits">Under the guidance of \nMs. Renu Rozera\nBy</string>
 </resources>

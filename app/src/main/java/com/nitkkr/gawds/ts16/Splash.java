@@ -76,7 +76,7 @@ public class Splash extends AppCompatActivity
 		protected Void doInBackground(Context... params)
 		{
 			oldTime = System.currentTimeMillis();
-			startAlarm(params[0]);
+//			startAlarm(params[0]);
 			try
 			{
 				new MessageDbHelper(params[0]);

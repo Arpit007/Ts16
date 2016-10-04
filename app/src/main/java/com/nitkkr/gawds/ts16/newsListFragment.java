@@ -43,6 +43,8 @@ public class newsListFragment extends Fragment
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("Hola!","Here");
+		UpdateNews();
 	}
 
 

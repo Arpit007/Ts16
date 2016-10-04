@@ -19,6 +19,7 @@ public class homeFragment extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState)
 	{
+
 		Typeface font = Typeface.createFromAsset(activity.getAssets(),
 				"fonts/Font1.ttf");
 
