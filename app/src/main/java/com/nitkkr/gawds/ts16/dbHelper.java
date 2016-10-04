@@ -14,9 +14,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class dbHelper extends SQLiteOpenHelper{
@@ -113,7 +115,6 @@ public class dbHelper extends SQLiteOpenHelper{
 
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
-
                     i.putExtra(context.getString(R.string.EventID), event.eventID);
 
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
@@ -195,7 +196,12 @@ public class dbHelper extends SQLiteOpenHelper{
         {
             e.printStackTrace();
         }
-
+        Collections.sort(list, new Comparator<eventData>() {
+            @Override
+            public int compare(eventData ob1, eventData ob2) {
+                return 0;
+            }
+        });
         return list;
     }
 

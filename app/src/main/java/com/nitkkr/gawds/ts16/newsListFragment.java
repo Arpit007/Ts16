@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class newsListFragment extends Fragment
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
+			Toast.makeText(getContext(),"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_LONG).show();
 		}
 		else
 		{
