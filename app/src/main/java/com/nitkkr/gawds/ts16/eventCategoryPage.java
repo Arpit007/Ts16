@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,12 @@ public class eventCategoryPage extends AppCompatActivity
 		CategoriesDbHelper helper = new CategoriesDbHelper(getBaseContext());
 		list = helper.ReadDatabaseCategory(helper.getWritableDatabase());
 		helper.close();
+		if(list.size()==0)
+		{
 
+			Toast.makeText(this,"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_LONG).show();
+			startActivity(new Intent(this,mainActivity.class));
+		}
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
 
 		categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener()

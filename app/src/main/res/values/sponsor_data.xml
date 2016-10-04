@@ -2,34 +2,11 @@
 <resources>
 
     <string-array name="sponsorLabelList">
-        <item>Microsoft</item>
-        <item>Google</item>
-        <item>Nvidia</item>
-        <item>Apple</item>
-        <item>Microsoft</item>
-        <item>Google</item>
-        <item>Nvidia</item>
-        <item>Apple</item>
+
     </string-array>
     <string-array name="sponsorUrlList">
-        <item>http://www.microsoft.com</item>
-        <item>http://www.google.com</item>
-        <item>http://www.nvidia.com</item>
-        <item>http://www.apple.com</item>
-        <item>http://www.microsoft.com</item>
-        <item>http://www.google.com</item>
-        <item>http://www.nvidia.com</item>
-        <item>http://www.apple.com</item>
-    </string-array>
+       </string-array>
     <integer-array name="sponsorImageIDList">
-        <item>@drawable/home_icon</item>
-        <item>@drawable/duration_icon</item>
-        <item>@drawable/location_icon</item>
-        <item>@drawable/news_icon</item>
-        <item>@drawable/home_icon</item>
-        <item>@drawable/duration_icon</item>
-        <item>@drawable/location_icon</item>
-        <item>@drawable/news_icon</item>
-    </integer-array>
+      </integer-array>
 
 </resources>

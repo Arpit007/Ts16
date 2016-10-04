@@ -112,22 +112,32 @@ public class eventDetail extends AppCompatActivity
 
 
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(data.Venue);
-
+		boolean check1=false;
+		boolean check2=false;
 		try
 		{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date=simpleDateFormat.parse(data.Day);
 			simpleDateFormat.applyPattern("dd MMM yyyy");
 			((TextView)findViewById(R.id.eventDetailDate)).setText(simpleDateFormat.format(date));
-
+			check1=true;
 			simpleDateFormat=new SimpleDateFormat("hh:mm:ss");
 			date=simpleDateFormat.parse(data.Time);
 			simpleDateFormat.applyPattern("hh:mm a");
 			((TextView)findViewById(R.id.eventDetailTime)).setText(simpleDateFormat.format(date));
+			check2=true;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+		if(!check1)
+		{
+			((TextView)findViewById(R.id.eventDetailDate)).setText("NA");
+		}
+		if(!check2)
+		{
+			((TextView)findViewById(R.id.eventDetailTime)).setText("NA");
 		}
 
 

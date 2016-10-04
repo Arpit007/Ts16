@@ -20,27 +20,31 @@
                   android:layout_alignParentStart="true" android:padding="5dp">
 
         <LinearLayout
-            android:layout_width="wrap_content" android:layout_height="wrap_content">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:weightSum="100">
         <LinearLayout android:layout_weight="50" android:orientation="vertical"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:paddingRight="20dp" android:id="@+id/aboutDev1">
+             android:id="@+id/aboutDev1"
+            android:layout_marginLeft="5dp"
+            android:paddingRight="5dp">
             <ImageView
                 android:src="@drawable/dev1"
                 android:id="@+id/aboutUsDev1Img" android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:maxHeight="80dp"/>
             <TextView android:text="@string/DevName1" android:layout_gravity="center_horizontal"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:textSize="30sp" android:id="@+id/dev1"/>
+                      android:textSize="26sp" android:id="@+id/dev1"/>
             <ImageView android:src="@drawable/fb" android:layout_gravity="center_horizontal"
                        android:layout_width="40dp" android:layout_height="40dp"/>
         </LinearLayout>
 
         <LinearLayout android:layout_weight="50" android:orientation="vertical"
                       android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:paddingLeft="10dp" android:id="@+id/aboutDev2">
+                      android:id="@+id/aboutDev2">
             <ImageView
-                android:src="@drawable/dev1"
+                android:src="@drawable/dev2"
                 android:id="@+id/aboutUsDev2Img" android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:scaleType="fitCenter"/>
@@ -53,6 +57,12 @@
         </LinearLayout>
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/aboutUsImages"
+        android:textSize="30dp"
+        android:text="Under the guidance of \nMs. Renu Rozera\nBy" android:textAlignment="center"/>
     <LinearLayout android:layout_alignParentBottom="true" android:paddingBottom="10dp"
                 android:layout_centerHorizontal="true" android:gravity="center"
                 android:layout_width="wrap_content" android:layout_height="wrap_content">

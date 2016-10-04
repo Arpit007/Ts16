@@ -75,21 +75,31 @@ public class eventItemAdapter extends BaseAdapter
 		final eventData data=dataList.get(position);
 
 		((TextView)convertView.findViewById(R.id.event_name)).setText(data.eventName);
-
+		boolean check1=false;
+		boolean check2=false;
 		try
 		{
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date date=simpleDateFormat.parse(data.Day+" "+data.Time);
 			simpleDateFormat.applyPattern("hh:mm a");
 			(( TextView)convertView.findViewById(R.id.recycler_event_time)).setText(simpleDateFormat.format(date));
+			check1=true;
 			simpleDateFormat.applyPattern("dd MMM yyyy");
 			(( TextView)convertView.findViewById(R.id.recycler_event_date)).setText(simpleDateFormat.format(date));
+			check2=true;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-
+		if(!check1)
+		{
+			(( TextView)convertView.findViewById(R.id.recycler_event_time)).setText("NA");
+		}
+		if(!check2)
+		{
+			(( TextView)convertView.findViewById(R.id.recycler_event_date)).setText("NA");
+		}
 		eventStatusListener.setEventStatusCode(data,context);
 
 		if(forced || data.isBookmarked() || showBookmark )
