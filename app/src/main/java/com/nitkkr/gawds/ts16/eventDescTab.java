@@ -67,7 +67,7 @@ public class eventDescTab extends Fragment
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         ((TextView)(view.findViewById(R.id.eventDescriptionText))).setText(data.Description);

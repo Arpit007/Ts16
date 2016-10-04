@@ -7,7 +7,7 @@
     tools:context="com.nitkkr.gawds.ts16.eventDetail">
 
         <ImageView
-            android:src="@mipmap/ic_launcher" android:scaleType="fitCenter"
+            android:src="@drawable/logots_16" android:scaleType="fitCenter"
             android:layout_width="match_parent" android:layout_height="180dp"
             android:id="@+id/eventDetailImage"/>
 
@@ -34,7 +34,8 @@
             android:id="@+id/eventDetailNotify" android:button="@drawable/bookmark_style"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_alignParentTop="true" android:paddingTop="15dp" android:paddingRight="5dp"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="invisible" android:layout_alignParentEnd="true"/>
 
         <LinearLayout android:orientation="vertical" android:weightSum="100"
                       android:layout_below="@id/eventDetailImage"

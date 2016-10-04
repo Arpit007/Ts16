@@ -53,8 +53,9 @@ public class eventStatusListener
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
+
 		return code;
 	}
 

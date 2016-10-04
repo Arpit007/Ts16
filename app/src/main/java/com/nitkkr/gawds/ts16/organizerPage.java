@@ -83,7 +83,7 @@ public class organizerPage extends AppCompatActivity
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 

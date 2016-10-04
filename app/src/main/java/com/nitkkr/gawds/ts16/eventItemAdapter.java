@@ -90,7 +90,7 @@ public class eventItemAdapter extends BaseAdapter
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		if(!check1)
 		{

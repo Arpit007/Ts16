@@ -59,8 +59,9 @@ public class newsListFragment extends Fragment
 			if(MessageDataList!=null)
 				MessageDataList.clear();
 
-			MessageDataList = MessageDbHelper.getMessageList(getContext());
+
 		}
+		MessageDataList = MessageDbHelper.getMessageList(getContext());
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);

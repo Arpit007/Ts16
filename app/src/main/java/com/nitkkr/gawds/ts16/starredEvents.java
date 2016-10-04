@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class starredEvents extends AppCompatActivity implements eventItemAdapter.BookmarkListener
 {
@@ -43,6 +45,13 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 				eventDataList.add(data);
 			}
 		}
+//		Collections.sort(eventDataList, new Comparator<eventData>() {
+//			@Override
+//			public int compare(eventData eventData, eventData t1) {
+//				return eventData.eventName.compareToIgnoreCase(t1.eventName);
+//			}
+//
+//		});
 
 		helper.close();
 

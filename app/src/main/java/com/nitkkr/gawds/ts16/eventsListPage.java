@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class eventsListPage extends AppCompatActivity implements eventItemAdapter.BookmarkListener
@@ -43,7 +45,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		setTitle(title);
 		BookmarkChanged();
@@ -69,6 +71,12 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		}
 		else
 		{
+//			Collections.sort(list, new Comparator<eventData>() {
+//				@Override
+//				public int compare(eventData eventData, eventData t1) {
+//					return (eventData.eventName+""+eventData.Time).compareToIgnoreCase(t1.eventName);
+//				}
+//			});
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
 			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
 			adapter.listener=this;
@@ -83,7 +91,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 

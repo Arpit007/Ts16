@@ -262,7 +262,7 @@ public class dbHelper extends SQLiteOpenHelper{
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
         return ongoing;
@@ -336,7 +336,7 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return item;

@@ -23,9 +23,9 @@ public class httpRequest
 			}
 
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return stringBuilder.toString();
 	}

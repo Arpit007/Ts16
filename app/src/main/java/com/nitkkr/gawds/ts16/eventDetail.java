@@ -129,7 +129,7 @@ public class eventDetail extends AppCompatActivity
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		if(!check1)
 		{

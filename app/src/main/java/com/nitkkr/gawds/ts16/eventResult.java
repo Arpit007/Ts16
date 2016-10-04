@@ -19,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class eventResult extends AppCompatActivity
@@ -44,6 +47,12 @@ public class eventResult extends AppCompatActivity
 				resultList.add(data);
 
 		helper.close();
+		Collections.sort(resultList, new Comparator<eventData>() {
+			@Override
+			public int compare(eventData eventData, eventData t1) {
+				return eventData.eventName.compareToIgnoreCase(t1.eventName);
+			}
+		});
 
 		if(resultList.size()==0)
 		{

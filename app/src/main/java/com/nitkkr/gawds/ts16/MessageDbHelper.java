@@ -60,7 +60,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -112,8 +112,8 @@ class MessageDbHelper extends SQLiteOpenHelper
         }
         catch (Exception e)
         {
-            Log.d("addMessage ", "Error while trying to add message");
-            e.printStackTrace();
+//            Log.d("addMessage ", "Error while trying to add message");
+//            e.printStackTrace();
         }
     }
 
@@ -140,7 +140,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return list;
     }
