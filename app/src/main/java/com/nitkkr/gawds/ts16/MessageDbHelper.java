@@ -117,7 +117,7 @@ class MessageDbHelper extends SQLiteOpenHelper
         }
     }
 
-    private ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
+    public ArrayList<MessageData> ReadDatabaseMessage(SQLiteDatabase db)
     {
         ArrayList<MessageData> list=new ArrayList<>();
         try

@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class organizerPage extends AppCompatActivity
 {
@@ -80,6 +82,12 @@ public class organizerPage extends AppCompatActivity
 				data.Detail=item.optString("Detail");
 				organizerList.add(data);
 			}
+			Collections.sort(organizerList, new Comparator<organizerData>() {
+				@Override
+				public int compare(organizerData eventData, organizerData t1) {
+					return (eventData.Detail).compareToIgnoreCase(t1.Detail);
+				}
+			});
 		}
 		catch(Exception e)
 		{

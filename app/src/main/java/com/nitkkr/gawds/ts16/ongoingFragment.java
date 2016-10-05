@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ongoingFragment extends Fragment
 {
@@ -53,6 +55,12 @@ public class ongoingFragment extends Fragment
 		}
 		else
 		{
+			Collections.sort(eventDataList, new Comparator<eventData>() {
+				@Override
+				public int compare(eventData eventData, eventData t1) {
+					return (eventData.eventName+""+eventData.Time).compareToIgnoreCase(t1.eventName);
+				}
+			});
 			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
 
 			ListView listView = (ListView) view.findViewById(R.id.OngoingList);

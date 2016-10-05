@@ -71,12 +71,12 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		}
 		else
 		{
-//			Collections.sort(list, new Comparator<eventData>() {
-//				@Override
-//				public int compare(eventData eventData, eventData t1) {
-//					return (eventData.eventName+""+eventData.Time).compareToIgnoreCase(t1.eventName);
-//				}
-//			});
+			Collections.sort(list, new Comparator<eventData>() {
+				@Override
+				public int compare(eventData eventData, eventData t1) {
+					return (eventData.Day+""+eventData.Time).compareToIgnoreCase(t1.eventName);
+				}
+			});
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
 			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
 			adapter.listener=this;

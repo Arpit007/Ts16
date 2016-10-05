@@ -65,7 +65,7 @@ public class Splash extends AppCompatActivity
 		final PendingIntent pendingIntent=PendingIntent.getBroadcast(c,12345,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 		AlarmManager alarm = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-		alarm.setRepeating(AlarmManager.RTC_WAKEUP,1000,60000,pendingIntent);
+		alarm.setRepeating(AlarmManager.RTC_WAKEUP,1000,300000,pendingIntent);
 	}
 
 	class parallelDataSetup extends AsyncTask<Context,Void,Void>

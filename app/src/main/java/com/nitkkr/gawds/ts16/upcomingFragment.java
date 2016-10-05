@@ -48,12 +48,12 @@ public class upcomingFragment extends Fragment
 		dbHelper helper=new dbHelper(getContext());
 		eventDataList=helper.GetUpcomingEvents(helper.getReadableDatabase());
 		helper.close();
-//		Collections.sort(eventDataList, new Comparator<eventData>() {
-//			@Override
-//			public int compare(eventData eventData, eventData t1) {
-//				return eventData.Time.compareToIgnoreCase(t1.Time);
-//			}
-//		});
+		Collections.sort(eventDataList, new Comparator<eventData>() {
+			@Override
+			public int compare(eventData eventData, eventData t1) {
+				return eventData.Time.compareToIgnoreCase(t1.Time);
+			}
+		});
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoUpcoming).setVisibility(View.VISIBLE);
