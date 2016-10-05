@@ -48,7 +48,12 @@ public class ongoingFragment extends Fragment
 		dbHelper DbHelper=new dbHelper(getContext());
 		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
 		DbHelper.close();
-
+		Collections.sort(eventDataList, new Comparator<eventData>() {
+			@Override
+			public int compare(eventData eventData, eventData t1) {
+				return (eventData.EndTime).compareToIgnoreCase(t1.EndTime);
+			}
+		});
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);

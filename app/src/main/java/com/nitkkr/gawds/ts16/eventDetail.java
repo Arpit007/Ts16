@@ -20,6 +20,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,7 +30,7 @@ public class eventDetail extends AppCompatActivity
 {
 	eventData data;
 	int selectedtabID;
-
+	ImageView eventDetailImage;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -39,8 +42,17 @@ public class eventDetail extends AppCompatActivity
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab2)));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab3)));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+		eventDetailImage=(ImageView) findViewById(R.id.eventDetailImage);
+		Glide.with(eventDetail.this).load(R.drawable.logots_16).into(eventDetailImage);
+		try
+			{
+				Glide.with(eventDetail.this).load("http://www.almerston.com/images/"+data.ImageID).diskCacheStrategy(DiskCacheStrategy.RESULT).crossFade().placeholder(R.drawable.logots_16).into(eventDetailImage);
+			}
+		catch (Exception e)
+		{
 
-		dbHelper helper=new dbHelper(this);
+		}
+			dbHelper helper=new dbHelper(this);
 		data=helper.GetEventById(helper.getReadableDatabase(),getIntent().getIntExtra(getString(R.string.EventID),0));
 		helper.close();
 
@@ -93,24 +105,7 @@ public class eventDetail extends AppCompatActivity
 
 	public void eventUpdated()
 	{
-		try
-		{
-			int ImageId=data.getImageResourceID();
-			if(ImageId==-2);
-			else
-			if(ImageId!=-1)
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageResource(ImageId);
-			else
-				((ImageView)findViewById(R.id.eventDetailImage)).setImageURI(Uri.parse(data.ImageID));
-		}
-		catch (Exception e)
-		{
-			Log.d("EventDetail","Image Error");
-		}
-
 		setTitle(data.eventName);
-
-
 		((TextView)findViewById(R.id.eventDetailLocation)).setText(data.Venue);
 		boolean check1=false;
 		boolean check2=false;
@@ -141,20 +136,8 @@ public class eventDetail extends AppCompatActivity
 		}
 
 
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-		{
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-			{
-				data.updateBookmark(getBaseContext(),isChecked);
-			}
-		});
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setChecked(data.isBookmarked());
-		((CheckBox)findViewById(R.id.eventDetailNotify)).setVisibility(View.INVISIBLE);
 		eventStatusListener listener=new eventStatusListener((TextView)findViewById(R.id.eventDetailStatus),(ImageView) findViewById(R.id.eventStatusBullet),this);
 		listener.setStatusCode(data);
-
-		findViewById(R.id.eventDetailNotify).setVisibility(View.VISIBLE);
 
 	}
 
@@ -164,7 +147,7 @@ public class eventDetail extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+				onBackPressed();
 				finish();
 				return true;
 		}
@@ -205,4 +188,11 @@ public class eventDetail extends AppCompatActivity
 			return mNumOfTabs;
 		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.anim_left_in,R.anim.anim_right_out);
+	}
+
 }

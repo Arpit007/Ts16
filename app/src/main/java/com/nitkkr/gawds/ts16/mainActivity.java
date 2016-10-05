@@ -57,7 +57,7 @@ public class mainActivity extends AppCompatActivity
 		Log.d("Tabid", String.valueOf(TabID));
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
-		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.news_icon));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.events_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

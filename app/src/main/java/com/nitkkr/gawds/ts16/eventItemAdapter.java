@@ -102,7 +102,7 @@ public class eventItemAdapter extends BaseAdapter
 		}
 		eventStatusListener.setEventStatusCode(data,context);
 
-		if(forced || data.isBookmarked() || showBookmark )
+		if(showBookmark)
 		{
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
 		}

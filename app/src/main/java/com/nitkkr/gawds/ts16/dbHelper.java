@@ -91,7 +91,7 @@ public class dbHelper extends SQLiteOpenHelper{
         catch (Exception e)
         {
             Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -146,13 +146,13 @@ public class dbHelper extends SQLiteOpenHelper{
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
             c.close();
         } catch (Exception e) {
             Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
         }
     }
@@ -196,7 +196,7 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         Collections.sort(list, new Comparator<eventData>() {
             @Override
@@ -232,7 +232,7 @@ public class dbHelper extends SQLiteOpenHelper{
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
         return upcoming;
@@ -297,7 +297,7 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         db.close();
         return false;

@@ -74,7 +74,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 			Collections.sort(list, new Comparator<eventData>() {
 				@Override
 				public int compare(eventData eventData, eventData t1) {
-					return (eventData.Day+""+eventData.Time).compareToIgnoreCase(t1.eventName);
+					return (eventData.Day+""+eventData.Time).compareToIgnoreCase(t1.Day+""+t1.Time);
 				}
 			});
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
@@ -106,7 +106,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+				onBackPressed();
 				finish();
 				return true;
 		}
