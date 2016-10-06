@@ -2,6 +2,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.Comparator;
 
 public class upcomingFragment extends Fragment
 {
+	Parcelable state;
 	private ArrayList<eventData> eventDataList=null;
 	View view;
 
@@ -79,6 +81,11 @@ public class upcomingFragment extends Fragment
 				}
 			});
 		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
 	}
 }
 
