@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.eventsListPage"
-    android:background="@drawable/event_bg"
+    android:background="@drawable/all_remaining"
     >
 
     <TextView
@@ -18,7 +18,7 @@
     <ListView android:id="@+id/eventList"
               android:divider="#00ffffff" android:dividerHeight="20dp"
               android:paddingLeft="10dp" android:paddingRight="10dp"
-              android:paddingTop="30dp" android:scrollbars="none"
-
+              android:paddingTop="10dp" android:scrollbars="none"
+            android:layout_marginTop="20sp"
               android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </RelativeLayout>

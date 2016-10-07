@@ -1,14 +1,17 @@
 package com.nitkkr.gawds.ts16;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class eventRuleTab extends Fragment
 {
@@ -57,8 +60,19 @@ public class eventRuleTab extends Fragment
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Contact));
-				startActivity(intent);
+				startActivityForResult(intent,100);
 			}
 		});
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==100)
+		{
+				if(resultCode== getActivity().RESULT_OK)
+				{
+					Toast.makeText(getContext(),"Back Success",Toast.LENGTH_SHORT).show();
+				}
+		}
 	}
 }

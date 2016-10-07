@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -151,7 +152,7 @@ public class organizerPage extends AppCompatActivity
 				public void onClick(View v)
 				{
 					Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Phone));
-					startActivity(intent);
+					startActivityForResult(intent,102);
 				}
 			});
 
@@ -174,5 +175,14 @@ public class organizerPage extends AppCompatActivity
 		}
 	}
 
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==102)
+		{
+			if(resultCode==RESULT_OK)
+			{
+				Toast.makeText(organizerPage.this,"Success",Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }

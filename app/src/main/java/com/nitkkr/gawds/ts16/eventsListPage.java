@@ -48,53 +48,49 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 //			e.printStackTrace();
 		}
 		setTitle(title);
+
 		BookmarkChanged();
 //		overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
 	}
 
 	@Override
-	public void BookmarkChanged()
-	{
-		eventListView =(ListView) findViewById(R.id.eventList);
+	public void BookmarkChanged() {
+		eventListView = (ListView) findViewById(R.id.eventList);
 
-		if(list!= null)
+		if (list != null)
 			list.clear();
 
-		dbHelper helper=new dbHelper(this);
-		list=helper.ReadDatabaseEvents(helper.getReadableDatabase(),CategoryID);
+		dbHelper helper = new dbHelper(this);
+		list = helper.ReadDatabaseEvents(helper.getReadableDatabase(), CategoryID);
 		helper.close();
 
 
-		if(list.size()==0)
-		{
+		if (list.size() == 0) {
 			findViewById(R.id.noEvent).setVisibility(View.VISIBLE);
-		}
-		else
-		{
+		} else {
 			Collections.sort(list, new Comparator<eventData>() {
 				@Override
 				public int compare(eventData eventData, eventData t1) {
-					return (eventData.Day+""+eventData.Time).compareToIgnoreCase(t1.Day+""+t1.Time);
+					return (eventData.Day + "" + eventData.Time).compareToIgnoreCase(t1.Day + "" + t1.Time);
 				}
 			});
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
-			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
-			adapter.listener=this;
+			eventItemAdapter adapter = new eventItemAdapter(list, getApplicationContext(), true);
+			adapter.listener = this;
+			int index=eventListView.getFirstVisiblePosition();
+			View v=eventListView.getChildAt(0);
+			int top=(v==null)?0:(v.getTop()-eventListView.getPaddingTop());
 			eventListView.setAdapter(adapter);
+			eventListView.setSelectionFromTop(index,top);
 		}
 
-		TypedArray array=getBaseContext().getResources().obtainTypedArray(R.array.Category_Image_Map);
-
-		try
-		{
-			(( ImageView)findViewById(R.id.bg)).setImageResource(array.getResourceId(CategoryID,0));
-		}
-		catch (Exception e)
-		{
+		TypedArray array = getBaseContext().getResources().obtainTypedArray(R.array.Category_Image_Map);
+		try {
+			((ImageView) findViewById(R.id.bg)).setImageResource(array.getResourceId(CategoryID, 0));
+		} catch (Exception e) {
 //			e.printStackTrace();
 		}
 	}
-
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();

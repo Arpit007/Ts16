@@ -136,13 +136,16 @@ public class mainActivity extends AppCompatActivity
 	{
 		int id = item.getItemId();
 
+
 		if (id == R.id.nav_home)
 		{
+
 			TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 			tabLayout.getTabAt(0).select();
 		}
 		else if (id == R.id.nav_events)
 		{
+
 			Intent intent=new Intent(this,eventCategoryPage.class);
 			startActivity(intent);
 			}
@@ -185,6 +188,7 @@ public class mainActivity extends AppCompatActivity
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
+//
 		return true;
 	}
 

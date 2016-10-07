@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class starredEvents extends AppCompatActivity implements eventItemAdapter.BookmarkListener
 {
@@ -45,29 +43,28 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 				eventDataList.add(data);
 			}
 		}
-		Collections.sort(eventDataList, new Comparator<eventData>() {
-			@Override
-			public int compare(eventData eventData, eventData t1) {
-				return eventData.eventName.compareToIgnoreCase(t1.eventName);
-			}
-
-		});
 
 		helper.close();
 
 		if(eventDataList.size()==0)
 		{
 			findViewById(R.id.NoStar).setVisibility(View.VISIBLE);
+			findViewById(R.id.starList).setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			findViewById(R.id.NoStar).setVisibility(View.INVISIBLE);
+			findViewById(R.id.starList).setVisibility(View.VISIBLE);
 			ListView listView=(ListView)findViewById(R.id.starList);
 			eventItemAdapter adapter=new eventItemAdapter(eventDataList, this, true);
 			adapter.listener=this;
 			adapter.setForcedBookmark();
+			int index=listView.getFirstVisiblePosition();
+			View v=listView.getChildAt(0);
+			int top=(v==null)?0:(v.getTop()-listView.getPaddingTop());
 			listView.setAdapter(adapter);
+			listView.setSelectionFromTop(index,top);
+
 		}
 	}
 }
-
