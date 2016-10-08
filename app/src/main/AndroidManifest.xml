@@ -62,7 +62,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.eventCategoryPage"/>
         </activity>
-        <activity android:name=".schedule" android:screenOrientation="sensorLandscape">
+        <activity android:name=".schedule" android:screenOrientation="sensorPortrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nitkkr.gawds.ts16.mainActivity"/>

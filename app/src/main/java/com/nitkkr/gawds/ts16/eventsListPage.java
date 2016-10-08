@@ -3,6 +3,8 @@ package com.nitkkr.gawds.ts16;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,17 +24,17 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_events_list_page);
 		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+
 		Bundle b=getIntent().getExtras();
 
-		CategoryID=0;
+		String string = getString(R.string.CategoryID);
 
 		if(b!=null)
-			CategoryID=b.getInt(getString(R.string.CategoryID),0);
+			CategoryID=b.getInt(string);
 
-		String title="All Events";
-
+		String title=null;
 		if(b!=null)
-			title=b.getString("CategoryName","All Events");
+			title=b.getString("CategoryName");
 
 		try
 		{
@@ -43,7 +45,6 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		{
 			e.printStackTrace();
 		}
-
 		setTitle(title);
 		BookmarkChanged();
 	}
@@ -68,11 +69,20 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		}
 		else
 		{
+			Collections.sort(list, new Comparator<eventData>() {
+				@Override
+				public int compare(eventData eventData, eventData t1) {
+					return (eventData.Day + "" + eventData.Time).compareToIgnoreCase(t1.Day + "" + t1.Time);
+				}
+			});
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
-			eventListView.setVisibility(View.VISIBLE);
 			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
 			adapter.listener=this;
+			int index=eventListView.getFirstVisiblePosition();
+			View v=eventListView.getChildAt(0);
+			int top=(v==null)?0:(v.getTop()-eventListView.getPaddingTop());
 			eventListView.setAdapter(adapter);
+			eventListView.setSelectionFromTop(index,top);
 		}
 
 		TypedArray array=getBaseContext().getResources().obtainTypedArray(R.array.Category_Image_Map);
@@ -85,6 +95,24 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 		{
 			e.printStackTrace();
 		}
-		array.recycle();
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.anim_left_in,R.anim.anim_right_out);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 }

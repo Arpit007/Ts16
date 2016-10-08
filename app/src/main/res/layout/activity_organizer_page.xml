@@ -7,6 +7,7 @@
     tools:context="com.nitkkr.gawds.ts16.organizerPage">
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/bg" android:scaleType="centerCrop"
+        android:src="@drawable/all_remaining"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:tint="#64101010"/>
     <ListView android:scrollbars="none" android:clickable="false"

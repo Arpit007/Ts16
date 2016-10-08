@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nitkkr.gawds.ts16.schedule">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/schedule"
-        />
+    tools:context="com.nitkkr.gawds.ts16.schedule"
+    android:background="@drawable/logo_border">
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:textAlignment="center"
+      android:layout_alignParentBottom="true"
+      android:text="Check Here"
+      android:id="@+id/scheduleButton"
+      android:gravity="center"/>
 </RelativeLayout>

@@ -19,12 +19,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class organizerPage extends AppCompatActivity
 {
@@ -80,10 +83,16 @@ public class organizerPage extends AppCompatActivity
 				data.Detail=item.optString("Detail");
 				organizerList.add(data);
 			}
+			Collections.sort(organizerList, new Comparator<organizerData>() {
+				@Override
+				public int compare(organizerData eventData, organizerData t1) {
+					return (eventData.Detail).compareToIgnoreCase(t1.Detail);
+				}
+			});
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -143,7 +152,7 @@ public class organizerPage extends AppCompatActivity
 				public void onClick(View v)
 				{
 					Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Phone));
-					startActivity(intent);
+					startActivityForResult(intent,102);
 				}
 			});
 
@@ -167,5 +176,14 @@ public class organizerPage extends AppCompatActivity
 		}
 	}
 
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==102)
+		{
+			if(resultCode==RESULT_OK)
+			{
+				Toast.makeText(organizerPage.this,"Success",Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 }

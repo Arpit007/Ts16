@@ -20,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class eventCategoryPage extends AppCompatActivity
 {
@@ -41,7 +44,7 @@ public class eventCategoryPage extends AppCompatActivity
 		if(list.size()==0)
 		{
 
-			Toast.makeText(this,"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_LONG).show();
+			Toast.makeText(this,"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_SHORT).show();
 			startActivity(new Intent(this,mainActivity.class));
 		}
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));

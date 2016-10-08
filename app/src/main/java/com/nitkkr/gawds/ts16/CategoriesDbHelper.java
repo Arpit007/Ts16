@@ -42,8 +42,8 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
-            e.printStackTrace();
+//            Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
+//            e.printStackTrace();
         }
 
     }
@@ -62,8 +62,8 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            Log.d("addorUpdateCategory", "Error while trying to add or update category");
-            e.printStackTrace();
+//            Log.d("addorUpdateCategory", "Error while trying to add or update category");
+//            e.printStackTrace();
         }
     }
 
@@ -92,7 +92,7 @@ public class CategoriesDbHelper  extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return list;
     }

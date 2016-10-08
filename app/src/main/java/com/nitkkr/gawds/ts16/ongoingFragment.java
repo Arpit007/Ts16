@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ongoingFragment extends Fragment
 {
@@ -45,7 +47,12 @@ public class ongoingFragment extends Fragment
 		dbHelper DbHelper=new dbHelper(getContext());
 		eventDataList=DbHelper.GetOngoingEvents(DbHelper.getReadableDatabase());
 		DbHelper.close();
-
+		Collections.sort(eventDataList, new Comparator<eventData>() {
+			@Override
+			public int compare(eventData eventData, eventData t1) {
+				return (eventData.EndTime).compareToIgnoreCase(t1.EndTime);
+			}
+		});
 		if (eventDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoOngoing).setVisibility(View.VISIBLE);
@@ -53,6 +60,12 @@ public class ongoingFragment extends Fragment
 		}
 		else
 		{
+			Collections.sort(eventDataList, new Comparator<eventData>() {
+				@Override
+				public int compare(eventData eventData, eventData t1) {
+					return (eventData.eventName+""+eventData.Time).compareToIgnoreCase(t1.eventName);
+				}
+			});
 			view.findViewById(R.id.NoOngoing).setVisibility(View.INVISIBLE);
 			view.findViewById(R.id.OngoingList).setVisibility(View.VISIBLE);
 

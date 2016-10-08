@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.nitkkr.gawds.ts16.starredEvents">
     <android.support.v7.widget.AppCompatImageView
-    android:id="@+id/bg" android:scaleType="centerCrop"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-
-    android:tint="#64101010"/>
+        android:id="@+id/bg" android:scaleType="centerCrop"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:src="@drawable/all_remaining"
+        android:tint="#64101010"/>
     <TextView
         android:layout_centerVertical="true" android:layout_centerHorizontal="true"
         android:layout_centerInParent="true" android:id="@+id/NoStar"
@@ -18,8 +18,9 @@
         android:layout_gravity="center"/>
     <ListView
         android:id="@+id/starList" android:scrollbars="none"
-              android:divider="#00ffffff" android:dividerHeight="20dp"
-              android:paddingTop="30dp" android:paddingLeft="10dp" android:paddingRight="10dp"
-              android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        android:divider="#00ffffff" android:dividerHeight="20dp"
+        android:layout_marginTop="30dp" android:paddingLeft="10dp" android:paddingRight="10dp"
+
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
 
 </RelativeLayout>

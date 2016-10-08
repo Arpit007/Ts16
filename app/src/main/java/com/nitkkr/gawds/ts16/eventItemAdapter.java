@@ -90,7 +90,7 @@ public class eventItemAdapter extends BaseAdapter
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		if(!check1)
 		{
@@ -102,7 +102,7 @@ public class eventItemAdapter extends BaseAdapter
 		}
 		eventStatusListener.setEventStatusCode(data,context);
 
-		if(forced || data.isBookmarked() || showBookmark )
+		if(showBookmark)
 		{
 			convertView.findViewById(R.id.starrred).setVisibility(View.VISIBLE);
 		}

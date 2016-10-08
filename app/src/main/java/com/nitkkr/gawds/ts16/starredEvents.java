@@ -59,8 +59,12 @@ public class starredEvents extends AppCompatActivity implements eventItemAdapter
 			eventItemAdapter adapter=new eventItemAdapter(eventDataList, this, true);
 			adapter.listener=this;
 			adapter.setForcedBookmark();
+			int index=listView.getFirstVisiblePosition();
+			View v=listView.getChildAt(0);
+			int top=(v==null)?0:(v.getTop()-listView.getPaddingTop());
 			listView.setAdapter(adapter);
+			listView.setSelectionFromTop(index,top);
+
 		}
 	}
 }
-

@@ -84,7 +84,7 @@ public class ServertoSqliteLoader extends IntentService
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         try
@@ -108,7 +108,7 @@ public class ServertoSqliteLoader extends IntentService
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         try
@@ -161,7 +161,7 @@ public class ServertoSqliteLoader extends IntentService
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         try
         {
@@ -184,7 +184,7 @@ public class ServertoSqliteLoader extends IntentService
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

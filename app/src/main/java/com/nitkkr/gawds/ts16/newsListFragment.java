@@ -53,15 +53,21 @@ public class newsListFragment extends Fragment
 	{
 		if (view==null)
 			return;
-		MessageDbHelper helper = new MessageDbHelper(getContext());
 
-		MessageDataList = helper.getUpdatedMessages(helper.getWritableDatabase());
+		if(MessageDbHelper.isUpdated(getContext()) || MessageDataList==null)
+		{
+			if(MessageDataList!=null)
+				MessageDataList.clear();
+
+
+		}
+		MessageDbHelper helper=new MessageDbHelper(getContext());
+		MessageDataList = helper.ReadDatabaseMessage(helper.getReadableDatabase());
 		helper.close();
-
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
-			Toast.makeText(getContext(),"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_LONG).show();
+			Toast.makeText(getContext(),"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_SHORT).show();
 		}
 		else
 		{
@@ -144,7 +150,6 @@ public class newsListFragment extends Fragment
 			Drawable drawable= ResourcesCompat.getDrawable(getResources(), R.drawable.bullet_icon, null);
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
-			array.recycle();
 
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(),"fonts/Font1.ttf");
 			(( TextView)convertView.findViewById(R.id.news_Title)).setTypeface(font);

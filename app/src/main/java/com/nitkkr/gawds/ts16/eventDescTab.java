@@ -62,12 +62,19 @@ public class eventDescTab extends Fragment
             else if(hours==1)
                 time+=" hour";
             else time+=" hours";
+            if(hours==0)
+            {
+                time="";
+                ((TextView)view.findViewById(R.id.eventDescriptionDuration)).setVisibility(View.INVISIBLE);
+            }
 
-            ((TextView)view.findViewById(R.id.eventDescriptionDuration)).setText(time);
+//            else {
+                ((TextView) view.findViewById(R.id.eventDescriptionDuration)).setText(time);
+//            }
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         ((TextView)(view.findViewById(R.id.eventDescriptionText))).setText(data.Description);
