@@ -14,11 +14,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
 public class dbHelper extends SQLiteOpenHelper{
@@ -230,7 +230,7 @@ public class dbHelper extends SQLiteOpenHelper{
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Log.d("Date","Date Error");
             }
         }
         return upcoming;

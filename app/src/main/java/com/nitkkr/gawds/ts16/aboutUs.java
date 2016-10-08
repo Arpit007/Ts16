@@ -45,7 +45,7 @@ public class aboutUs extends AppCompatActivity
 		});
 
 		Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(),
-				"fonts/Free.ttf");
+				"fonts/Free1.ttf");
 		((TextView)findViewById(R.id.dev1)).setTypeface(font);
 		((TextView)findViewById(R.id.dev2)).setTypeface(font);
 

@@ -53,14 +53,9 @@ public class newsListFragment extends Fragment
 			return;
 		MessageDbHelper helper = new MessageDbHelper(getContext());
 
-		if(helper.isUpdated() || MessageDataList==null)
-		{
-			if(MessageDataList!=null)
-				MessageDataList.clear();
+		MessageDataList = helper.getUpdatedMessages(helper.getWritableDatabase());
+		helper.close();
 
-			MessageDataList = helper.getUpdatedMessages(helper.getWritableDatabase());
-			helper.close();
-		}
 		if (MessageDataList.size() == 0)
 		{
 			view.findViewById(R.id.NoNews).setVisibility(View.VISIBLE);
