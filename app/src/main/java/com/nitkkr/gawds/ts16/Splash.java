@@ -70,13 +70,12 @@ public class Splash extends AppCompatActivity
 
 	class parallelDataSetup extends AsyncTask<Context,Void,Void>
 	{
-		long oldTime, currentTime;
+		long oldTime;
 
 		@Override
 		protected Void doInBackground(Context... params)
 		{
 			oldTime = System.currentTimeMillis();
-			startAlarm(params[0]);
 			try
 			{
 				new MessageDbHelper(params[0]);
