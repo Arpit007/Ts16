@@ -3,13 +3,14 @@ package com.nitkkr.gawds.ts16;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class eventsListPage extends AppCompatActivity implements eventItemAdapter.BookmarkListener
@@ -75,6 +76,7 @@ public class eventsListPage extends AppCompatActivity implements eventItemAdapte
 					return (eventData.Day + "" + eventData.Time).compareToIgnoreCase(t1.Day + "" + t1.Time);
 				}
 			});
+
 			findViewById(R.id.noEvent).setVisibility(View.INVISIBLE);
 			eventItemAdapter adapter=new eventItemAdapter(list, getApplicationContext(), true);
 			adapter.listener=this;

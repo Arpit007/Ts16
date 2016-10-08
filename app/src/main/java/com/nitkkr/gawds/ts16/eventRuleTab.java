@@ -1,12 +1,10 @@
 package com.nitkkr.gawds.ts16;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,37 +40,23 @@ public class eventRuleTab extends Fragment
 
 	public void eventUpdated()
 	{
-		if(view== null)
+		if (view == null)
 			return;
 
 		Typeface font = Typeface.createFromAsset(getContext().getAssets(),
-				"fonts/Font1.ttf");
-		(( TextView)view.findViewById(R.id.eventRuleText)).setTypeface(font);
-		((TextView)(view.findViewById(R.id.eventRuleText))).setText(data.Rules);
-
-		font = Typeface.createFromAsset(getContext().getAssets(),
 				"fonts/Font2.ttf");
-		(( TextView)view.findViewById(R.id.eventCall)).setTypeface(font);
+		( (TextView) view.findViewById(R.id.eventRuleText) ).setTypeface(font);
+		( (TextView) ( view.findViewById(R.id.eventRuleText) ) ).setText(data.Rules);
+		( (TextView) view.findViewById(R.id.eventCall) ).setTypeface(font);
 
 		view.findViewById(R.id.eventCall).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Contact));
-				startActivityForResult(intent,100);
+				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.Contact));
+				startActivity(intent);
 			}
 		});
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==100)
-		{
-				if(resultCode== getActivity().RESULT_OK)
-				{
-					Toast.makeText(getContext(),"Back Success",Toast.LENGTH_SHORT).show();
-				}
-		}
 	}
 }

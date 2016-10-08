@@ -8,7 +8,7 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
         <TextView android:id="@+id/resultView" android:gravity="left"
                   android:textAlignment="gravity" android:paddingTop="10dp"
-                  android:textSize="17sp"
+                  android:textSize="18sp"
                   android:lineSpacingExtra="5dp" android:singleLine="false"
                   android:layout_width="match_parent" android:layout_height="wrap_content"/>
     </ScrollView>

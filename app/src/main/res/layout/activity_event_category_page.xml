@@ -14,7 +14,8 @@
 
     <ListView
         android:scrollbars="none"
-        android:id="@+id/eventCategoryList" android:paddingTop="30dp"
+        android:id="@+id/eventCategoryList" android:paddingTop="20dp"
+        android:paddingBottom="10dp"
         android:divider="#00ffffff" android:dividerHeight="10dp"
         android:paddingLeft="10dp" android:paddingRight="10dp"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>

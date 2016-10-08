@@ -43,7 +43,6 @@ public class eventCategoryPage extends AppCompatActivity
 		helper.close();
 		if(list.size()==0)
 		{
-
 			Toast.makeText(this,"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_SHORT).show();
 			startActivity(new Intent(this,mainActivity.class));
 		}
@@ -58,7 +57,6 @@ public class eventCategoryPage extends AppCompatActivity
 				i.putExtra("CategoryId",list.get(position).id);
 				i.putExtra("CategoryName",list.get(position).category);
 				eventCategoryPage.this.startActivity(i);
-//				overridePendingTransition(R.anim.anim_left_out,R.anim.anim_right_in);
 			}
 		});
 		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);

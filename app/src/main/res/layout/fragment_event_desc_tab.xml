@@ -14,7 +14,7 @@
         <ScrollView android:layout_below="@id/eventDescriptionDuration" android:paddingTop="10dp"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
             <TextView android:id="@+id/eventDescriptionText" android:textAlignment="gravity"
-                      android:gravity="left" android:textSize="18sp"
+                      android:gravity="left" android:textSize="18sp" android:textAllCaps="false"
                       android:layout_width="match_parent" android:layout_height="wrap_content"/>
         </ScrollView>
     </RelativeLayout>

@@ -64,13 +64,13 @@ public class eventDescTab extends Fragment
             else time+=" hours";
             if(hours==0)
             {
-                time="";
-                ((TextView)view.findViewById(R.id.eventDescriptionDuration)).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.eventDescriptionDuration).setVisibility(View.INVISIBLE);
             }
-
-//            else {
-                ((TextView) view.findViewById(R.id.eventDescriptionDuration)).setText(time);
-//            }
+            else
+            {
+                view.findViewById(R.id.eventDescriptionDuration).setVisibility(View.VISIBLE);
+            }
+            ((TextView) view.findViewById(R.id.eventDescriptionDuration)).setText(time);
         }
         catch (Exception e)
         {
@@ -82,9 +82,6 @@ public class eventDescTab extends Fragment
         Typeface font = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/Font2.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionDuration)).setTypeface(font);
-
-        font = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/Font1.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionText)).setTypeface(font);
 
     }

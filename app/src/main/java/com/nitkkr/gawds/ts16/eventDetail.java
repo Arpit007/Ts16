@@ -33,7 +33,7 @@ public class eventDetail extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_detail);
-
+		overridePendingTransition(R.anim.anim_right_in,R.anim.anim_left_out);
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.eventTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab1)));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab2)));
@@ -204,5 +204,11 @@ public class eventDetail extends AppCompatActivity
 		public int getCount() {
 			return mNumOfTabs;
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.anim_left_in,R.anim.anim_right_out);
 	}
 }

@@ -40,7 +40,7 @@ public class Splash extends AppCompatActivity
 		{
 			this.getSupportActionBar().hide();
 		}
-		Toast.makeText(this,"Loading...Ensure a working Data Connection!",Toast.LENGTH_LONG).show();
+		Toast.makeText(this,"Loading...\nEnsure a working Data Connection!",Toast.LENGTH_LONG).show();
 		new parallelDataSetup().execute(this.getBaseContext());
 	}
 

@@ -8,9 +8,9 @@
         android:layout_width="match_parent" android:layout_height="match_parent">
         <ImageView
             android:layout_weight="30" android:scaleType="centerCrop"
-            android:src="@drawable/logo_border"
+            android:src="@drawable/logo_border" android:paddingTop="10dp" android:paddingBottom="10dp"
             android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <LinearLayout android:orientation="vertical" android:layout_weight="40" android:paddingTop="10dp"
+        <LinearLayout android:orientation="vertical" android:layout_weight="40" android:paddingTop="10dp" android:paddingBottom="10dp"
                       android:layout_width="match_parent" android:layout_height="wrap_content" android:weightSum="100">
             <Button
                 android:id="@+id/newsButton" style="@style/Widget.AppCompat.Button.Borderless"

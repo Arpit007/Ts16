@@ -24,7 +24,7 @@ public class eventData
 
 	boolean isResultDeclared()
 	{
-		return (!Result.equals("") || Result==null);
+		return (!Result.equals("") || Result.length()>10 || Result==null);
 	}
 
 	boolean isBookmarked()
