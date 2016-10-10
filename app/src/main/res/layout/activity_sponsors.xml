@@ -8,7 +8,6 @@
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/bg" android:scaleType="centerCrop"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:src="@drawable/sponsor_page_background"
         android:tint="#64101010"
         />
 <GridView

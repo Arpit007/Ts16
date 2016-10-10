@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -103,6 +105,8 @@ class MessageDbHelper extends SQLiteOpenHelper
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
                     builder.setSmallIcon(R.drawable.logo_border);
+                    Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.logots_16);
+                    builder.setLargeIcon(bitmap);
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("MessageNotification", 120, builder.build());
                 }
