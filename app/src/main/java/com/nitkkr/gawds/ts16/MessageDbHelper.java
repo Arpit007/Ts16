@@ -97,12 +97,12 @@ class MessageDbHelper extends SQLiteOpenHelper
                     stackBuilder.addParentStack(mainActivity.class);
                     stackBuilder.addNextIntent(i);
                     builder.setAutoCancel(true);
-                    builder.setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});
+                    builder.setVibrate(new long[]{1000,500});
                     builder.setLights(Color.GREEN, 3000, 3000);
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
-                    builder.setSmallIcon(R.drawable.news_icon);
+                    builder.setSmallIcon(R.drawable.logo_border);
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("MessageNotification", 120, builder.build());
                 }

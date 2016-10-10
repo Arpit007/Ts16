@@ -113,7 +113,7 @@ public class dbHelper extends SQLiteOpenHelper{
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                     builder.setContentTitle(event.eventName + ": Results declared");
 
-                    builder.setSmallIcon(R.drawable.result_icon);
+                    builder.setSmallIcon(R.drawable.logo_border);
 
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
@@ -123,7 +123,7 @@ public class dbHelper extends SQLiteOpenHelper{
 
                     stackBuilder.addNextIntentWithParentStack(new Intent(context,mainActivity.class));
                     stackBuilder.addNextIntent(i);
-                    builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+                    builder.setVibrate(new long[] { 1000, 500});
                     builder.setLights(Color.RED, 3000, 3000);
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                     builder.setAutoCancel(true);

@@ -148,10 +148,10 @@ public class ServertoSqliteLoader extends IntentService
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
                     builder.setOnlyAlertOnce(true);
-                    builder.setVibrate(new long[]{ 500});
+                    builder.setVibrate(new long[]{ 1000,500});
                     builder.setLights(Color.RED, 3000, 3000);
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-                    builder.setSmallIcon(R.drawable.events_icon);
+                    builder.setSmallIcon(R.drawable.logo_border);
                     builder.setAutoCancel(true);
                     upcomingEditor.putInt("" + item.eventID, item.eventID);
                     upcomingEditor.commit();
