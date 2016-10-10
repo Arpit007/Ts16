@@ -55,13 +55,21 @@ public class eventDescTab extends Fragment
 
             int hours = cal.get(Calendar.HOUR_OF_DAY), minutes=cal.get(Calendar.MINUTE);
 
-            String time=Integer.toString(hours);
+            String time;
+            if(hours>3)
+            {
+                time="All Day";
+            }
+            else
+            {
+                time = Integer.toString(hours);
 
-            if(minutes!=0)
-                time+="."+minutes+" hours";
-            else if(hours==1)
-                time+=" hour";
-            else time+=" hours";
+                if (minutes != 0)
+                    time += "." + minutes + " hours";
+                else if (hours == 1)
+                    time += " hour";
+                else time += " hours";
+            }
             if(hours==0)
             {
                 view.findViewById(R.id.eventDescriptionDuration).setVisibility(View.INVISIBLE);

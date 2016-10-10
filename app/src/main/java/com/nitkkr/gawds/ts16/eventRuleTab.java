@@ -45,6 +45,7 @@ public class eventRuleTab extends Fragment
 
 		Typeface font = Typeface.createFromAsset(getContext().getAssets(),
 				"fonts/Font2.ttf");
+		if(data.Status!=-1)
 			( (TextView) view.findViewById(R.id.eventRuleText) ).setTypeface(font);
 		String string = data.Rules.toString();
 		( (TextView) ( view.findViewById(R.id.eventRuleText) ) ).setText(string);
