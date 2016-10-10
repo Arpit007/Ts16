@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -111,7 +113,7 @@ public class dbHelper extends SQLiteOpenHelper{
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                     builder.setContentTitle(event.eventName + ": Results declared");
 
-                    builder.setSmallIcon(R.drawable.result_icon);
+                    builder.setSmallIcon(R.drawable.logo_border);
 
                     Intent i = new Intent(context, eventDetail.class);
                     i.putExtra(context.getString(R.string.TabID), 2);
@@ -121,12 +123,14 @@ public class dbHelper extends SQLiteOpenHelper{
 
                     stackBuilder.addNextIntentWithParentStack(new Intent(context,mainActivity.class));
                     stackBuilder.addNextIntent(i);
-                    builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
+                    builder.setVibrate(new long[] { 1000, 1000});
                     builder.setLights(Color.RED, 3000, 3000);
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                     builder.setAutoCancel(true);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
+                    Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.logots_16);
+                    builder.setLargeIcon(bitmap);
 
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     notification.notify("ResultNotification", 140, builder.build());

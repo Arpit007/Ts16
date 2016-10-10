@@ -124,7 +124,7 @@ public class eventItemAdapter extends BaseAdapter
 
 		Typeface font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font1.ttf");
-		(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
+			(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
 
 		font = Typeface.createFromAsset(context.getAssets(),
 				"fonts/Font2.ttf");

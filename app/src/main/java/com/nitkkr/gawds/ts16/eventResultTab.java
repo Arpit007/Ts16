@@ -53,7 +53,7 @@ public class eventResultTab extends Fragment
 
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(),
 					"fonts/Font2.ttf");
-			(( TextView)view.findViewById(R.id.resultView)).setTypeface(font);
+				(( TextView)view.findViewById(R.id.resultView)).setTypeface(font);
 		}
 	}
 }

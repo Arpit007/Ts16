@@ -82,7 +82,7 @@ public class eventDescTab extends Fragment
         Typeface font = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/Font2.ttf");
         (( TextView)view.findViewById(R.id.eventDescriptionDuration)).setTypeface(font);
-        (( TextView)view.findViewById(R.id.eventDescriptionText)).setTypeface(font);
+            (( TextView)view.findViewById(R.id.eventDescriptionText)).setTypeface(font);
 
     }
 }

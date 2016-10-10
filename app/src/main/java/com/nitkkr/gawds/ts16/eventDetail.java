@@ -20,6 +20,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,7 +30,7 @@ public class eventDetail extends AppCompatActivity
 {
 	eventData data;
 	int selectedtabID;
-
+	ImageView eventDetailImage;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
 	{
@@ -39,6 +42,7 @@ public class eventDetail extends AppCompatActivity
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab2)));
 		tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.eventTab3)));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+		eventDetailImage=(ImageView) findViewById(R.id.eventDetailImage);
 
 		dbHelper helper=new dbHelper(this);
 		data=helper.GetEventById(helper.getReadableDatabase(),getIntent().getIntExtra(getString(R.string.EventID),0));
@@ -46,6 +50,8 @@ public class eventDetail extends AppCompatActivity
 
 		if(data==null)
 			data=new eventData();
+		Log.d("Image",data.ImageID);
+		Glide.with(eventDetail.this).load(getString(R.string.imagePath)+data.ImageID).crossFade().placeholder(R.drawable.logots_16).diskCacheStrategy(DiskCacheStrategy.ALL).into(eventDetailImage);
 
 		selectedtabID=getIntent().getIntExtra(getString(R.string.TabID),0);
 		tabLayout.getTabAt(selectedtabID).select();

@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
@@ -76,7 +78,6 @@ public class ServertoSqliteLoader extends IntentService
                 item.Result = object.getString(result);
                 item.Rules = object.getString(rules);
                 item.Contact = object.getString(contact);
-
                 helper.addEvent(helper.getWritableDatabase(), item);
             }
 
@@ -146,10 +147,12 @@ public class ServertoSqliteLoader extends IntentService
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
                     builder.setOnlyAlertOnce(true);
-                    builder.setVibrate(new long[]{ 1000, 1000, 1000, 1000, 1000 });
+                    builder.setVibrate(new long[]{ 1000, 1000});
                     builder.setLights(Color.RED, 3000, 3000);
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-                    builder.setSmallIcon(R.drawable.events_icon);
+                    Bitmap bitmap= BitmapFactory.decodeResource(getResources(), R.drawable.logots_16);
+                    builder.setLargeIcon(bitmap);
+                    builder.setSmallIcon(R.drawable.logo_border);
                     builder.setAutoCancel(true);
                     upcomingEditor.putInt("" + item.eventID, item.eventID);
                     upcomingEditor.commit();

@@ -15,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class mainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener
 {
 	NavigationView navigationView;
-
+	int TabID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -39,34 +40,32 @@ public class mainActivity extends AppCompatActivity
 			DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 			ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 					this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-			drawer.addDrawerListener(toggle);
+			drawer.setDrawerListener(toggle);
 			toggle.syncState();
 		}
 		catch (Exception e)
 		{
 //			e.printStackTrace();
 		}
-
-
 		navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 		navigationView.setCheckedItem(R.id.nav_home);
 		navigationView.setItemIconTintList(null);
+		TabID=getIntent().getIntExtra(String.valueOf(R.string.TabID),0);
 		font = Typeface.createFromAsset(getBaseContext().getAssets(), "fonts/Free.ttf");
 		((TextView)navigationView.getHeaderView(0).findViewById(R.id.headerLogo)).setTypeface(font);
-
+		Log.d("Tabid", String.valueOf(TabID));
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.homeTabLayout);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.home_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.events_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ongoing_icon));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.upcoming_icon));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.homePager);
 		viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(),this));
 		viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-		navigateToTab(getIntent().getIntExtra(getString(R.string.TabID),0));
-
+		viewPager.setCurrentItem(TabID);
+		navigateToTab(TabID);
 		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(TabLayout.Tab tab) {
@@ -152,8 +151,9 @@ public class mainActivity extends AppCompatActivity
 		}
 		else if (id == R.id.nav_schedule)
 		{
-			Intent intent=new Intent(this,schedule.class);
-			startActivity(intent);
+			String uri = getString(R.string.schedule_page);
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+			startActivityForResult(intent,456);
 		}
 		else if (id == R.id.nav_starred)
 		{
@@ -165,14 +165,8 @@ public class mainActivity extends AppCompatActivity
 			Intent intent=new Intent(this,eventResult.class);
 			startActivity(intent);
 		}
-		else if (id == R.id.nav_organizers)
-		{
-			Intent intent=new Intent(this,organizerPage.class);
-			startActivity(intent);
-		}
-		else if (id == R.id.nav_sponsor)
-		{
-			Intent intent=new Intent(this,sponsors.class);
+		else if (id == R.id.nav_organizers) {
+			Intent intent = new Intent(this, organizerPage.class);
 			startActivity(intent);
 		}
 		else if (id == R.id.nav_dev)
@@ -216,7 +210,7 @@ public class mainActivity extends AppCompatActivity
 
 			switch (position) {
 				case 0: homeFragment fragment=new homeFragment();
-						fragment.setActivity(activity);
+					fragment.setActivity(activity);
 					return fragment;
 				case 1: return new newsListFragment();
 				case 2: return new ongoingFragment();
@@ -232,4 +226,8 @@ public class mainActivity extends AppCompatActivity
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }
