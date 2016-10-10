@@ -122,14 +122,6 @@ public class eventItemAdapter extends BaseAdapter
 		});
 		((CheckBox)convertView.findViewById(R.id.starrred)).setChecked(data.isBookmarked());
 
-		Typeface font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Font1.ttf");
-		(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
-
-		font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Font2.ttf");
-		(( TextView)convertView.findViewById(R.id.recycler_event_date)).setTypeface(font);
-		(( TextView)convertView.findViewById(R.id.recycler_event_time)).setTypeface(font);
 
 		TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);
 

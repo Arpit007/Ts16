@@ -29,10 +29,6 @@
                 android:title="Organizers"
                 android:icon="@drawable/call_icon"/>
         <item
-                android:id="@+id/nav_sponsor"
-                android:title="Sponsors"
-                android:icon="@drawable/sponsor_icon"/>
-        <item
                 android:id="@+id/nav_dev"
                 android:icon="@drawable/about_icon"
                 android:title="About Developers"/>

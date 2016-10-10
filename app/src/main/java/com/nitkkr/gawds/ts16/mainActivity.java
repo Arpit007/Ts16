@@ -151,8 +151,9 @@ public class mainActivity extends AppCompatActivity
 			}
 		else if (id == R.id.nav_schedule)
 		{
-			Intent intent=new Intent(this,schedule.class);
-			startActivity(intent);
+			String uri = getString(R.string.schedule_page);
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+			startActivityForResult(intent,456);
 		}
 		else if (id == R.id.nav_starred)
 		{
@@ -164,14 +165,8 @@ public class mainActivity extends AppCompatActivity
 			Intent intent=new Intent(this,eventResult.class);
 			startActivity(intent);
 		}
-		else if (id == R.id.nav_organizers)
-		{
-			Intent intent=new Intent(this,organizerPage.class);
-			startActivity(intent);
-		}
-		else if (id == R.id.nav_sponsor)
-		{
-			Intent intent=new Intent(this,sponsors.class);
+		else if (id == R.id.nav_organizers) {
+			Intent intent = new Intent(this, organizerPage.class);
 			startActivity(intent);
 		}
 		else if (id == R.id.nav_dev)
@@ -231,4 +226,8 @@ public class mainActivity extends AppCompatActivity
 		}
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }

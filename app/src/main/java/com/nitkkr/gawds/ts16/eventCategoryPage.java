@@ -116,8 +116,6 @@ public class eventCategoryPage extends AppCompatActivity
 			DrawableCompat.setTint(DrawableCompat.wrap(drawable), array.getColor(position%array.length(),0));
 			view.setImageDrawable(drawable);
 
-			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
-			(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);
 
 			return convertView;
 		}
