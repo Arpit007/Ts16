@@ -51,6 +51,9 @@ public class eventRuleTab extends Fragment
 		( (TextView) ( view.findViewById(R.id.eventRuleText) ) ).setText(string);
 		( (TextView) view.findViewById(R.id.eventCall) ).setTypeface(font);
 
+		if(data.Contact.equals(""))
+			view.findViewById(R.id.eventCall).setVisibility(View.GONE);
+
 		view.findViewById(R.id.eventCall).setOnClickListener(new View.OnClickListener()
 		{
 			@Override

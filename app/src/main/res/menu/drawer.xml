@@ -22,6 +22,7 @@
             android:title="Results"
             />
         <item android:title="" android:enabled="false"/>
+        <item android:title="" android:enabled="false"/>
     </group>
     <group android:id="@+id/drawerGroup2" android:checkableBehavior="none">
         <item
