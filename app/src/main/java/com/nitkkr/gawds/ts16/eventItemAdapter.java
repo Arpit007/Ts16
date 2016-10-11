@@ -79,7 +79,7 @@ public class eventItemAdapter extends BaseAdapter
 		boolean check2=false;
 		try
 		{
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date=simpleDateFormat.parse(data.Day+" "+data.Time);
 			simpleDateFormat.applyPattern("hh:mm a");
 			(( TextView)convertView.findViewById(R.id.recycler_event_time)).setText(simpleDateFormat.format(date));

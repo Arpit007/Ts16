@@ -48,6 +48,12 @@ public class eventCategoryPage extends AppCompatActivity
 			Toast.makeText(this,"Please wait until we load data!\nMake Sure you have a working Internet Connection!",Toast.LENGTH_SHORT).show();
 			startActivity(new Intent(this,mainActivity.class));
 		}
+		Collections.sort(list, new Comparator<eventCategory>() {
+			@Override
+			public int compare(eventCategory eventCategory, eventCategory t1) {
+				return eventCategory.category.compareToIgnoreCase(t1.category);
+			}
+		});
 		categoryList.setAdapter(new eventCategoryAdapter(list, getBaseContext()));
 
 		categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener()

@@ -36,18 +36,18 @@ public class eventStatusListener
 		try
 		{
 
-			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			long BeginTime=(format.parse(data.Day+" "+ data.Time).getTime())/1000;
-			long EndTime=(format.parse(data.Day+" "+ data.EndTime).getTime())/1000;
+//			long EndTime=(format.parse(data.Day+" "+ data.EndTime).getTime())/1000;
 			long currentTimeStamp=Calendar.getInstance().getTimeInMillis()/1000;
 			long lapse = TimeUnit.HOURS.toMillis(context.getResources().getInteger(R.integer.upcomingDuration));
 
-			if(currentTimeStamp>=BeginTime && currentTimeStamp<EndTime)
+			if(data.Status==1)
 				code=StatusCode.Ongoing;
 			else if (currentTimeStamp < BeginTime && currentTimeStamp + lapse > BeginTime)
 				code=StatusCode.Upcoming;
-			else if(currentTimeStamp>EndTime)
+			else if(data.Status==-1)
 				code=StatusCode.Over;
 			else code=StatusCode.None;
 		}

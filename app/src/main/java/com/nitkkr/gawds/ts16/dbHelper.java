@@ -92,7 +92,7 @@ public class dbHelper extends SQLiteOpenHelper{
         }
         catch (Exception e)
         {
-            Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
+//            Log.d("addEventExceptionCatch" ,"Error occurred while adding or updating event\n");
 //            e.printStackTrace();
         }
     }
@@ -107,39 +107,21 @@ public class dbHelper extends SQLiteOpenHelper{
             if(count!=0)
             {
                 c.moveToFirst();
-                event.Status=c.getInt(c.getColumnIndex(status));
+                event.setBookmark(c.getInt(c.getColumnIndex(special)));
                 eventValues=setEventContentValues(eventValues, event);
-                Log.d("Updating ",event.eventID+"");
+
+//                Log.d("Updating ",event.eventID+"");
                 if((c.getString(c.getColumnIndex(result))).compareToIgnoreCase(event.Result)!=0 && event.isBookmarked())
                 {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                    builder.setContentTitle(event.eventName + ": Results declared");
-
-                    builder.setSmallIcon(R.drawable.logo_border);
-
-                    Intent i = new Intent(context, eventDetail.class);
-                    i.putExtra(context.getString(R.string.TabID), 2);
-                    i.putExtra(context.getString(R.string.EventID), event.eventID);
-
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-
-                    stackBuilder.addNextIntentWithParentStack(new Intent(context,mainActivity.class));
-                    stackBuilder.addNextIntent(i);
-                    builder.setVibrate(new long[] { 1000, 500});
-                    builder.setLights(Color.RED, 3000, 3000);
-                    builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-                    builder.setAutoCancel(true);
-                    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(pendingIntent);
-                    Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.logots_16);
-                    builder.setLargeIcon(bitmap);
-                    NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notification.notify("ResultNotification", 140, builder.build());
+                    generate(event,"Result Declared");
                 }
+
                 db.update(TABLE_EVENTS,eventValues,"id = "+event.eventID,null);
-                Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
-                cu.moveToFirst();
-                Log.d("Updating ",event.eventID+" "+eventValues.get("status")+" "+cu.getString(cu.getColumnIndex(status)));
+                c.close();
+//                Cursor cu=db.rawQuery("Select status from "+TABLE_EVENTS+" where id="+event.eventID+";",null);
+//                cu.moveToFirst();
+//                Log.d("Updating ",event.eventID+" "+eventValues.get("status")+" "+cu.getString(cu.getColumnIndex(status)));
+//                cu.close();
             }
             else
             {
@@ -154,12 +136,39 @@ public class dbHelper extends SQLiteOpenHelper{
             }
             c.close();
         } catch (Exception e) {
-            Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
+
+//            Log.d("addorUpdateEvent error ", "Error while trying to add or update event");
 //            e.printStackTrace();
         } finally {
         }
     }
+public  void generate(eventData event,String message)
+{
 
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+    builder.setContentTitle(event.eventName + " "+message);
+
+    builder.setSmallIcon(R.drawable.logo_border);
+
+    Intent i = new Intent(context, eventDetail.class);
+    i.putExtra(context.getString(R.string.TabID), 2);
+    i.putExtra(context.getString(R.string.EventID), event.eventID);
+
+    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+
+    stackBuilder.addNextIntentWithParentStack(new Intent(context,mainActivity.class));
+    stackBuilder.addNextIntent(i);
+    builder.setVibrate(new long[] { 1000, 500});
+    builder.setLights(Color.RED, 3000, 3000);
+    builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+    builder.setAutoCancel(true);
+    PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+    builder.setContentIntent(pendingIntent);
+    Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.logots_16);
+    builder.setLargeIcon(bitmap);
+    NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    notification.notify("ResultNotification", 2140+event.eventID, builder.build());
+}
     public ArrayList<eventData> ReadDatabaseEvents( SQLiteDatabase db,int category)
     {
 
@@ -219,14 +228,14 @@ public class dbHelper extends SQLiteOpenHelper{
         {
             try
             {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-                long BeginTime = ( format.parse(data.Day + " " + data.Time).getTime() ) / 1000;
-                long currentTimeStamp = Calendar.getInstance().getTimeInMillis() / 1000;
-
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                Log.d("timing ",data.Day + " " + data.Time);
+                long BeginTime = ( format.parse(data.Day + " " + data.Time).getTime() );
+                long currentTimeStamp = Calendar.getInstance().getTimeInMillis();
+//                Log.d("times ",""+BeginTime+" "+currentTimeStamp);
                 long lapse = TimeUnit.HOURS.toMillis(context.getResources().getInteger(R.integer.upcomingDuration));
 
-                if (currentTimeStamp < BeginTime && currentTimeStamp + lapse > BeginTime)
+                if (currentTimeStamp < BeginTime && currentTimeStamp + lapse > BeginTime && data.Status==0)
                 {
                     if (data.code != eventStatusListener.StatusCode.Upcoming)
                         data.code = eventStatusListener.StatusCode.Upcoming;
@@ -250,13 +259,13 @@ public class dbHelper extends SQLiteOpenHelper{
         {
             try
             {
-                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                 long BeginTime=(format.parse(data.Day+" "+ data.Time).getTime())/1000;
-                long EndTime=(format.parse(data.Day+" "+ data.EndTime).getTime())/1000;
+//                long EndTime=(format.parse(data.Day+" "+ data.EndTime).getTime())/1000;
                 long currentTimeStamp=Calendar.getInstance().getTimeInMillis()/1000;
 
-                if(currentTimeStamp>=BeginTime && currentTimeStamp<EndTime)
+                if(currentTimeStamp<BeginTime+(3600*3) && data.Status==1)
                 {
                     if(data.code!= eventStatusListener.StatusCode.Ongoing)
                         data.code= eventStatusListener.StatusCode.Ongoing;

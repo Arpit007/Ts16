@@ -3,6 +3,7 @@ package com.nitkkr.gawds.ts16;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -64,8 +65,9 @@ public class homeFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent=new Intent(homeFragment.this.getContext(),schedule.class);
-				startActivity(intent);
+				String uri = getString(R.string.schedule_page);
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+				startActivityForResult(intent,456);
 			}
 		});
 		button.setTypeface(font);

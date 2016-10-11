@@ -56,7 +56,7 @@ public class eventData
 		bookmark=bookmarked;
 
 		dbHelper helper=new dbHelper(c);
-		helper.updateBookmarkStatus(helper.getReadableDatabase(),getBookmark(),this.eventID);
+		helper.updateBookmarkStatus(helper.getWritableDatabase(),getBookmark(),this.eventID);
 		helper.close();
 
 		return true;

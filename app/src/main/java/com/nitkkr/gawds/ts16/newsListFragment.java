@@ -131,7 +131,7 @@ public class newsListFragment extends Fragment
 
 			try
 			{
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date date=simpleDateFormat.parse(data.Date);
 				simpleDateFormat.applyPattern("hh:mm a, dd MMM yyyy");
 				(( TextView)convertView.findViewById(R.id.news_date)).setText(simpleDateFormat.format(date));
