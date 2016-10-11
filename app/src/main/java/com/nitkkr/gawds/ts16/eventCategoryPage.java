@@ -113,7 +113,8 @@ public class eventCategoryPage extends AppCompatActivity
 			final eventCategory thisCategory=list.get(position);
 
 			((TextView)convertView.findViewById(R.id.category_name)).setText(thisCategory.category);
-
+			Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
+			(( TextView)convertView.findViewById(R.id.category_name)).setTypeface(font);
 			ImageView view=(ImageView)convertView.findViewById(R.id.categoryBullet);
 
 			TypedArray array=context.getResources().obtainTypedArray(R.array.ModernColor);

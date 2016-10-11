@@ -50,9 +50,8 @@ public class eventResultTab extends Fragment
 			view.findViewById(R.id.NoResult).setVisibility(View.INVISIBLE);
 
 			((TextView)view.findViewById(R.id.resultView)).setText(Html.fromHtml(data.Result));
-
 			Typeface font = Typeface.createFromAsset(getContext().getAssets(),
-					"fonts/Font1.ttf");
+					"fonts/Font2.ttf");
 			(( TextView)view.findViewById(R.id.resultView)).setTypeface(font);
 		}
 	}

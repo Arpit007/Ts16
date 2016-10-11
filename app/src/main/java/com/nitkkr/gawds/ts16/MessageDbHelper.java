@@ -104,7 +104,7 @@ class MessageDbHelper extends SQLiteOpenHelper
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                     PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.setContentIntent(pendingIntent);
-                    builder.setSmallIcon(R.drawable.logo_border);
+                    builder.setSmallIcon(R.drawable.events_icon);
                     Bitmap bitmap= BitmapFactory.decodeResource(context.getResources(), R.drawable.logots_16);
                     builder.setLargeIcon(bitmap);
                     NotificationManager notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -75,6 +75,8 @@ public class eventItemAdapter extends BaseAdapter
 		final eventData data=dataList.get(position);
 
 		((TextView)convertView.findViewById(R.id.event_name)).setText(data.eventName);
+		Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Font1.ttf");
+		(( TextView)convertView.findViewById(R.id.event_name)).setTypeface(font);
 		boolean check1=false;
 		boolean check2=false;
 		try

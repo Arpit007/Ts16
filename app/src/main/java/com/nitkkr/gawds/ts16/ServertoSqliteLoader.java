@@ -177,7 +177,7 @@ public class ServertoSqliteLoader extends IntentService
                     builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
                     Bitmap bitmap= BitmapFactory.decodeResource(getResources(), R.drawable.logots_16);
                     builder.setLargeIcon(bitmap);
-                    builder.setSmallIcon(R.drawable.logo_border);
+                    builder.setSmallIcon(R.drawable.events_icon);
                     builder.setAutoCancel(true);
                     upcomingEditor.putInt("" + item.eventID, item.eventID);
                     upcomingEditor.commit();

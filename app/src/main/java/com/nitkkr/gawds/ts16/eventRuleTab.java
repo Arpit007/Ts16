@@ -42,19 +42,27 @@ public class eventRuleTab extends Fragment
 
 	public void eventUpdated()
 	{
-		if(view== null)
+		if (view == null)
 			return;
 
-		((TextView)(view.findViewById(R.id.eventRuleText))).setText(data.Rules);
+		Typeface font = Typeface.createFromAsset(getContext().getAssets(),
+				"fonts/Font2.ttf");
+		if(data.Status!=-1)
+			( (TextView) view.findViewById(R.id.eventRuleText) ).setTypeface(font);
+		String string = data.Rules.toString();
+		( (TextView) ( view.findViewById(R.id.eventRuleText) ) ).setText(string);
+		( (TextView) view.findViewById(R.id.eventCall) ).setTypeface(font);
 
+		if(data.Contact.equals(""))
+			view.findViewById(R.id.eventCall).setVisibility(View.GONE);
 
 		view.findViewById(R.id.eventCall).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+data.Contact));
-				startActivityForResult(intent,100);
+				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + data.Contact));
+				startActivity(intent);
 			}
 		});
 	}

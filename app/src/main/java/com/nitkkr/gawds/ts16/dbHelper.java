@@ -148,7 +148,7 @@ public  void generate(eventData event,String message)
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
     builder.setContentTitle(event.eventName + " "+message);
 
-    builder.setSmallIcon(R.drawable.logo_border);
+    builder.setSmallIcon(R.drawable.events_icon);
 
     Intent i = new Intent(context, eventDetail.class);
     i.putExtra(context.getString(R.string.TabID), 2);

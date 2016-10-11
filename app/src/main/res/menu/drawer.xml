@@ -21,6 +21,9 @@
             android:icon="@drawable/result_icon"
             android:title="Results"
             />
+        <item android:id="@+id/noid"
+            android:title=""
+            />
         <item android:title="" android:enabled="false"/>
     </group>
     <group android:id="@+id/drawerGroup2" android:checkableBehavior="none">
